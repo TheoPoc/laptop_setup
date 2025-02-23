@@ -34,4 +34,17 @@ appstore_apps:
   - { id: 937984704, name: "Amphetamine" }
 
 cursor_extensions:
-  - { name: "Cursor AI", id: "https://cursor.com/api/extension/1234567890" }
+  - { name: "Gitignore", id: "codezombiech.gitignore" }
+  - { name: "Git History", id: "donjayamanne.githistory" }
+  - { name: "Git Lens", id: "eamodio.gitlens" }
+  - { name: "Terraform", id: "hashicorp.terraform" }
+  - { name: "Pretty formatter", id: "mblode.pretty-formatter" }
+  - { name: "Compare folders", id: "moshfeu.compare-folders" }
+  - { name: "Diff Merge", id: "moshfeu.diff-merge" }
+  - { name: "Gitignore", id: "codezombiech.gitignore" }
+  - { name: "Python", id: "ms-python.python" }
+  - { name: "Makefile", id: "ms-vscode.makefile-tools" }
+  - { name: "Trailing space", id: "shardulm94.trailing-spaces" }
+  - { name: "Shellcheck", id: "timonwong.shellcheck" }
+  - { name: "Markdown", id: "yzhang.markdown-all-in-one" }
+  - { name: "Gitlab", id: "gitlab.gitlab-workflow" }
