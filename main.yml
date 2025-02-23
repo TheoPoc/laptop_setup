@@ -13,6 +13,8 @@
       tags: ['rosetta']
     - role: zsh
       tags: ['zsh']
+    - role: vim
+      tags: ['vim']
     - role: mise
       tags: ['mise']
     - role: ghorg

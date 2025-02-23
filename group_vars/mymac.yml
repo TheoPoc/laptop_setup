@@ -16,7 +16,7 @@ homebrew:
     - mise
     - direnv
     - yq
-
+    - autojump
 
   casks:
     - google-chrome

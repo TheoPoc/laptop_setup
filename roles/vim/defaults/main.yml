@@ -1,0 +1,4 @@
+---
+
+username: "{{ ansible_env.USER }}"
+group: "staff"

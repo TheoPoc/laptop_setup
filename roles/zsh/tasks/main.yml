@@ -35,6 +35,13 @@
     mode: "0644"
   tags: zsh
 
+- name: Copy .p10k.zsh
+  ansible.builtin.copy:
+    src: "p10k.zsh"
+    dest: "/Users/{{ username }}/.p10k.zsh"
+    mode: "0644"
+  tags: zsh
+
 - name: Set default shell
   ansible.builtin.user:
     name: "{{ username }}"
