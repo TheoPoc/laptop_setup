@@ -1,0 +1,6 @@
+---
+
+cursor_application_path: /Applications/Cursor.app
+
+# Override default extensions or add environment-specific ones
+additional_cursor_extensions: []

@@ -1,0 +1,19 @@
+---
+- name: Install Cursor via Homebrew Cask
+  community.general.homebrew_cask:
+    name: cursor
+    state: present
+  tags: ['cursor']
+
+- name: Add Cursor to Gatekeeper
+  ansible.builtin.command: xattr -dr com.apple.quarantine {{ cursor_application_path }}
+  changed_when: false
+  become: true
+  tags: cursor
+
+- name: Install Cursor extensions
+  ansible.builtin.command:
+  with_items: "{{ cursor.extensions }}"
+  register: cursor_result
+  changed_when: "'already installed' not in cursor_result.stdout"
+  tags: cursor

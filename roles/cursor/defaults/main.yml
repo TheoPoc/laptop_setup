@@ -1,0 +1,11 @@
+---
+cursor_extensions:
+  - "dbaeumer.vscode-eslint"
+  - "esbenp.prettier-vscode"
+  - "ms-python.python"
+  - "golang.go"
+  - "hashicorp.terraform"
+  - "redhat.ansible"
+  - "ms-azuretools.vscode-docker"
+  - "github.copilot"
+  # Add more extensions as needed 

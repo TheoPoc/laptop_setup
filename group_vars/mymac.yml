@@ -32,3 +32,6 @@ homebrew:
 appstore_apps:
   - { id: 441258766, name: "Magnet" }
   - { id: 937984704, name: "Amphetamine" }
+
+cursor_extensions:
+  - { name: "Cursor AI", id: "https://cursor.com/api/extension/1234567890" }
