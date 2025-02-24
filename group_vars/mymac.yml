@@ -18,7 +18,8 @@ homebrew:
     - yq
     - autojump
     - s5cmd
-
+    - tldr
+    
   casks:
     - google-chrome
     - firefox

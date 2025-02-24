@@ -2,6 +2,12 @@
 
 ohmyzsh:
   url: https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh
+  plugins:
+    - command-not-found
+    - virtualenv
+    - git
+    - copyfile
+    - autojump
 
 powerlevel10k:
   theme:
