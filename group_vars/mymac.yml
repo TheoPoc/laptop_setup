@@ -35,6 +35,7 @@ homebrew:
 appstore_apps:
   - { id: 441258766, name: "Magnet" }
   - { id: 937984704, name: "Amphetamine" }
+  - { id: 985367838, name: "Microsoft Outlook" }
 
 cursor_extensions:
   - { name: "Gitignore", id: "codezombiech.gitignore" }
