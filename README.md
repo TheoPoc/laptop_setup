@@ -22,6 +22,6 @@ cd ansible-mgmt-laptop
 
 4. Run the playbook
 ```
-ansible-galaxy install -r requirements.yml
-ansible-playbook main.yml --ask-become-pass
+/opt/homebrew/bin/ansible-galaxy install -r requirements.yml
+/opt/homebrew/bin/ansible-playbook main.yml --ask-become-pass
 ```

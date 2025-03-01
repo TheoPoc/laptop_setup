@@ -77,6 +77,5 @@ mise_tools:
   updatecli: "latest"
   pipx: "latest"
   granted: "latest"
-  docker-slim: "latest"
 
 username: "{{ ansible_user_id }}"

@@ -18,7 +18,7 @@ fi
 # Install Ansible
 if [[ ! -x /usr/local/bin/ansible ]]; then
   echo "[INFO] Install Ansible"
-  brew install ansible
+  /opt/homebrew/bin/brew install ansible
 fi
 
 echo "[INFO] Done"
