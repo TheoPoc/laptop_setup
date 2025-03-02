@@ -8,7 +8,8 @@
   ansible.builtin.pip:
     name: gita
     state: present
-    extra_args: --user
+    extra_args: --user --upgrade
+    executable: /usr/local/bin/pip3
 
 - name: Create gita config directory
   ansible.builtin.file:
@@ -20,4 +21,4 @@
   ansible.builtin.template:
     src: gita.yml.j2
     dest: "{{ ansible_env.HOME }}/.config/gita/repo.yml"
-    mode: '0644' 
+    mode: '0644'

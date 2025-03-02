@@ -23,6 +23,11 @@ homebrew:
     - ca-certificates
     - when
     - docker
+    - ripgrep
+    - mysql-client
+    - session-manager-plugin
+    - shellcheck
+    
 
   casks:
     - google-chrome
