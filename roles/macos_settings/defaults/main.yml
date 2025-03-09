@@ -145,45 +145,45 @@ iterm2:
 # Safari settings
 ##
 safari:
-  defaults:
-    - { name: Don't send search queries to Apple 1/2, key: UniversalSearchEnabled, type: bool, value: false }
-    - { name: Don't send search queries to Apple 2/2, key: SuppressSearchSuggestions, type: bool, value: true }
-    - { name: Enable restore session at launch, key: AlwaysRestoreSessionAtLaunch, type: bool, value: false }
-    - { name: Don't launch private window on start-up, key: OpenPrivateWindowWhenNotRestoringSessionAtLaunch, type: bool, value: false }
-    - { name: Always show tab bar, key: AlwaysShowTabBar, type: bool, value: true }
-    - { name: Disable auto fill passwords, key: AutoFillPasswords, type: bool, value: false }
-    - { name: Don't open downloads automatically, key: AutoOpenSafeDownloads, type: bool, value: false }
-    - { name: Change the Safari search to find strings contained in other words, key: FindOnPageMatchesWordStartsOnly, type: bool, value: false }
-    - { name: Auto clear downloads, key: DownloadsClearingPolicy, type: int, value: 2 }
-    - { name: Show developer tools, key: ShowDevelopMenu, type: bool, value: true }
-    - { name: Show full URL in Safari, key: ShowFullURLInSmartSearchField, type: bool, value: true }
-    - { name: Show status bar, key: ShowStatusBar, type: bool, value: true }
-    - { name: Show overlay status bar, key: ShowOverlayStatusBar, type: bool, value: true }
-    - { name: Show status bar in full screen, key: ShowStatusBarInFullScreen, type: bool, value: true }
-    - { name: Set Duckduckgo as a search engine, key: SearchProviderIdentifier, type: string, value: "com.duckduckgo" }
-    # 0: Homepage, 1: Empty Page, 2: Same Page, 4: Start Page
-    - { name: Setup new window behaviour, key: NewTabBehavior, type: int, value: 4 }
-    - { name: Setup new tab behaviour, key: NewWindowBehavior, type: int, value: 4 }
-    # 6 top sites: 0, 12 top sites: 1, 24 top sites: 2
-    - { name: Setup top sites grid arrangement, key: TopSitesGridArrangement, type: int, value: 0 }
-    # 0: Never, 1: Automatically, 2: Always
-    - { name: Open pages in tabs instead of windows, key: TabCreationPolicy, type: int, value: 2 }
-    - { name: ⌘ + click open a new tab, key: CommandClickMakesTabs, type: bool, value: true }
-    - { name: Don't make new tab or window active, key: OpenNewTabsInFront, type: bool, value: false }
-    - { name: Use ⌘ + number to switch tab, key: Command1Through9SwitchesTabs, type: bool, value: true }
-    - { name: Set Safari's home page to `about:blank` for faster loading, key: HomePage, type: string, value: "" }
-    - { name: Enable debug menu, key: IncludeInternalDebugMenu, type: bool, value: true }
-    - { name: Enable developer menu, key: IncludeDevelopMenu, type: bool, value: true }
-    - { name: Enable WebKit developer menu 1/2, key: WebKitDeveloperExtrasEnabledPreferenceKey, type: bool, value: true }
-    - { name: Enable WebKit developer menu 2/2, key: com.apple.Safari.ContentPageGroupIdentifier.WebKit2DeveloperExtrasEnabled, type: bool, value: true }
-    - { name: Enable continuous spellchecking, key: WebContinuousSpellCheckingEnabled, type: bool, value: true }
-    - { name: Disable auto-correction, key: WebAutomaticSpellingCorrectionEnabled, type: bool, value: false }
-    - { name: Disable autofill for passwords, key: AutoFillPasswords, type: bool, value: false }
-    - { name: Disable autofill for address book, key: AutoFillFromAddressBook, type: bool, value: false }
-    - { name: Disable autofill for credit card, key: AutoFillCreditCardData, type: bool, value: false }
-    - { name: Disable autofill for miscellaneous, key: AutoFillMiscellaneousForms, type: bool, value: false }
-    - { name: Enable 'Do Not Track', key: SendDoNotTrackHTTPHeader, type: bool, value: true }
-    - { name: Update extensions automatically, key: InstallExtensionUpdatesAutomatically, type: bool, value: true }
+  defaults: []
+    # - { name: Don't send search queries to Apple 1/2, key: UniversalSearchEnabled, type: bool, value: false }
+    # - { name: Don't send search queries to Apple 2/2, key: SuppressSearchSuggestions, type: bool, value: true }
+    # - { name: Enable restore session at launch, key: AlwaysRestoreSessionAtLaunch, type: bool, value: false }
+    # - { name: Don't launch private window on start-up, key: OpenPrivateWindowWhenNotRestoringSessionAtLaunch, type: bool, value: false }
+    # - { name: Always show tab bar, key: AlwaysShowTabBar, type: bool, value: true }
+    # - { name: Disable auto fill passwords, key: AutoFillPasswords, type: bool, value: false }
+    # - { name: Don't open downloads automatically, key: AutoOpenSafeDownloads, type: bool, value: false }
+    # - { name: Change the Safari search to find strings contained in other words, key: FindOnPageMatchesWordStartsOnly, type: bool, value: false }
+    # - { name: Auto clear downloads, key: DownloadsClearingPolicy, type: int, value: 2 }
+    # - { name: Show developer tools, key: ShowDevelopMenu, type: bool, value: true }
+    # - { name: Show full URL in Safari, key: ShowFullURLInSmartSearchField, type: bool, value: true }
+    # - { name: Show status bar, key: ShowStatusBar, type: bool, value: true }
+    # - { name: Show overlay status bar, key: ShowOverlayStatusBar, type: bool, value: true }
+    # - { name: Show status bar in full screen, key: ShowStatusBarInFullScreen, type: bool, value: true }
+    # - { name: Set Duckduckgo as a search engine, key: SearchProviderIdentifier, type: string, value: "com.duckduckgo" }
+    # # 0: Homepage, 1: Empty Page, 2: Same Page, 4: Start Page
+    # - { name: Setup new window behaviour, key: NewTabBehavior, type: int, value: 4 }
+    # - { name: Setup new tab behaviour, key: NewWindowBehavior, type: int, value: 4 }
+    # # 6 top sites: 0, 12 top sites: 1, 24 top sites: 2
+    # - { name: Setup top sites grid arrangement, key: TopSitesGridArrangement, type: int, value: 0 }
+    # # 0: Never, 1: Automatically, 2: Always
+    # - { name: Open pages in tabs instead of windows, key: TabCreationPolicy, type: int, value: 2 }
+    # - { name: ⌘ + click open a new tab, key: CommandClickMakesTabs, type: bool, value: true }
+    # - { name: Don't make new tab or window active, key: OpenNewTabsInFront, type: bool, value: false }
+    # - { name: Use ⌘ + number to switch tab, key: Command1Through9SwitchesTabs, type: bool, value: true }
+    # - { name: Set Safari's home page to `about:blank` for faster loading, key: HomePage, type: string, value: "" }
+    # - { name: Enable debug menu, key: IncludeInternalDebugMenu, type: bool, value: true }
+    # - { name: Enable developer menu, key: IncludeDevelopMenu, type: bool, value: true }
+    # - { name: Enable WebKit developer menu 1/2, key: WebKitDeveloperExtrasEnabledPreferenceKey, type: bool, value: true }
+    # - { name: Enable WebKit developer menu 2/2, key: com.apple.Safari.ContentPageGroupIdentifier.WebKit2DeveloperExtrasEnabled, type: bool, value: true }
+    # - { name: Enable continuous spellchecking, key: WebContinuousSpellCheckingEnabled, type: bool, value: true }
+    # - { name: Disable auto-correction, key: WebAutomaticSpellingCorrectionEnabled, type: bool, value: false }
+    # - { name: Disable autofill for passwords, key: AutoFillPasswords, type: bool, value: false }
+    # - { name: Disable autofill for address book, key: AutoFillFromAddressBook, type: bool, value: false }
+    # - { name: Disable autofill for credit card, key: AutoFillCreditCardData, type: bool, value: false }
+    # - { name: Disable autofill for miscellaneous, key: AutoFillMiscellaneousForms, type: bool, value: false }
+    # - { name: Enable 'Do Not Track', key: SendDoNotTrackHTTPHeader, type: bool, value: true }
+    # - { name: Update extensions automatically, key: InstallExtensionUpdatesAutomatically, type: bool, value: true }
 
 ##
 # Textedit settings
