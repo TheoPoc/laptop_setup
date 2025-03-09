@@ -149,3 +149,32 @@ cursor_settings:
   "gitlab.duoCodeSuggestions.enabled": false
   "diffEditor.codeLens": true
   "diffEditor.ignoreTrimWhitespace": false
+
+cursor_keybindings:
+  - key: "ctrl+shift+j"
+    command: "workbench.action.toggleMaximizedPanel"
+
+  - key: "alt+space"
+    command: "editor.action.triggerSuggest"
+    when: "editorHasCompletionItemProvider && textInputFocus && !editorReadonly"
+
+  - key: "ctrl+space"
+    command: "-editor.action.triggerSuggest"
+    when: "editorHasCompletionItemProvider && textInputFocus && !editorReadonly"
+
+  - key: "shift+cmd+s"
+    command: "workbench.action.terminal.runSelectedText"
+
+  - key: "shift+cmd+[Period]"
+    command: "-toggleExplainMode"
+    when: "suggestWidgetVisible"
+
+  - key: "shift+cmd+m"
+    command: "-workbench.actions.view.problems"
+    when: "workbench.panel.markers.view.active"
+
+  - key: "shift+cmd+m"
+    command: "continue.focusContinueInputWithoutClear"
+
+  - key: "shift+cmd+l"
+    command: "-continue.focusContinueInputWithoutClear"
