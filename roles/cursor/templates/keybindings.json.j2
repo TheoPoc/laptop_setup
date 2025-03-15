@@ -1,5 +1,5 @@
 // Place your keybindings in this file to overwrite the default keybindings
-{% if cursor_keybindings is mapping -%}
+{% if cursor_keybindings is sequence -%}
 {{ cursor_keybindings | to_nice_json }}
 {% else -%}
 {{ '{}' }}
