@@ -8,6 +8,7 @@ ohmyzsh:
     - git
     - copyfile
     - autojump
+    - fastfile
 
 powerlevel10k:
   theme:
