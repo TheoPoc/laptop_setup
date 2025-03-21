@@ -39,3 +39,21 @@
     mode: 'u=rw,go='
   tags: cursor, keybindings
   when: (cursor_keybindings_overwrite | default(False) | bool)
+
+- name: Create rules directory
+  ansible.builtin.file:
+    path: '/Users/{{ username }}/Documents/cursor'
+    state: directory
+    mode: '0644'
+  tags: cursor, rules
+
+- name: Copy rules files
+  ansible.builtin.copy:
+    src: "cursor-{{ item }}.rules"
+    dest: "/Users/{{ username }}/Documents/cursor/{{ item }}.rules"
+    mode: '0640'
+  loop:
+    - ansible
+    - terraform
+    - bash
+  tags: cursor, rules
