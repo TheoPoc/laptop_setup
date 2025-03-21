@@ -23,8 +23,6 @@
       tags: ['gita']
     - role: copier
       tags: ['copier']
-    - role: pipx
-      tags: ['pipx']
     - role: uv
       tags: ['uv']
     - role: zsh
