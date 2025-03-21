@@ -1,0 +1,16 @@
+---
+# Default variables for uv role
+# uv_version: latest  # To specify a particular version
+# uv_pipx_extra_args: ""  # For any additional pipx install arguments 
+
+# Package options
+uv_state: present  # Options: present, absent, upgrade, reinstall
+
+# pipx options
+uv_pipx_force: false  # Whether to force modification of the application's venv
+uv_pipx_python: ""  # Specify a Python version to use (e.g. "3.9")
+uv_pipx_index_url: ""  # Base URL of Python Package Index if needed
+uv_pipx_install_deps: false  # Whether to include applications of dependent packages
+
+# Source options
+# uv_source: ""  # Alternative source (git repo URL, local path) instead of PyPI 

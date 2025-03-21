@@ -27,6 +27,8 @@
       tags: ['copier']
     - role: pipx
       tags: ['pipx']
+    - role: uv
+      tags: ['uv']
     - role: zsh
       tags: ['zsh']
     - role: macos_settings
