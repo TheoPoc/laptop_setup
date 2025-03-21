@@ -31,5 +31,8 @@
   changed_when: false
 
 - name: Activate mise
-  ansible.builtin.command: "mise activate"
+  ansible.builtin.shell: |
+    eval "$(mise activate zsh)"
+  args:
+    executable: /bin/zsh
   changed_when: false
