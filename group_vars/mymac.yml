@@ -97,6 +97,7 @@ username: "{{ ansible_user_id }}"
 
 
 cursor_settings:
+  "extensions.verifySignature": false
   "editor.bracketPairColorization.enabled": true
   "editor.mouseWheelZoom": true
   "terminal.external.osxExec": "Rosetta iTerm.app"
