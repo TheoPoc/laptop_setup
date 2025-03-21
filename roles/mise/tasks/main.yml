@@ -33,8 +33,8 @@
 - name: Create .zshrc if it doesn't exist
   ansible.builtin.file:
     path: "{{ ansible_env.HOME }}/.zshrc"
-    state: directory
-    mode: '0755'
+    state: touch
+    mode: '0644'
     modification_time: preserve
     access_time: preserve
 
