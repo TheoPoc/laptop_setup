@@ -30,6 +30,14 @@
   loop: "{{ mise_tools | dict2items }}"
   changed_when: false
 
+- name: Create .zshrc if it doesn't exist
+  ansible.builtin.file:
+    path: "{{ ansible_env.HOME }}/.zshrc"
+    state: directory
+    mode: '0755'
+    modification_time: preserve
+    access_time: preserve
+
 - name: Add mise activation to .zshrc
   ansible.builtin.lineinfile:
     path: "{{ ansible_env.HOME }}/.zshrc"
