@@ -3,11 +3,6 @@
 - name: Install uv using pipx
   community.general.pipx:
     name: uv
-    state: "{{ uv_state }}"
-    source: "{{ uv_source | default(omit) }}"
-    force: "{{ uv_pipx_force }}"
-    python: "{{ uv_pipx_python | default(omit) }}"
-    index_url: "{{ uv_pipx_index_url | default(omit) }}"
-    install_deps: "{{ uv_pipx_install_deps }}"
+    state: "present"
   tags:
     - uv
