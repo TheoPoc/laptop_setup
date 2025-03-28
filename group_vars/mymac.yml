@@ -5,6 +5,7 @@ homebrew:
     - homebrew/command-not-found
     - falcosuessgott/tap
     - starkandwayne/cf
+    - suzuki-shunsuke/tfmv
 
   formulae:
     - git
@@ -36,6 +37,7 @@ homebrew:
     - safe
     - pug
     - tfautomv
+    - tfmv
 
 
   casks:
