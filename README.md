@@ -20,9 +20,16 @@ cd ansible-mgmt-laptop
 ./setup.sh
 ```
 
-4. Ensure you're logged in Apple ID
+4. Grant Terminal Full Disk Access
+   - Open System Preferences > Security & Privacy > Privacy
+   - Select "Full Disk Access" from the left sidebar
+   - Click the lock icon to make changes (enter your password)
+   - Click the "+" button and add Terminal.app from /Applications/Utilities/
+   - Ensure the checkbox next to Terminal.app is checked
 
-5. Run the playbook
+5. Ensure you're logged in Apple ID
+
+6. Run the playbook
 ```
 ansible-playbook main.yml -i hosts --ask-become-pass
 ```
