@@ -94,6 +94,7 @@ dock:
     - /Applications/iTerm.app
     - /Applications/Google\ Chrome.app
     - /Applications/Spotify.app
+    - /Applications/Bitwarden.app
     - /System/Applications/Messages.app
     - /System/Applications/Calendar.app
     - /System/Applications/Notes.app
