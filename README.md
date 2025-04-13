@@ -59,3 +59,8 @@ Run the playbook
 ```
 ansible-playbook main.yml -i hosts --ask-become-pass
 ```
+
+## Create a Rosetta iterm2
+ - Open Finder and navigate to Applications menu
+ - Copy `iTerm2.app` to `Rosetta iTerm2.app`
+ - Read information from `Rosetta iTerm2.app` and enable Rosetta
