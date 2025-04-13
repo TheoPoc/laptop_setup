@@ -3,12 +3,6 @@
 set -e
 set -o pipefail
 
-# Install Command Line Tools
-if [[ ! -x /usr/bin/gcc ]]; then
-  echo "[INFO] Install macOS Command Line Tools"
-  xcode-select --install
-fi
-
 # Install Homebrew
 if [[ ! -x /usr/local/bin/brew ]]; then
   echo "[INFO] Install Homebrew"
