@@ -44,6 +44,15 @@ cd ansible-mgmt-laptop
    - Save the file
    - Note: Make sure the username you specify exists on your system and has the necessary permissions to execute the playbook tasks.
 
+8. Configure Git settings (optional)
+   - Open [mymac.yml](group_vars/mymac.yml) in your text editor
+   - Update the following variables with your information:
+     ```yaml
+     git_username: "Your Name"  # Replace with your full name
+     git_email: "your.email@example.com"  # Replace with your email
+     ```
+   - If you don't want to configure Git, set `git_enabled: false`
+
 ## Execution
 
 Run the playbook

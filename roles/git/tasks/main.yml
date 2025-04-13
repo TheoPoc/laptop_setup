@@ -1,0 +1,24 @@
+#SPDX-License-Identifier: MIT-0
+---
+# tasks file for roles/git
+
+- name: Configure Git settings
+  block:
+    - name: Configure Git username
+      ansible.builtin.git_config:
+        name: user.name
+        scope: global
+        value: "{{ git_username }}"
+
+    - name: Configure Git email
+      ansible.builtin.git_config:
+        name: user.email
+        scope: global
+        value: "{{ git_email }}"
+
+    - name: Configure Git credential helper
+      ansible.builtin.git_config:
+        name: credential.helper
+        scope: global
+        value: "{{ git_credential_helper }}"
+  when: git_enabled | bool

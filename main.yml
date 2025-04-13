@@ -29,3 +29,5 @@
       tags: ['zsh']
     - role: macos_settings
       tags: ['macos_settings']
+    - role: git
+      tags: ['git']

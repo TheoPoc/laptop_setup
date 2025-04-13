@@ -1,0 +1,11 @@
+#SPDX-License-Identifier: MIT-0
+---
+# defaults file for roles/git
+
+# Enable/disable Git configuration
+git_enabled: true
+
+# Git configuration variables
+git_username: "Your Name"
+git_email: "your.email@example.com"
+git_credential_helper: store  # Pour macOS
