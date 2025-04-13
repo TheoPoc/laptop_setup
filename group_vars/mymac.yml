@@ -106,7 +106,7 @@ cursor_settings:
   "extensions.verifySignature": false
   "editor.bracketPairColorization.enabled": true
   "editor.mouseWheelZoom": true
-  "terminal.external.osxExec": "Rosetta iTerm.app"
+  "terminal.external.osxExec": "iTerm.app"
   "files.autoSave": "afterDelay"
   "gitlab.instanceUrl": "https://gitlab.com"
   "editor.minimap.enabled": false
