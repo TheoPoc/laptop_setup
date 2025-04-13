@@ -50,9 +50,8 @@ settings:
 ##
 systemuiserver:
   defaults:
-    - { name: Setup menu bar, key: menuExtras, type: array, value: ["/System/Library/CoreServices/Menu Extras/TimeMachine.menu"] }
     - { name: Show volume, key: "NSStatusItem Visible com.apple.menuextra.volume", type: bool, value: true }
-    - { name: Show Time Machine, key: "NSStatusItem Visible com.apple.menuextra.TimeMachine", type: bool, value: true }
+    - { name: Show Time Machine, key: "NSStatusItem Visible com.apple.menuextra.TimeMachine", type: bool, value: false }
 
 ##
 # Clock settings
