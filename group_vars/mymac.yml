@@ -201,3 +201,20 @@ pipx_executable: "/Users/{{ ansible_user }}/.local/share/mise/installs/pipx/late
 git_enabled: true
 git_username: theo
 git_email: theo.poccard@gmail.com
+
+
+# Set applications in Dock
+display_applications:
+  - /Applications/Arc.app
+  - /Applications/Slack.app
+  - /Applications/Cursor.app
+  - /Applications/Firefox.app
+  - /Applications/iTerm.app
+  - /Applications/Google\ Chrome.app
+  - /Applications/Spotify.app
+  - /Applications/Bitwarden.app
+  - /System/Applications/Messages.app
+  - /System/Applications/Calendar.app
+  - /System/Applications/Notes.app
+  - "\"/System/Applications/System Settings.app\""
+  - /System/Applications/Launchpad.app

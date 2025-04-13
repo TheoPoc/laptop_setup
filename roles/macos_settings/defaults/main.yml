@@ -85,24 +85,12 @@ dock:
     - { name: Don't show Dashboard as a Space, key: dashboard-in-overlay, type: bool, value: true }
     - { name: Show indicator lights for open applications, key: show-process-indicators, type: bool, value: true}
 
-  # Set applications in Dock
-  display_applications:
-    - /Applications/Arc.app
-    - /Applications/Slack.app
-    - /Applications/Cursor.app
-    - /Applications/Firefox.app
-    - /Applications/iTerm.app
-    - /Applications/Google\ Chrome.app
-    - /Applications/Spotify.app
-    - /Applications/Bitwarden.app
-    - /System/Applications/Messages.app
-    - /System/Applications/Calendar.app
-    - /System/Applications/Notes.app
-    - "\"/System/Applications/System Settings.app\""
-    - /System/Applications/Launchpad.app
-
   # Reset Launchpad
   reset_launchpad: false
+
+  # Set applications in Dock
+display_applications: []
+
 
 ##
 # Finder settings
