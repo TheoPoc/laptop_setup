@@ -73,8 +73,8 @@ dock:
     - { name: Don't automatically rearrange Spaces based on most recent use, key: mru-spaces, type: bool, value: false }
     - { name: Automatically hide and show the Dock, key: autohide, type: bool, value: true }
     - { name: Don't show recent applications in Dock, key: show-recents, type: bool, value: false }
-    - { name: Orientation left, key: orientation, type: string, value: left }
-    - { name: Set size of icons, key: tilesize, type: float, value: 39 }
+    - { name: Orientation left, key: orientation, type: string, value: bottom }
+    - { name: Set size of icons, key: tilesize, type: float, value: 60 }
     - { name: Hot corners - Top left corner 1/2, key: wvous-tl-corner, type: int, value: 0 }
     - { name: Hot corners - Top left corner 2/2, key: wvous-tl-modifier, type: int, value: 0 }
     - { name: Hot corners - Top right corner 1/2, key: wvous-tr-corner, type: int, value: 0 }
