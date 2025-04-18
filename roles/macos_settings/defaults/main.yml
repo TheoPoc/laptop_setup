@@ -292,5 +292,5 @@ others:
   # Night Shift schedule
   nightshift:
     enabled: true
-    start_time: 18:00
-    end_time: 08:00
+    start_time: "18:00"
+    end_time: "08:00"
