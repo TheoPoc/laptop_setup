@@ -195,11 +195,11 @@ cursor_keybindings:
     command: "-workbench.actions.view.problems"
     when: "workbench.panel.markers.view.active"
 
-  - key: "shift+alt+l"
+  - key: "shift+alt+m"
     command: "editor.action.selectHighlights"
     when: "editorFocus"
 
-  - key: "alt+l"
+  - key: "alt+m"
     command: "editor.action.addSelectionToNextFindMatch"
     when: "editorFocus"
 
