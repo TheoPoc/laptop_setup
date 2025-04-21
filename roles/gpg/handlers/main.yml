@@ -1,0 +1,6 @@
+---
+# handlers file for roles/gpg
+
+- name: Reload GPG agent
+  ansible.builtin.command: gpgconf --reload gpg-agent
+  when: gpg_enabled | bool 

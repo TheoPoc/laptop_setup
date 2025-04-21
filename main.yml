@@ -34,3 +34,5 @@
       tags: ['git']
     - role: rancher-desktop
       tags: ['rancher-desktop']
+    - role: gpg
+      tags: ['gpg']
