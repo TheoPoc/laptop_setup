@@ -38,6 +38,7 @@ homebrew:
     - tfautomv                # Terraform automatic resource move suggestions
     - tfmv                    # Terraform state mv command generator
     - hcledit                 # CLI tool for editing HCL files
+    - thefuck                 # Corrects your previous console command
 
 
   casks:
