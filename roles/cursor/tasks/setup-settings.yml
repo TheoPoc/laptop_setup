@@ -36,7 +36,7 @@
     src: keybindings.json.j2
     dest: '/Users/{{ username }}/Library/Application Support/Cursor/User/keybindings.json'
     force: '{{ cursor_keybindings_overwrite | default(False) | bool }}'
-    mode: 'u=rw,go='
+    mode: '0644'
   tags: cursor, keybindings
   when: (cursor_keybindings_overwrite | default(False) | bool)
 

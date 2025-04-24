@@ -103,6 +103,8 @@ mise_tools:
 
 username: "{{ ansible_user_id }}"
 
+# Enable Cursor MCP configuration
+cursor_mcp_enabled: true
 
 cursor_settings:
   "extensions.verifySignature": false
@@ -170,6 +172,8 @@ cursor_settings:
   "workbench.enableExperiments": false
   "window.commandCenter": 1
   "workbench.colorTheme": "Cursor Dark Midnight"
+  "terminal.explorerKind": "external"
+  "terminal.integrated.defaultProfile.osx": "zsh"
   "cursor.cpp.disabledLanguages":
     - "plaintext"
 

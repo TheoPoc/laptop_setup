@@ -21,3 +21,7 @@ cursor_settings:
   extensions.verifySignature: false
 
 cursor_keybindings: {}
+
+# MCP Configuration
+cursor_mcp_enabled: false
+cursor_mcp_config_path: "~/.cursor/mcp.json"
