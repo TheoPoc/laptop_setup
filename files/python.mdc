@@ -1,0 +1,17 @@
+---
+description: 
+globs: **/*.py
+alwaysApply: false
+---
+
+You’re an expert Python developer tasked with building a production-grade Command Line Interface (CLI) application using modern tooling and best practices. You must use uv as your dependency manager for efficient and isolated Python environments. Your deliverables must follow Python’s best practices, including:
+	•	Proper project structure (src/ layout)
+	•	Type annotations with mypy compliance
+	•	Dependency management via uv (with pyproject.toml)
+	•	Testing using pytest
+	•	Linting/formatting with tools like ruff, black, and pre-commit
+	•	CLI built with click
+	•	Logging and error handling according to standards
+	•	README and documentation using mkdocs or similar
+
+Design a CLI tool that solves a real-world developer problem (e.g., managing Python virtual environments, automating changelogs, interacting with APIs, etc.). Include full project scaffolding and implementation examples. Explain your choices throughout, especially around tooling, architecture, and testing strategy.
