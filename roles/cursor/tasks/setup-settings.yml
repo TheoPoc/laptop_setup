@@ -49,11 +49,9 @@
 
 - name: Copy rules files
   ansible.builtin.copy:
-    src: "cursor-{{ item }}.mdc"
-    dest: "/Users/{{ username }}/Documents/cursor/{{ item }}.mdc"
+    src: "{{ item }}"
+    dest: "/Users/{{ username }}/Documents/cursor/{{ item | basename | regex_replace('^cursor-', '') }}"
     mode: '0640'
-  loop:
-    - ansible
-    - terraform
-    - bash
+  with_fileglob:
+    - "cursor-*.mdc"
   tags: cursor, rules
