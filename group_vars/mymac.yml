@@ -15,6 +15,7 @@ homebrew:
     - wget                    # Utility for non-interactive download of files from the web
     - curl                    # Command line tool for transferring data with URLs
     - jq                      # Lightweight and flexible command-line JSON processor
+    - dive                    # Docker Image Volume Explorer
     - htop                    # Interactive process viewer and system monitor
     - gopass                  # Password manager with Git integration
     - mise                    # Dev tools version manager (formerly rtx)
