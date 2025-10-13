@@ -1,0 +1,7 @@
+---
+# Debian/Ubuntu-specific variables for Cursor
+
+cursor_config_dir: "{{ ansible_env.HOME }}/.config/Cursor"
+cursor_user_dir: "{{ ansible_env.HOME }}/.config/Cursor/User"
+cursor_cli_path: "{{ ansible_env.HOME }}/.local/bin/cursor"
+cursor_rules_dir: "{{ ansible_env.HOME }}/Documents/cursor"

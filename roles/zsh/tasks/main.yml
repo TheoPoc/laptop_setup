@@ -1,50 +1,7 @@
 ---
-- name: Install necessary zsh homebrew packages
-  community.general.homebrew:
-    name:
-      - zsh
-      - zsh-completions
-      - zsh-autosuggestions
-      - zsh-syntax-highlighting
-    state: present
-  tags: zsh
+# Main task file for zsh role
 
-- name: Set default shell
-  ansible.builtin.user:
-    name: "{{ username }}"
-    shell: /bin/zsh
-  tags: zsh
-
-- name: Check if oh-my-zsh is installed
-  stat:
-    path: "/Users/{{ username }}/.oh-my-zsh"
-  register: oh_my_zsh_installed
-
-- name: Install Oh My Zsh # noqa: latest
-  ansible.builtin.git:
-    repo: https://github.com/ohmyzsh/ohmyzsh.git
-    dest: ~/.oh-my-zsh
-    depth: 1
-  tags: zsh
-
-- name: Install powerlevel10k theme
-  ansible.builtin.git:
-    repo: "{{ powerlevel10k.theme.url }}"
-    dest: "/Users/{{ username }}/.oh-my-zsh/custom/themes/powerlevel10k"
-    version: "{{ powerlevel10k.theme.version }}"
-  tags: zsh
-
-- name: Copy .zshrc
-  ansible.builtin.template:
-    src: "templates/.zshrc.j2"
-    dest: "/Users/{{ username }}/.zshrc"
-    mode: "0644"
-  tags: zsh
-
-- name: Copy .p10k.zsh
-  ansible.builtin.copy:
-    src: "p10k.zsh"
-    dest: "/Users/{{ username }}/.p10k.zsh"
-    mode: "0644"
+- name: Include OS-specific installation tasks
+  ansible.builtin.include_tasks: "install-{{ ansible_os_family }}.yml"
   tags: zsh
 

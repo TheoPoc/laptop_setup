@@ -1,10 +1,9 @@
-#SPDX-License-Identifier: MIT-0
 ---
 galaxy_info:
-  role_name: git
+  role_name: zsh
   namespace: ansible_mgmt_laptop
   author: Theo Poccard
-  description: Git configuration role for multi-OS support
+  description: Zsh shell installation and configuration with Oh My Zsh
   license: MIT
   min_ansible_version: "2.14"
 
@@ -19,8 +18,8 @@ galaxy_info:
         - all
 
   galaxy_tags:
-    - git
-    - configuration
-    - development
+    - zsh
+    - shell
+    - terminal
 
 dependencies: []

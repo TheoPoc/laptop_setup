@@ -1,66 +1,178 @@
-# Ansible Playbook for macOS
+# Ansible Playbook for macOS and Ubuntu
 
-This repository contains an Ansible playbook for macOS. It installs Homebrew and other packages.
+This repository contains an Ansible playbook for automating workstation setup on both macOS and Ubuntu. It installs essential development tools, configures your development environment, and manages applications.
+
+## Supported Operating Systems
+
+- **macOS** (Intel and Apple Silicon)
+- **Ubuntu** 20.04 LTS and later
 
 ## Installation
 
-1. Generate an SSH key
-```
-ssh-keygen -t rsa -b 4096 -C "$(whoami)@$(hostname)" -f ~/.ssh/id_rsa -N ""
-eval "$(ssh-agent -s)"
-ssh-add ~/.ssh/id_rsa
-```
+### Prerequisites
 
-2. Add the SSH key to your Git provider
+#### macOS
+1. Install Command Line Tools:
+   ```bash
+   xcode-select --install
+   ```
 
-3. Install Command Line Tools
-```
-xcode-select --install
-```
-
-4. Clone the repository and run the setup script
-```
-git clone https://github.com/TheoPoc/ansible-mgmt-laptop.git
-cd ansible-mgmt-laptop
-./setup.sh
-```
-
-5. Grant Terminal Full Disk Access
+2. Grant Terminal Full Disk Access:
    - Open System Preferences > Security & Privacy > Privacy
    - Select "Full Disk Access" from the left sidebar
    - Click the lock icon to make changes (enter your password)
    - Click the "+" button and add Terminal.app from /Applications/Utilities/
    - Ensure the checkbox next to Terminal.app is checked
 
-6. Ensure you're logged in Apple ID
+3. Ensure you're logged in to your Apple ID (for App Store installations)
 
-7. Change the username in the Ansible configuration (if needed):
+#### Ubuntu
+1. Update your system:
+   ```bash
+   sudo apt update && sudo apt upgrade -y
+   ```
+
+2. Install required packages:
+   ```bash
+   sudo apt install -y git python3 python3-pip
+   ```
+
+### Common Setup Steps
+
+1. Generate an SSH key (if you don't have one):
+   ```bash
+   ssh-keygen -t rsa -b 4096 -C "$(whoami)@$(hostname)" -f ~/.ssh/id_rsa -N ""
+   eval "$(ssh-agent -s)"
+   ssh-add ~/.ssh/id_rsa
+   ```
+
+2. Add the SSH key to your Git provider
+
+3. Clone the repository and run the setup script:
+   ```bash
+   git clone https://github.com/TheoPoc/ansible-mgmt-laptop.git
+   cd ansible-mgmt-laptop
+   ./setup.sh
+   ```
+
+4. Configure your username in the Ansible inventory:
    - Open the `hosts` file in your favorite text editor
-   - Modify the `ansible_user` value to match your desired username:
-     ```
+   - For macOS, modify the `[mymac]` section:
+     ```ini
      [mymac]
-     127.0.0.1 ansible_user=your_new_username
+     127.0.0.1 ansible_user=your_username
      ```
-   - Save the file
-   - Note: Make sure the username you specify exists on your system and has the necessary permissions to execute the playbook tasks.
+   - For Ubuntu, uncomment and modify the `[myubuntu]` section:
+     ```ini
+     [myubuntu]
+     127.0.0.1 ansible_user=your_username
+     ```
 
-8. Configure Git settings (optional)
-   - Open [mymac.yml](group_vars/mymac.yml) in your text editor
-   - Update the following variables with your information:
+5. Configure settings:
+   - Edit [group_vars/all.yml](group_vars/all.yml)
+   - Update your Git configuration:
      ```yaml
      git_username: "Your Name"  # Replace with your full name
      git_email: "your.email@example.com"  # Replace with your email
      ```
+   - Customize packages, tools, and applications for your needs
    - If you don't want to configure Git, set `git_enabled: false`
 
 ## Execution
 
-Run the playbook
-```
+### Run the full playbook
+
+**macOS:**
+```bash
 ansible-playbook main.yml -i hosts --ask-become-pass
 ```
 
-## Create a Rosetta iterm2
+**Ubuntu:**
+```bash
+ansible-playbook main.yml -i hosts --ask-become-pass
+```
+
+### Run specific roles with tags
+
+Install only base tools (Homebrew/APT packages):
+```bash
+ansible-playbook main.yml -i hosts --tags base-tools --ask-become-pass
+```
+
+Install only Cursor IDE:
+```bash
+ansible-playbook main.yml -i hosts --tags cursor --ask-become-pass
+```
+
+Configure only Git:
+```bash
+ansible-playbook main.yml -i hosts --tags git --ask-become-pass
+```
+
+Available tags: `base-tools`, `cursor`, `mise`, `zsh`, `git`, `warp`, `vim`, `gpg`, `rancher-desktop`, `appstore` (macOS only), `macos_settings` (macOS only)
+
+## What Gets Installed
+
+### Common to Both macOS and Ubuntu
+
+- **Base development tools**: git, python, curl, wget, jq, ripgrep, htop, etc.
+- **DevOps tools** (via mise): terraform, kubectl, helm, k9s, awscli, packer, vault, etc.
+- **IDEs and terminals**: Cursor, Warp
+- **Shell**: zsh with Oh My Zsh and Powerlevel10k
+- **Container runtime**: Rancher Desktop
+- **Version managers**: mise (replacement for rtx)
+- **Git configuration** with OS-specific credential helpers
+
+### macOS-Specific
+
+- **Package manager**: Homebrew
+- **App Store apps**: Magnet, Bitwarden, Amphetamine, etc.
+- **Terminal**: iTerm2 (optional)
+- **System settings**: Dock, Finder, Safari configurations
+- **Rosetta 2**: For Apple Silicon Macs
+
+### Ubuntu-Specific
+
+- **Package manager**: APT + Snap
+- **Applications**: Installed via snap or direct downloads
+- **Git credential helper**: libsecret
+
+## Architecture
+
+The playbook is organized into modular roles:
+
+- **base-tools**: OS-agnostic package installation (Homebrew for macOS, APT for Ubuntu)
+- **cursor**: Cross-platform IDE with OS-specific configurations
+- **zsh**: Shell configuration with framework
+- **mise**: Development tools version manager
+- **git**: Git configuration with OS-specific credential helpers
+- **warp**: Modern terminal (supports both macOS and Ubuntu)
+- **rancher-desktop**: Container runtime
+- **vim**, **gpg**, **gita**, **copier**, **uv**: Cross-platform tools
+
+### macOS-only roles:
+- **appstore**: Mac App Store applications
+- **rosetta**: ARM64 emulation for Intel apps
+- **iterm2**: macOS terminal
+- **macos_settings**: System preferences
+
+## Customization
+
+Edit the unified configuration file [group_vars/all.yml](group_vars/all.yml) to customize:
+- **Homebrew packages** (macOS): taps, formulae, and casks
+- **Cursor IDE**: Extensions, settings, keybindings, MCP configuration
+- **Mise tools**: Version manager tools (terraform, kubectl, helm, etc.)
+- **Git configuration**: Username, email, and credential helper
+- **Warp workflows**: Custom terminal workflows
+- **App Store apps** (macOS): Applications to install
+- **Dock applications** (macOS): Apps to display in the Dock
+- And much more!
+
+**Note**: The configuration automatically adapts to your OS (macOS or Ubuntu) using OS-specific detection in the roles.
+
+## macOS: Create a Rosetta iTerm2
+For Apple Silicon Macs running x86_64 applications:
  - Open Finder and navigate to Applications menu
  - Copy `iTerm2.app` to `Rosetta iTerm2.app`
- - Read information from `Rosetta iTerm2.app` and enable Rosetta
+ - Right-click `Rosetta iTerm2.app`, select "Get Info"
+ - Enable "Open using Rosetta"

@@ -1,23 +1,25 @@
 ---
+# macOS installation tasks for base-tools using Homebrew
+
 # - name: Update and upgrade packages for Homebrew
 #   community.general.homebrew:
 #     update_homebrew: true
 #     upgrade_all: true
-#   tags: homebrew, upgrade
+#   tags: base-tools, homebrew, upgrade
 
 - name: Install homebrew taps
   community.general.homebrew_tap:
-    name: "{{ homebrew.taps }}"
-  tags: homebrew, taps
+    name: "{{ homebrew_taps }}"
+  tags: base-tools, homebrew, taps
 
 - name: Install homebrew formulae
   community.general.homebrew:
-    name: "{{ homebrew.formulae }}"
+    name: "{{ homebrew_formulae }}"
     state: present
-  tags: homebrew, formulae
+  tags: base-tools, homebrew, formulae
 
 - name: Install homebrew casks
   community.general.homebrew_cask:
-    name: "{{ homebrew.casks }}"
+    name: "{{ homebrew_casks }}"
     state: present
-  tags: homebrew, casks
+  tags: base-tools, homebrew, casks

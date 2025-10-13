@@ -1,0 +1,4 @@
+---
+# macOS-specific variables for git role
+
+git_credential_helper: osxkeychain

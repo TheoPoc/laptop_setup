@@ -1,0 +1,101 @@
+---
+- name: Verify
+  hosts: all
+  gather_facts: true
+  tasks:
+    - name: Check if zsh is installed
+      ansible.builtin.command: which zsh
+      register: zsh_installed
+      changed_when: false
+      failed_when: zsh_installed.rc != 0
+
+    - name: Verify zsh version
+      ansible.builtin.command: zsh --version
+      register: zsh_version
+      changed_when: false
+
+    - name: Display zsh version
+      ansible.builtin.debug:
+        msg: "zsh version: {{ zsh_version.stdout }}"
+
+    - name: Get current user shell
+      ansible.builtin.command: grep "^{{ ansible_user_id }}:" /etc/passwd
+      register: user_shell
+      changed_when: false
+
+    - name: Verify user shell is zsh
+      ansible.builtin.assert:
+        that:
+          - "'/zsh' in user_shell.stdout"
+        fail_msg: "User shell is not set to zsh"
+        success_msg: "User shell is set to zsh"
+
+    - name: Check if oh-my-zsh is installed
+      ansible.builtin.stat:
+        path: "{{ ansible_env.HOME }}/.oh-my-zsh"
+      register: ohmyzsh_dir
+
+    - name: Verify oh-my-zsh is installed
+      ansible.builtin.assert:
+        that:
+          - ohmyzsh_dir.stat.exists
+          - ohmyzsh_dir.stat.isdir
+        fail_msg: "oh-my-zsh is not installed"
+        success_msg: "oh-my-zsh is installed"
+
+    - name: Check if powerlevel10k theme is installed
+      ansible.builtin.stat:
+        path: "{{ ansible_env.HOME }}/.oh-my-zsh/custom/themes/powerlevel10k"
+      register: p10k_theme
+
+    - name: Verify powerlevel10k theme is installed
+      ansible.builtin.assert:
+        that:
+          - p10k_theme.stat.exists
+          - p10k_theme.stat.isdir
+        fail_msg: "powerlevel10k theme is not installed"
+        success_msg: "powerlevel10k theme is installed"
+
+    - name: Check if .zshrc exists
+      ansible.builtin.stat:
+        path: "{{ ansible_env.HOME }}/.zshrc"
+      register: zshrc_file
+
+    - name: Verify .zshrc exists
+      ansible.builtin.assert:
+        that:
+          - zshrc_file.stat.exists
+        fail_msg: ".zshrc does not exist"
+        success_msg: ".zshrc exists"
+
+    - name: Check if .p10k.zsh exists
+      ansible.builtin.stat:
+        path: "{{ ansible_env.HOME }}/.p10k.zsh"
+      register: p10k_config
+
+    - name: Verify .p10k.zsh exists
+      ansible.builtin.assert:
+        that:
+          - p10k_config.stat.exists
+        fail_msg: ".p10k.zsh does not exist"
+        success_msg: ".p10k.zsh exists"
+
+    - name: Check if zsh-autosuggestions is installed
+      ansible.builtin.command: dpkg -l zsh-autosuggestions
+      register: zsh_autosuggestions
+      changed_when: false
+      failed_when: false
+
+    - name: Check if zsh-syntax-highlighting is installed
+      ansible.builtin.command: dpkg -l zsh-syntax-highlighting
+      register: zsh_syntax_highlighting
+      changed_when: false
+      failed_when: false
+
+    - name: Verify zsh plugins are installed
+      ansible.builtin.assert:
+        that:
+          - zsh_autosuggestions.rc == 0
+          - zsh_syntax_highlighting.rc == 0
+        fail_msg: "Some zsh plugins are not installed"
+        success_msg: "All zsh plugins are installed"
