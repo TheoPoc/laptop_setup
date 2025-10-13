@@ -2,7 +2,6 @@
 
 homebrew:
   taps:
-    - homebrew/command-not-found
     - falcosuessgott/tap
     - starkandwayne/cf
     - suzuki-shunsuke/tfmv

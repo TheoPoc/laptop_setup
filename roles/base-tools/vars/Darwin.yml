@@ -4,7 +4,6 @@
 package_manager: homebrew
 
 homebrew_taps:
-  - homebrew/command-not-found
   - falcosuessgott/tap
   - starkandwayne/cf
   - suzuki-shunsuke/tfmv

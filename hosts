@@ -1,6 +1,1 @@
-[mymac]
 127.0.0.1 ansible_user=tpoccard
-
-[myubuntu]
-# Uncomment and configure for Ubuntu installations
-# 127.0.0.1 ansible_user=your_username
