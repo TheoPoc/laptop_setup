@@ -1,7 +1,16 @@
 ---
+
+- name: Get uv path from mise
+  ansible.builtin.command:
+    cmd: "mise which uv"
+  register: uv_path
+  changed_when: false
+  tags:
+    - gita
+
 - name: Check if gita is installed
   ansible.builtin.shell:
-    cmd: "uv tool list | grep -E 'gita$'"
+    cmd: "{{ uv_path.stdout }} tool list | grep -E 'gita$'"
   register: is_gita_installed
   changed_when: false
   failed_when: false
@@ -10,7 +19,7 @@
 
 - name: Install gita using uv
   ansible.builtin.command:
-    cmd: "uv tool install gita"
+    cmd: "{{ uv_path.stdout }} tool install gita"
   when: is_gita_installed.rc != 0
   tags:
     - gita

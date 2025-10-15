@@ -29,7 +29,6 @@ homebrew_formulae:
   - when                    # Simple calendar and task management tool
   - ripgrep                 # Fast line-oriented search tool (alternative to grep)
   - mysql-client            # MySQL database client
-  - session-manager-plugin  # AWS Session Manager plugin for the AWS CLI
   - shellcheck              # Static analysis tool for shell scripts
   - ipcalc                  # Calculator for IP addresses
   - lsd                     # Modern ls command with colorful output and icons
@@ -38,7 +37,6 @@ homebrew_formulae:
   - safe                    # Command-line interface to Vault for secrets management
   - pug                     # CLI tool for managing terraform resources and state interactively
   - tfautomv                # Terraform automatic resource move suggestions
-  - tfmv                    # Terraform state mv command generator
   - hcledit                 # CLI tool for editing HCL files
   - thefuck                 # Corrects your previous console command
 
@@ -52,3 +50,4 @@ homebrew_casks:
   - libreoffice
   - postman
   - warp
+  - tfmv

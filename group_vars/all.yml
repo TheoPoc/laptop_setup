@@ -27,7 +27,6 @@ homebrew:
     - when                    # Simple calendar and task management tool
     - ripgrep                 # Fast line-oriented search tool (alternative to grep)
     - mysql-client            # MySQL database client
-    - session-manager-plugin  # AWS Session Manager plugin for the AWS CLI
     - shellcheck              # Static analysis tool for shell scripts
     - ipcalc                  # Calculator for IP addresses
     - lsd                     # Modern ls command with colorful output and icons

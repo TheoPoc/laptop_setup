@@ -223,9 +223,16 @@
       changed_when: false
       failed_when: false
 
+    - name: Check if LibreOffice is installed
+      ansible.builtin.command: which libreoffice
+      register: libreoffice_installed
+      changed_when: false
+      failed_when: false
+
     - name: Display desktop applications installation status
       ansible.builtin.debug:
         msg:
           - "Slack installed: {{ slack_installed.rc == 0 }}"
           - "Postman installed: {{ postman_installed.rc == 0 }}"
+          - "LibreOffice installed: {{ libreoffice_installed.rc == 0 }}"
           - "Note: Desktop apps may not install in containers due to GUI dependencies or download restrictions"

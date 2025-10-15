@@ -1,9 +1,20 @@
 ---
 
+- name: Get uv path from mise
+  ansible.builtin.command:
+    cmd: "mise which uv"
+  register: uv_path
+  changed_when: false
+  tags:
+    - uv
+
 - name: Update uv shell configuration
   ansible.builtin.command:
-    cmd: "uv tool update-shell"
+    cmd: "{{ uv_path.stdout }} tool update-shell"
   register: uv_shell_update
   changed_when: false
+  failed_when:
+    - uv_shell_update.rc != 0
+    - "'already up-to-date' not in uv_shell_update.stderr"
   tags:
     - uv

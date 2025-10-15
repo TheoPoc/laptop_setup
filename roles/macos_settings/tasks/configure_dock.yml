@@ -11,7 +11,7 @@
   tags: dock, defaults
 
 - name: Dock - Configure applications
-  when: dock.display_applications | length > 0
+  when: display_applications | length > 0
   tags: dock, configuration, applications
   block:
     - name: Dock - Install dockutil
@@ -29,7 +29,7 @@
     - name: Dock - Set the Dock items
       ansible.builtin.shell: "$(brew --prefix)/bin/dockutil --add {{ item }} --no-restart"
       changed_when: true
-      with_items: "{{ dock.display_applications }}"
+      with_items: "{{ display_applications }}"
       notify: Kill Dock
 
     - name: Dock - Flush handlers
