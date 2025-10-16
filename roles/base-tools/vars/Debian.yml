@@ -38,7 +38,6 @@ apt_packages:
   - lsb-release # LSB version reporting utility
   - unzip # ZIP archive extraction utility
   - firefox # Web browser
-  - libreoffice # Office suite
 
 # Note: gnupg is not included in apt_packages due to version conflicts in test containers.
 # GPG tools are typically pre-installed in Ubuntu base images. If needed, install manually.
