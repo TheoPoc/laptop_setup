@@ -1,0 +1,22 @@
+---
+# Ansible-lint configuration
+# https://ansible.readthedocs.io/projects/lint/configuring/
+
+profile: moderate
+
+skip_list:
+  - yaml[line-length]  # Line length warnings - handled by yamllint
+  - yaml[comments]  # Comment formatting - handled by yamllint
+  - latest[git]  # Git latest version warnings - acceptable for development
+  - command-instead-of-module  # Sometimes shell commands are necessary
+  - no-changed-when  # Not all commands need changed_when
+  - risky-file-permissions  # Downloads don't always need strict permissions
+  - risky-shell-pipe  # Pipefail not always necessary
+  - var-naming[no-role-prefix]  # Some variables are intentionally without prefix
+  - ignore-errors  # Using failed_when is preferred but not always required
+  - schema[meta]  # Meta schema validation can be overly strict
+  - name[play]  # Play names are not always required
+  - role-name  # Role naming conventions are flexible
+
+exclude_paths:
+  - .github/  # GitHub-specific files have different YAML requirements

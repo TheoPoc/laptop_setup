@@ -14,31 +14,31 @@ architecture_mapping:
 package_architecture: "{{ architecture_mapping[ansible_architecture] | default('amd64') }}"
 
 apt_packages:
-  - git                     # Version control system
-  - python3                 # Python 3 interpreter
-  - python3-pip             # Python package installer
-  - nmap                    # Network exploration tool
-  - openssl                 # SSL/TLS toolkit
-  - wget                    # Network downloader
-  - curl                    # Transfer data with URLs
-  - jq                      # JSON processor
-  - htop                    # Interactive process viewer
-  - direnv                  # Environment variable manager
-  - autojump                # Fast directory navigation
-  - ca-certificates         # Common CA certificates
-  - ripgrep                 # Fast grep alternative
-  - mysql-client            # MySQL client
-  - shellcheck              # Shell script static analysis
-  - ipcalc                  # IP address calculator
-  - zsh                     # Z shell
-  - vim                     # Vi IMproved editor
-  - build-essential         # Build tools (gcc, make, etc.)
-  - software-properties-common  # Manage repositories
-  - apt-transport-https     # HTTPS support for apt
-  - lsb-release             # LSB version reporting utility
-  - unzip                   # ZIP archive extraction utility
-  - firefox                 # Web browser
-  - libreoffice             # Office suite
+  - git # Version control system
+  - python3 # Python 3 interpreter
+  - python3-pip # Python package installer
+  - nmap # Network exploration tool
+  - openssl # SSL/TLS toolkit
+  - wget # Network downloader
+  - curl # Transfer data with URLs
+  - jq # JSON processor
+  - htop # Interactive process viewer
+  - direnv # Environment variable manager
+  - autojump # Fast directory navigation
+  - ca-certificates # Common CA certificates
+  - ripgrep # Fast grep alternative
+  - mysql-client # MySQL client
+  - shellcheck # Shell script static analysis
+  - ipcalc # IP address calculator
+  - zsh # Z shell
+  - vim # Vi IMproved editor
+  - build-essential # Build tools (gcc, make, etc.)
+  - software-properties-common # Manage repositories
+  - apt-transport-https # HTTPS support for apt
+  - lsb-release # LSB version reporting utility
+  - unzip # ZIP archive extraction utility
+  - firefox # Web browser
+  - libreoffice # Office suite
 
 # Note: gnupg is not included in apt_packages due to version conflicts in test containers.
 # GPG tools are typically pre-installed in Ubuntu base images. If needed, install manually.
@@ -94,7 +94,6 @@ binary_applications:
     url: "https://dl.pstmn.io/download/latest/linux64"
     install_dir: "/opt/postman"
     binary_name: "postman"
-
 
 # Legacy snap packages (kept for reference, now installed via methods above)
 # snap_packages:

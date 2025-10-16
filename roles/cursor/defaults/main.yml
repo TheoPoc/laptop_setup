@@ -21,7 +21,6 @@ cursor_settings:
   extensions.verifySignature: false
 
 cursor_keybindings: {}
-
 cursor_install_extensions: true
 # MCP Configuration
 cursor_mcp_enabled: false

@@ -1,5 +1,4 @@
 ---
-
 - name: Install Cursor extensions
   ansible.builtin.command:
     cmd: "{{ cursor_cli_path }} --install-extension {{ item.id | default(item.name) }}"

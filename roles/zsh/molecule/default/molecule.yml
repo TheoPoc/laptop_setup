@@ -40,8 +40,8 @@ provisioner:
     host_vars:
       ubuntu-zsh:
         ansible_user: root
-        username: root
-        powerlevel10k:
+        zsh_username: root
+        zsh_powerlevel10k:
           theme:
             url: "https://github.com/romkatv/powerlevel10k.git"
             version: "master"

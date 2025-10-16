@@ -1,5 +1,4 @@
 ---
-
 - name: Copy vim settings
   ansible.builtin.copy:
     src: ".vimrc"

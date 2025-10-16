@@ -13,7 +13,7 @@ numberOfReviewers: 1
 
 # Reviewers (GitHub usernames)
 reviewers:
-  - saewyn  # Replace with actual team members
+  - saewyn # Replace with actual team members
 
 # Keywords to skip automatic assignment
 skipKeywords:

@@ -3,7 +3,7 @@
 # tasks file for rancher-desktop
 
 - name: Check if Rancher Desktop is already installed
-  stat:
+  ansible.builtin.stat:
     path: /Applications/Rancher Desktop.app
   register: rancher_desktop_installed
   changed_when: false
@@ -13,12 +13,11 @@
     var: rancher_desktop
     verbosity: 0
 
-
 - name: Get latest Rancher Desktop release info
-  uri:
+  ansible.builtin.uri:
     url: "https://api.github.com/repos/{{ rancher_desktop.repo }}/releases?per_page={{ rancher_desktop.version }}"
     method: GET
-    return_content: yes
+    return_content: true
     status_code: 200
   register: latest_release
   when: not rancher_desktop_installed.stat.exists
@@ -27,7 +26,7 @@
   until: latest_release is success
 
 - name: Extract download URL for Apple Silicon
-  set_fact:
+  ansible.builtin.set_fact:
     download_url: "{{ item.browser_download_url }}"
   loop: "{{ latest_release.json[0].assets }}"
   when:
@@ -37,7 +36,7 @@
   failed_when: (item | length) == 0
 
 - name: Download Rancher Desktop for Apple Silicon
-  get_url:
+  ansible.builtin.get_url:
     url: "{{ download_url }}"
     dest: /tmp/Rancher.Desktop.dmg
   when:
@@ -46,7 +45,7 @@
   delay: 5
 
 - name: Mount Rancher Desktop DMG
-  command: hdiutil attach /tmp/Rancher.Desktop.dmg
+  ansible.builtin.command: hdiutil attach /tmp/Rancher.Desktop.dmg
   when: not rancher_desktop_installed.stat.exists
   register: mount_result
   failed_when: mount_result.rc != 0
@@ -68,20 +67,20 @@
     - rancher_volume_find.files | length > 0
 
 - name: Install Rancher Desktop
-  copy:
+  ansible.builtin.copy:
     src: "{{ rancher_volume_path }}/Rancher Desktop.app"
     dest: /Applications/
-    remote_src: yes
+    remote_src: true
   when: not rancher_desktop_installed.stat.exists
 
 - name: Unmount Rancher Desktop DMG
-  command: hdiutil detach "{{ rancher_volume_path }}"
+  ansible.builtin.command: hdiutil detach "{{ rancher_volume_path }}"
   when: not rancher_desktop_installed.stat.exists
   register: unmount_result
-  ignore_errors: yes
+  ignore_errors: true
 
 - name: Clean up downloaded DMG
-  file:
+  ansible.builtin.file:
     path: /tmp/Rancher.Desktop.dmg
     state: absent
   when: not rancher_desktop_installed.stat.exists

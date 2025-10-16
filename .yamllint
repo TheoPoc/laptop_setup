@@ -18,13 +18,16 @@ rules:
   comments:
     min-spaces-from-content: 1
 
+  # Comments indentation - disabled for ansible-lint compatibility
+  comments-indentation: false
+
   # Allow duplicate keys in some cases (Ansible handlers)
   key-duplicates:
     forbid-duplicated-merge-keys: true
 
   # Truthy values - Ansible style
   truthy:
-    allowed-values: ['true', 'false', 'yes', 'no']
+    allowed-values: ["true", "false", "yes", "no"]
     check-keys: false
 
   # Empty values

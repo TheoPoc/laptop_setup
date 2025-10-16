@@ -7,38 +7,37 @@ homebrew:
     - suzuki-shunsuke/tfmv
 
   formulae:
-    - git                     # Version control system for tracking changes in files
-    - python                  # Interpreted programming language for general-purpose programming
-    - nmap                    # Network exploration and security auditing utility
-    - openssl                 # Cryptography and SSL/TLS toolkit
-    - wget                    # Utility for non-interactive download of files from the web
-    - curl                    # Command line tool for transferring data with URLs
-    - jq                      # Lightweight and flexible command-line JSON processor
-    - dive                    # Docker Image Volume Explorer
-    - htop                    # Interactive process viewer and system monitor
-    - gopass                  # Password manager with Git integration
-    - mise                    # Dev tools version manager (formerly rtx)
-    - direnv                  # Environment variable manager for the shell
-    - yq                      # Command-line YAML, XML, TOML processor - jq wrapper for YAML
-    - autojump                # Shell extension to jump to frequently used directories
-    - s5cmd                   # Fast S3 and local filesystem execution tool
-    - tldr                    # Simplified and community-driven man pages
-    - ca-certificates         # Common CA certificates for SSL applications
-    - when                    # Simple calendar and task management tool
-    - ripgrep                 # Fast line-oriented search tool (alternative to grep)
-    - mysql-client            # MySQL database client
-    - shellcheck              # Static analysis tool for shell scripts
-    - ipcalc                  # Calculator for IP addresses
-    - lsd                     # Modern ls command with colorful output and icons
-    - vsh                     # HashiCorp Vault interactive shell
-    - vkv                     # Command-line interface for HashiCorp Vault key-value operations
-    - safe                    # Command-line interface to Vault for secrets management
-    - pug                     # CLI tool for managing terraform resources and state interactively
-    - tfautomv                # Terraform automatic resource move suggestions
-    - tfmv                    # Terraform state mv command generator
-    - hcledit                 # CLI tool for editing HCL files
-    - thefuck                 # Corrects your previous console command
-
+    - git # Version control system for tracking changes in files
+    - python # Interpreted programming language for general-purpose programming
+    - nmap # Network exploration and security auditing utility
+    - openssl # Cryptography and SSL/TLS toolkit
+    - wget # Utility for non-interactive download of files from the web
+    - curl # Command line tool for transferring data with URLs
+    - jq # Lightweight and flexible command-line JSON processor
+    - dive # Docker Image Volume Explorer
+    - htop # Interactive process viewer and system monitor
+    - gopass # Password manager with Git integration
+    - mise # Dev tools version manager (formerly rtx)
+    - direnv # Environment variable manager for the shell
+    - yq # Command-line YAML, XML, TOML processor - jq wrapper for YAML
+    - autojump # Shell extension to jump to frequently used directories
+    - s5cmd # Fast S3 and local filesystem execution tool
+    - tldr # Simplified and community-driven man pages
+    - ca-certificates # Common CA certificates for SSL applications
+    - when # Simple calendar and task management tool
+    - ripgrep # Fast line-oriented search tool (alternative to grep)
+    - mysql-client # MySQL database client
+    - shellcheck # Static analysis tool for shell scripts
+    - ipcalc # Calculator for IP addresses
+    - lsd # Modern ls command with colorful output and icons
+    - vsh # HashiCorp Vault interactive shell
+    - vkv # Command-line interface for HashiCorp Vault key-value operations
+    - safe # Command-line interface to Vault for secrets management
+    - pug # CLI tool for managing terraform resources and state interactively
+    - tfautomv # Terraform automatic resource move suggestions
+    - tfmv # Terraform state mv command generator
+    - hcledit # CLI tool for editing HCL files
+    - thefuck # Corrects your previous console command
 
   casks:
     - google-chrome
@@ -212,7 +211,6 @@ git_enabled: true
 git_username: theo
 git_email: theo.poccard@gmail.com
 
-
 # Set applications in Dock
 display_applications:
   - /Applications/Arc.app
@@ -232,7 +230,7 @@ display_applications:
 # In your playbook vars or group_vars/host_vars
 warp_workflows:
   - workflow_name: "Multiple terraform state rm"
-    workflow_command: !unsafe '"{{terraform_binary}} state list | grep {{search}} | xargs -I {} {{terraform_binary}} state rm {}"'
+    workflow_command: !unsafe '"{{ terraform_binary }} state list | grep {{ search }} | xargs -I {} {{ terraform_binary }} state rm {}"'
     workflow_tags:
       - devops
       - terraform
@@ -245,7 +243,7 @@ warp_workflows:
         description: "The terraform binary to use"
         default_value: "terraform"
   - workflow_name: "AWS ECR login"
-    workflow_command: !unsafe '"aws ecr get-login-password --region {{region}} --profile {{aws_profile}} | docker login --username AWS --password-stdin {{aws_account_id}}.dkr.ecr.{{region}}.amazonaws.com"'
+    workflow_command: !unsafe '"aws ecr get-login-password --region {{ region }} --profile {{ aws_profile }} | docker login --username AWS --password-stdin {{ aws_account_id }}.dkr.ecr.{{ region }}.amazonaws.com"'
     workflow_tags:
       - devops
       - aws
@@ -261,7 +259,7 @@ warp_workflows:
         description: "The AWS profile to use"
         default_value: "default"
   - workflow_name: "Rename multiple files recursively"
-    workflow_command: !unsafe 'zmv ''(**/){{filename}}'' ''${1}{{new_filename}}'''
+    workflow_command: !unsafe "zmv '(**/){{ filename }}' '${1}{{ new_filename }}'"
     workflow_tags:
       - linux
     workflow_description: "Rename multiple files recursively"

@@ -3,11 +3,11 @@
 
 - name: Include OS-specific variables
   ansible.builtin.include_vars: "{{ ansible_os_family }}.yml"
-  tags: ['cursor']
+  tags: ["cursor"]
 
 - name: Include OS-specific installation tasks
   ansible.builtin.include_tasks: "install-{{ ansible_os_family }}.yml"
-  tags: ['cursor']
+  tags: ["cursor"]
 
 - name: Setup Cursor settings
   ansible.builtin.include_tasks: setup-settings.yml
@@ -21,4 +21,4 @@
 - name: Setup MCP configuration
   ansible.builtin.include_tasks: setup-mcp.yml
   when: cursor_mcp_enabled | bool
-  tags: ['cursor', 'cursor_mcp']
+  tags: ["cursor", "cursor_mcp"]

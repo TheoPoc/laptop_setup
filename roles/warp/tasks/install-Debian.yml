@@ -1,26 +1,22 @@
 ---
-
-
-
 - name: Install Warp terminal (Debian/Ubuntu)
+  when: warp_enabled | bool
   block:
     - name: Download Warp DEB package
-      get_url:
+      ansible.builtin.get_url:
         url: "{{ warp_deb_url }}"
         dest: "/tmp/warp-terminal.deb"
-        mode: '0644'
-      register: deb_download
+        mode: "0644"
+      register: warp_deb_download
 
     - name: Install Warp DEB package
-      apt:
+      ansible.builtin.apt:
         deb: "/tmp/warp-terminal.deb"
         state: "{{ warp_apt_state }}"
       become: true
-      register: apt_result
+      register: warp_apt_result
   rescue:
     - name: Clean up downloaded DEB package
-      file:
+      ansible.builtin.file:
         path: "/tmp/warp-terminal.deb"
         state: absent
-
-  when: warp_enabled | bool

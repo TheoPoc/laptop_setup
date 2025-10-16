@@ -13,14 +13,14 @@
 
 - name: Set default shell to zsh
   ansible.builtin.user:
-    name: "{{ username }}"
+    name: "{{ zsh_username }}"
     shell: /bin/zsh
   tags: zsh
 
 - name: Check if oh-my-zsh is installed
-  stat:
+  ansible.builtin.stat:
     path: "{{ ansible_env.HOME }}/.oh-my-zsh"
-  register: oh_my_zsh_installed
+  register: zsh_oh_my_zsh_installed
 
 - name: Install Oh My Zsh
   ansible.builtin.git:
@@ -28,13 +28,13 @@
     dest: "{{ ansible_env.HOME }}/.oh-my-zsh"
     depth: 1
   tags: zsh
-  when: not oh_my_zsh_installed.stat.exists
+  when: not zsh_oh_my_zsh_installed.stat.exists
 
 - name: Install powerlevel10k theme
   ansible.builtin.git:
-    repo: "{{ powerlevel10k.theme.url }}"
+    repo: "{{ zsh_powerlevel10k.theme.url }}"
     dest: "{{ ansible_env.HOME }}/.oh-my-zsh/custom/themes/powerlevel10k"
-    version: "{{ powerlevel10k.theme.version }}"
+    version: "{{ zsh_powerlevel10k.theme.version }}"
   tags: zsh
 
 - name: Copy .zshrc
@@ -50,4 +50,3 @@
     dest: "{{ ansible_env.HOME }}/.p10k.zsh"
     mode: "0644"
   tags: zsh
-

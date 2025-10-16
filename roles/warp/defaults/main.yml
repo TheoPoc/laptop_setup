@@ -25,4 +25,4 @@ warp_workflows_create_dirs: true
 
 # User settings
 warp_user: "{{ ansible_user_id }}"
-warp_group: "{{ ansible_user_id }}" 
+warp_group: "{{ ansible_user_id }}"

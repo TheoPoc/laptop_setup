@@ -3,11 +3,10 @@ name: CI/CD Pipeline
 
 on:
   push:
-    branches: [main, develop, 'feat/**']
+    branches: [main, develop, "feat/**"]
   pull_request:
     branches: [main, develop]
   workflow_dispatch:
-
 env:
   ANSIBLE_FORCE_COLOR: "1"
   PYTHON_VERSION: "3.11"
@@ -150,17 +149,17 @@ jobs:
       - name: Run Trivy vulnerability scanner
         uses: aquasecurity/trivy-action@master
         with:
-          scan-type: 'fs'
-          scan-ref: '.'
-          format: 'sarif'
-          output: 'trivy-results.sarif'
-          severity: 'CRITICAL,HIGH'
+          scan-type: "fs"
+          scan-ref: "."
+          format: "sarif"
+          output: "trivy-results.sarif"
+          severity: "CRITICAL,HIGH"
 
       - name: Upload Trivy results to GitHub Security
         uses: github/codeql-action/upload-sarif@v3
         if: always()
         with:
-          sarif_file: 'trivy-results.sarif'
+          sarif_file: "trivy-results.sarif"
 
       - name: Check for hardcoded credentials
         run: |

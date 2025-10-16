@@ -35,7 +35,7 @@
   ansible.builtin.get_url:
     url: https://s3.amazonaws.com/session-manager-downloads/plugin/latest/mac_arm64/sessionmanager-bundle.zip
     dest: /tmp/sessionmanager-bundle.zip
-    mode: '0644'
+    mode: "0644"
   when:
     - not session_manager_installed.stat.exists
     - ansible_machine == 'arm64'
@@ -45,7 +45,7 @@
   ansible.builtin.get_url:
     url: https://s3.amazonaws.com/session-manager-downloads/plugin/latest/mac/sessionmanager-bundle.zip
     dest: /tmp/sessionmanager-bundle.zip
-    mode: '0644'
+    mode: "0644"
   when:
     - not session_manager_installed.stat.exists
     - ansible_machine != 'arm64'

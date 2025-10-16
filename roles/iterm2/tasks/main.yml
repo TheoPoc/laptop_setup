@@ -58,7 +58,7 @@
 
 - name: Check iterm2 theme
   ansible.builtin.shell: |
-     defaults read com.googlecode.iterm2 | grep "{{ iterm2_color_schemes.selected_theme }}"
+    defaults read com.googlecode.iterm2 | grep "{{ iterm2_color_schemes.selected_theme }}"
   register: iterm2_theme
   changed_when: false
   ignore_errors: true

@@ -1,3 +1,4 @@
+---
 - name: Siri - Configure defaults
   community.general.osx_defaults:
     domain: "{{ item.domain }}"

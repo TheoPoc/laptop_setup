@@ -5,4 +5,4 @@
   community.general.homebrew_cask:
     name: cursor
     state: present
-  tags: ['cursor']
+  tags: ["cursor"]

@@ -4,4 +4,3 @@
 - name: Include OS-specific installation tasks
   ansible.builtin.include_tasks: "install-{{ ansible_os_family }}.yml"
   tags: zsh
-

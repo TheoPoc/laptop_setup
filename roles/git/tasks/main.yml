@@ -7,22 +7,22 @@
   tags: git
 
 - name: Configure Git settings
+  when: git_enabled | bool
   block:
     - name: Configure Git username
-      ansible.builtin.git_config:
+      community.general.git_config:
         name: user.name
         scope: global
         value: "{{ git_username }}"
 
     - name: Configure Git email
-      ansible.builtin.git_config:
+      community.general.git_config:
         name: user.email
         scope: global
         value: "{{ git_email }}"
 
     - name: Configure Git credential helper
-      ansible.builtin.git_config:
+      community.general.git_config:
         name: credential.helper
         scope: global
         value: "{{ git_credential_helper }}"
-  when: git_enabled | bool

@@ -2,7 +2,7 @@
 # Debian/Ubuntu installation tasks for Rancher Desktop
 
 - name: Check if Rancher Desktop is already installed
-  stat:
+  ansible.builtin.stat:
     path: /usr/bin/rancher-desktop
   register: rancher_desktop_installed
   changed_when: false
@@ -13,10 +13,10 @@
     verbosity: 0
 
 - name: Get latest Rancher Desktop release info
-  uri:
+  ansible.builtin.uri:
     url: "https://api.github.com/repos/{{ rancher_desktop.repo }}/releases?per_page={{ rancher_desktop.version }}"
     method: GET
-    return_content: yes
+    return_content: true
     status_code: 200
   register: latest_release
   when: not rancher_desktop_installed.stat.exists
@@ -25,7 +25,7 @@
   until: latest_release is success
 
 - name: Extract download URL for Linux deb
-  set_fact:
+  ansible.builtin.set_fact:
     download_url: "{{ item.browser_download_url }}"
   loop: "{{ latest_release.json[0].assets }}"
   when:
@@ -35,7 +35,7 @@
   failed_when: (item | length) == 0
 
 - name: Download Rancher Desktop deb package
-  get_url:
+  ansible.builtin.get_url:
     url: "{{ download_url }}"
     dest: /tmp/rancher-desktop.deb
   when:
@@ -47,11 +47,11 @@
   ansible.builtin.apt:
     deb: /tmp/rancher-desktop.deb
     state: present
-  become: yes
+  become: true
   when: not rancher_desktop_installed.stat.exists
 
 - name: Clean up downloaded deb
-  file:
+  ansible.builtin.file:
     path: /tmp/rancher-desktop.deb
     state: absent
   when: not rancher_desktop_installed.stat.exists

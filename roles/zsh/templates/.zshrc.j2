@@ -11,7 +11,7 @@ autoload zmv
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-export ZSH=/Users/{{ username }}/.oh-my-zsh
+export ZSH=/Users/{{ zsh_username }}/.oh-my-zsh
 #export TERM=screen-256color
 
 
@@ -75,7 +75,7 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
-  {% for plugin in ohmyzsh.plugins %}
+  {% for plugin in zsh_ohmyzsh.plugins %}
   {{ plugin }}
   {% endfor %}
 )

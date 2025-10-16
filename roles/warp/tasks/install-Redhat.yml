@@ -1,24 +1,22 @@
 ---
-
 - name: Install Warp terminal (Red Hat/Fedora)
+  when: warp_enabled | bool
   block:
     - name: Download Warp RPM package
-      get_url:
+      ansible.builtin.get_url:
         url: "{{ warp_rpm_url }}"
         dest: "/tmp/warp-terminal.rpm"
-        mode: '0644'
-      register: rpm_download
+        mode: "0644"
+      register: warp_rpm_download
 
     - name: Install Warp RPM package
-      dnf:
+      ansible.builtin.dnf:
         name: "/tmp/warp-terminal.rpm"
         state: "{{ warp_rpm_state }}"
       become: true
-      register: dnf_result
+      register: warp_dnf_result
   rescue:
     - name: Clean up downloaded RPM package
-      file:
+      ansible.builtin.file:
         path: "/tmp/warp-terminal.rpm"
         state: absent
-
-  when: warp_enabled | bool
