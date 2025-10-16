@@ -6,6 +6,7 @@ profile: moderate
 
 skip_list:
   - yaml[line-length]  # Line length warnings - handled by yamllint
+  - line-length  # General line length warnings
   - yaml[comments]  # Comment formatting - handled by yamllint
   - latest[git]  # Git latest version warnings - acceptable for development
   - command-instead-of-module  # Sometimes shell commands are necessary
