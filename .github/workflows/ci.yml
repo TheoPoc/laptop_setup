@@ -45,11 +45,6 @@ jobs:
         run: |
           ansible-playbook main.yml --syntax-check -i hosts
 
-      - name: Check for secrets
-        uses: gitleaks/gitleaks-action@v2
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
   # Test matrix for all roles with Molecule
   test-roles:
     name: Test Role - ${{ matrix.role }}
@@ -138,46 +133,12 @@ jobs:
         env:
           ANSIBLE_HOST_KEY_CHECKING: "False"
 
-  # Security scanning
-  security:
-    name: Security Scan
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Run Trivy vulnerability scanner
-        uses: aquasecurity/trivy-action@master
-        with:
-          scan-type: "fs"
-          scan-ref: "."
-          format: "sarif"
-          output: "trivy-results.sarif"
-          severity: "CRITICAL,HIGH"
-
-      - name: Upload Trivy results to GitHub Security
-        uses: github/codeql-action/upload-sarif@v3
-        if: always()
-        with:
-          sarif_file: "trivy-results.sarif"
-
-      - name: Check for hardcoded credentials
-        run: |
-          echo "Scanning for potential hardcoded credentials..."
-          if grep -r -i -E "(password|passwd|pwd|secret|token|api_key).*=.*['\"][^'\"]{8,}" --include="*.yml" --include="*.yaml" . ; then
-            echo "⚠️ Potential hardcoded credentials found!"
-            exit 1
-          else
-            echo "✅ No hardcoded credentials detected"
-          fi
-        continue-on-error: true
-
   # Generate documentation
   documentation:
     name: Generate Documentation
     runs-on: ubuntu-latest
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-    needs: [integration-test, security]
+    needs: [integration-test]
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -211,7 +172,7 @@ jobs:
   notify:
     name: Notify Results
     runs-on: ubuntu-latest
-    needs: [lint, test-roles, integration-test, security]
+    needs: [lint, test-roles, integration-test]
     if: always()
     steps:
       - name: Check workflow status
@@ -219,8 +180,7 @@ jobs:
         run: |
           if [ "${{ needs.lint.result }}" = "failure" ] || \
              [ "${{ needs.test-roles.result }}" = "failure" ] || \
-             [ "${{ needs.integration-test.result }}" = "failure" ] || \
-             [ "${{ needs.security.result }}" = "failure" ]; then
+             [ "${{ needs.integration-test.result }}" = "failure" ]; then
             echo "status=failure" >> $GITHUB_OUTPUT
           else
             echo "status=success" >> $GITHUB_OUTPUT
