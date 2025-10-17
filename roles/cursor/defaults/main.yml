@@ -22,6 +22,7 @@ cursor_settings:
 
 cursor_keybindings: {}
 cursor_install_extensions: true
+cursor_skip_install: false # Set to true to skip Cursor installation (useful for containers/CI)
 # MCP Configuration
 cursor_mcp_enabled: false
 cursor_mcp_config_path: "~/.cursor/mcp.json"

@@ -5,13 +5,22 @@
   ansible.builtin.stat:
     path: /usr/bin/cursor
   register: cursor_installed
+  when: not (cursor_skip_install | default(false))
 
 - name: Download Cursor AppImage
   ansible.builtin.get_url:
     url: "https://downloader.cursor.sh/linux/appImage/x64"
     dest: "/tmp/cursor.AppImage"
     mode: "0755"
-  when: not cursor_installed.stat.exists
+  when:
+    - not (cursor_skip_install | default(false))
+    - not cursor_installed.stat.exists
+  retries: 3
+  delay: 5
+  register: cursor_download
+  until: cursor_download is succeeded
+  # Allow download to fail in containers/CI (network restrictions, DNS issues)
+  failed_when: false
   tags: ["cursor"]
 
 - name: Create Cursor application directory
@@ -19,6 +28,10 @@
     path: "{{ ansible_env.HOME }}/.local/bin"
     state: directory
     mode: "0755"
+  when:
+    - not (cursor_skip_install | default(false))
+    - cursor_download is defined
+    - cursor_download is succeeded
   tags: ["cursor"]
 
 - name: Install Cursor AppImage
@@ -27,7 +40,11 @@
     dest: "{{ ansible_env.HOME }}/.local/bin/cursor"
     mode: "0755"
     remote_src: true
-  when: not cursor_installed.stat.exists
+  when:
+    - not (cursor_skip_install | default(false))
+    - cursor_download is defined
+    - cursor_download is succeeded
+    - not cursor_installed.stat.exists
   tags: ["cursor"]
 
 - name: Create symbolic link for cursor
@@ -35,11 +52,18 @@
     src: "{{ ansible_env.HOME }}/.local/bin/cursor"
     dest: "{{ ansible_env.HOME }}/.local/bin/cursor-cli"
     state: link
+  when:
+    - not (cursor_skip_install | default(false))
+    - cursor_download is defined
+    - cursor_download is succeeded
   tags: ["cursor"]
 
 - name: Clean up downloaded AppImage
   ansible.builtin.file:
     path: "/tmp/cursor.AppImage"
     state: absent
-  when: not cursor_installed.stat.exists
+  when:
+    - not (cursor_skip_install | default(false))
+    - cursor_download is defined
+  failed_when: false
   tags: ["cursor"]

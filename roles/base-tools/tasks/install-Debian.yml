@@ -396,22 +396,15 @@
       block:
         - name: Get latest safe release version
           ansible.builtin.uri:
-            url: https://api.github.com/repos/starkandwayne/safe/releases/latest
+            url: https://api.github.com/repos/egen/safe/releases/latest
             return_content: true
           register: safe_release
 
         - name: Download safe binary
-          ansible.builtin.unarchive:
-            src: "https://github.com/starkandwayne/safe/releases/download/{{ safe_release.json.tag_name }}/safe-linux-amd64.tar.gz"
-            dest: /tmp
-            remote_src: true
-
-        - name: Install safe binary
-          ansible.builtin.copy:
-            src: /tmp/safe
+          ansible.builtin.get_url:
+            url: "https://github.com/egen/safe/releases/download/{{ safe_release.json.tag_name }}/safe-linux-amd64"
             dest: /usr/local/bin/safe
             mode: "0755"
-            remote_src: true
           become: true
 
     # Install pug (Terraform state interactive management)
@@ -544,7 +537,6 @@
     - /tmp/gopass.deb
     - /tmp/s5cmd
     - /tmp/vkv
-    - /tmp/safe
     - /tmp/pug
     - /tmp/tfautomv
     - /tmp/tfmv
