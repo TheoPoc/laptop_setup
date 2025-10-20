@@ -3,9 +3,9 @@
   hosts: all
   gather_facts: true
   tasks:
-    - name: Check if Cursor AppImage exists
+    - name: Check if Cursor binary exists
       ansible.builtin.stat:
-        path: "{{ ansible_env.HOME }}/.local/bin/cursor"
+        path: "/usr/bin/cursor"
       register: cursor_binary
 
     - name: Verify Cursor binary exists

@@ -1,7 +1,9 @@
 ---
 # Debian/Ubuntu-specific variables for Cursor
 
+cursor_version: "1.7"
+cursor_download_url: "https://api2.cursor.sh/updates/download/golden/linux-x64-deb/cursor/{{ cursor_version }}"
 cursor_config_dir: "{{ ansible_env.HOME }}/.config/Cursor"
 cursor_user_dir: "{{ ansible_env.HOME }}/.config/Cursor/User"
-cursor_cli_path: "{{ ansible_env.HOME }}/.local/bin/cursor"
+cursor_cli_path: "/usr/bin/cursor"
 cursor_rules_dir: "{{ ansible_env.HOME }}/Documents/cursor"

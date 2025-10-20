@@ -3,67 +3,47 @@
 
 - name: Check if Cursor is already installed
   ansible.builtin.stat:
-    path: /usr/bin/cursor
+    path: "/usr/bin/cursor"
   register: cursor_installed
-  when: not (cursor_skip_install | default(false))
 
-- name: Download Cursor AppImage
+- name: Check if .deb file already exists in /tmp
+  ansible.builtin.stat:
+    path: "/tmp/cursor.deb"
+  register: cursor_tmp_file
+
+- name: Download Cursor .deb package
   ansible.builtin.get_url:
-    url: "https://downloader.cursor.sh/linux/appImage/x64"
-    dest: "/tmp/cursor.AppImage"
-    mode: "0755"
+    url: "{{ cursor_download_url }}"
+    dest: "/tmp/cursor.deb"
+    mode: "0644"
   when:
-    - not (cursor_skip_install | default(false))
     - not cursor_installed.stat.exists
+    - not cursor_tmp_file.stat.exists
   retries: 3
   delay: 5
   register: cursor_download
-  until: cursor_download is succeeded
-  # Allow download to fail in containers/CI (network restrictions, DNS issues)
+  tags: ["cursor"]
+
+- name: Install Cursor .deb package with dpkg
+  ansible.builtin.command: dpkg --force-architecture --force-depends -i /tmp/cursor.deb
+  become: true
+  when: cursor_tmp_file.stat.exists or cursor_download is changed
+  register: cursor_dpkg_install
+  changed_when: cursor_dpkg_install.rc == 0
   failed_when: false
   tags: ["cursor"]
 
-- name: Create Cursor application directory
-  ansible.builtin.file:
-    path: "{{ ansible_env.HOME }}/.local/bin"
-    state: directory
-    mode: "0755"
-  when:
-    - not (cursor_skip_install | default(false))
-    - cursor_download is defined
-    - cursor_download is succeeded
+- name: Fix Cursor dependencies if needed
+  ansible.builtin.apt:
+    fix_broken: true
+  become: true
+  when: cursor_dpkg_install is changed
+  failed_when: false
   tags: ["cursor"]
 
-- name: Install Cursor AppImage
-  ansible.builtin.copy:
-    src: "/tmp/cursor.AppImage"
-    dest: "{{ ansible_env.HOME }}/.local/bin/cursor"
-    mode: "0755"
-    remote_src: true
-  when:
-    - not (cursor_skip_install | default(false))
-    - cursor_download is defined
-    - cursor_download is succeeded
-    - not cursor_installed.stat.exists
-  tags: ["cursor"]
-
-- name: Create symbolic link for cursor
+- name: Clean up downloaded .deb file
   ansible.builtin.file:
-    src: "{{ ansible_env.HOME }}/.local/bin/cursor"
-    dest: "{{ ansible_env.HOME }}/.local/bin/cursor-cli"
-    state: link
-  when:
-    - not (cursor_skip_install | default(false))
-    - cursor_download is defined
-    - cursor_download is succeeded
-  tags: ["cursor"]
-
-- name: Clean up downloaded AppImage
-  ansible.builtin.file:
-    path: "/tmp/cursor.AppImage"
+    path: "/tmp/cursor.deb"
     state: absent
-  when:
-    - not (cursor_skip_install | default(false))
-    - cursor_download is defined
-  failed_when: false
+  when: cursor_download is changed
   tags: ["cursor"]

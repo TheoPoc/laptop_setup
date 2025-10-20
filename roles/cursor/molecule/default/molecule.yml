@@ -41,7 +41,6 @@ provisioner:
       ubuntu-cursor:
         ansible_user: root
         username: root
-        cursor_skip_install: true
         cursor_install_extensions: false
         cursor_mcp_enabled: false
         cursor_settings_overwrite: true
