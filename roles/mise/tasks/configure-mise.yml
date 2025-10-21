@@ -16,6 +16,7 @@
   loop: "{{ mise_tools | dict2items | map(attribute='key') | list }}"
   when: mise_tools | length > 0
   changed_when: false
+  check_mode: false
   register: plugin_install
   failed_when:
     - plugin_install.rc != 0
@@ -26,9 +27,11 @@
   ansible.builtin.command: "mise install"
   when: mise_tools | length > 0
   changed_when: false
+  check_mode: false
 
 - name: Set global versions for mise plugins
   ansible.builtin.command: "mise use -g {{ item.key }}@{{ item.value }}"
   loop: "{{ mise_tools | dict2items }}"
   when: mise_tools | length > 0
   changed_when: false
+  check_mode: false

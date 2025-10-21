@@ -10,6 +10,7 @@
   register: appstore_mas_account
   failed_when: false
   changed_when: false
+  check_mode: false
 
 - name: Check if user is signed into Mac App Store
   ansible.builtin.assert:

@@ -82,6 +82,7 @@
         - deb_applications.slack.enabled | default(true)
       failed_when: false
       changed_when: false
+      check_mode: false
 
     - name: Check if Slack .deb file exists
       ansible.builtin.stat:
