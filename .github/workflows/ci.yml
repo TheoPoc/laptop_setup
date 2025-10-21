@@ -104,7 +104,7 @@ jobs:
             roles/${{ matrix.role }}/molecule/default/*.log
           retention-days: 7
 
-  # Integration test - full playbook dry run
+  # Integration test - full playbook execution
   integration-test:
     name: Integration Test - Full Playbook
     runs-on: ubuntu-latest
@@ -127,9 +127,9 @@ jobs:
         run: |
           ansible-galaxy install -r requirements.yml
 
-      - name: Run playbook check mode
+      - name: Run playbook integration test
         run: |
-          ansible-playbook main.yml -i hosts --check --diff
+          ansible-playbook main.yml -i hosts --diff
         env:
           ANSIBLE_HOST_KEY_CHECKING: "False"
 
