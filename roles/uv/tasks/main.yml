@@ -4,6 +4,7 @@
     cmd: "mise which uv"
   register: uv_path
   changed_when: false
+  become: false
   tags:
     - uv
 
@@ -11,9 +12,12 @@
   ansible.builtin.command:
     cmd: "{{ uv_path.stdout }} tool update-shell"
   register: uv_shell_update
-  changed_when: false
+  become: false
+  changed_when: "'Updated' in uv_shell_update.stdout or 'Updated' in uv_shell_update.stderr"
   failed_when:
     - uv_shell_update.rc != 0
-    - "'already up-to-date' not in uv_shell_update.stderr"
+    - "'already' not in uv_shell_update.stdout"
+    - "'already' not in uv_shell_update.stderr"
+    - "'shell could not be determined' not in uv_shell_update.stderr"
   tags:
     - uv

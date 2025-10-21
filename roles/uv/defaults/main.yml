@@ -1,2 +1,6 @@
 ---
 # Default variables for uv role
+
+# Control whether to update shell configuration
+# Set to false in containerized environments where shell detection may fail
+uv_update_shell: true
