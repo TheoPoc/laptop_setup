@@ -4,7 +4,9 @@
     cmd: "mise which uv"
   register: uv_path
   changed_when: false
+  failed_when: false
   become: false
+  check_mode: false
   tags:
     - uv
 
@@ -19,5 +21,9 @@
     - "'already' not in uv_shell_update.stdout"
     - "'already' not in uv_shell_update.stderr"
     - "'shell could not be determined' not in uv_shell_update.stderr"
+  when:
+    - uv_path.rc == 0
+    - uv_path.stdout is defined
+    - uv_path.stdout | length > 0
   tags:
     - uv
