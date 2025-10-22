@@ -102,6 +102,24 @@ jobs:
           echo "✅ Released ${{ github.ref_name }}"
           echo "🔗 https://github.com/${{ github.repository }}/releases/tag/${{ github.ref_name }}"
 
+      - name: Send Telegram notification
+        if: always()
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TELEGRAM_CHAT_ID }}
+          token: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          format: markdown
+          disable_web_page_preview: false
+          message: |
+            🚀 *New Release Published!*
+
+            *Repository:* `${{ github.repository }}`
+            *Version:* `${{ github.ref_name }}`
+            *Author:* ${{ github.actor }}
+
+            [View Release](${{ github.server_url }}/${{ github.repository }}/releases/tag/${{ github.ref_name }})
+            [View Changelog](${{ github.server_url }}/${{ github.repository }}/releases/tag/${{ github.ref_name }}#changelog)
+
   # Tag and release workflow dispatch
   tag-release:
     name: Tag New Release
@@ -159,6 +177,24 @@ jobs:
         run: |
           echo "Tag ${{ steps.version.outputs.version }} created and pushed"
           echo "Release workflow will be triggered automatically"
+
+      - name: Send Telegram notification
+        if: always()
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TELEGRAM_CHAT_ID }}
+          token: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          format: markdown
+          disable_web_page_preview: true
+          message: |
+            🏷️ *New Tag Created*
+
+            *Repository:* `${{ github.repository }}`
+            *New Version:* `${{ steps.version.outputs.version }}`
+            *Bump Type:* ${{ github.event.inputs.version_type }}
+            *Author:* ${{ github.actor }}
+
+            The release workflow will be triggered automatically.
 
   # Automated changelog maintenance
   update-changelog:

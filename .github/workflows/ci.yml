@@ -189,11 +189,33 @@ jobs:
              [ "${{ needs.test-roles.result }}" = "failure" ] || \
              [ "${{ needs.integration-test.result }}" = "failure" ]; then
             echo "status=failure" >> $GITHUB_OUTPUT
+            echo "status_emoji=❌" >> $GITHUB_OUTPUT
           else
             echo "status=success" >> $GITHUB_OUTPUT
+            echo "status_emoji=✅" >> $GITHUB_OUTPUT
           fi
 
-      - name: Create status badge
-        run: |
-          echo "Workflow Status: ${{ steps.check.outputs.status }}"
-          echo "You can add notification steps here (Slack, Discord, etc.)"
+      - name: Send Telegram notification
+        if: always()
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TELEGRAM_CHAT_ID }}
+          token: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          format: markdown
+          disable_web_page_preview: true
+          message: |
+            ${{ steps.check.outputs.status_emoji }} *CI/CD Pipeline ${{ steps.check.outputs.status }}*
+
+            *Repository:* `${{ github.repository }}`
+            *Branch:* `${{ github.ref_name }}`
+            *Event:* ${{ github.event_name }}
+            *Commit:* [${{ github.sha }}](${{ github.event.head_commit.url }})
+            *Author:* ${{ github.actor }}
+            *Message:* ${{ github.event.head_commit.message }}
+
+            *Job Results:*
+            • Lint: ${{ needs.lint.result == 'success' && '✅' || '❌' }}
+            • Test Roles: ${{ needs.test-roles.result == 'success' && '✅' || '❌' }}
+            • Integration Test: ${{ needs.integration-test.result == 'success' && '✅' || '❌' }}
+
+            [View Workflow Run](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})
