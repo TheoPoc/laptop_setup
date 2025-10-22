@@ -54,12 +54,19 @@ jobs:
       fail-fast: false
       matrix:
         role:
+          - appstore
           - base-tools
+          - copier
           - cursor
           - git
+          - gita
+          - gpg
+          - iterm2
           - mise
           - rancher-desktop
           - uv
+          - vim
+          - warp
           - zsh
     steps:
       - name: Checkout code

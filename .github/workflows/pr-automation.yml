@@ -99,8 +99,16 @@ jobs:
 
           CHANGED_ROLES=$(git diff --name-only origin/${{ github.base_ref }}...HEAD | grep "^roles/" | cut -d'/' -f2 | sort -u)
 
+          # Roles that are excluded from Molecule testing (macOS-only or don't need tests)
+          EXCLUDED_ROLES="homebrew macos_settings rosetta"
+
           MISSING_TESTS=""
           for role in $CHANGED_ROLES; do
+            # Skip excluded roles
+            if echo "$EXCLUDED_ROLES" | grep -qw "$role"; then
+              continue
+            fi
+
             if [ ! -d "roles/$role/molecule" ]; then
               MISSING_TESTS="$MISSING_TESTS\n- \`$role\`"
             fi
