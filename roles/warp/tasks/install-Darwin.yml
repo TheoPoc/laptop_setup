@@ -5,4 +5,5 @@
     state: "{{ warp_homebrew_cask_state }}"
     greedy: "{{ warp_homebrew_cask_greedy }}"
   register: warp_homebrew_result
-  when: warp_enabled | bool
+  when:
+    - warp_enabled | bool

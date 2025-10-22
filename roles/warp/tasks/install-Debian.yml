@@ -1,6 +1,8 @@
 ---
 - name: Install Warp terminal (Debian/Ubuntu)
-  when: warp_enabled | bool
+  when:
+    - warp_enabled | bool
+    - not ansible_check_mode
   block:
     - name: Download Warp DEB package
       ansible.builtin.get_url:
