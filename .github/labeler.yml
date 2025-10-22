@@ -93,7 +93,7 @@
   - .yamllint
 
 'area: testing':
-  - '**/molecule/**/*
+  - '**/molecule/**/*'
   - '**/verify.yml'
   - '**/converge.yml'
 
