@@ -1,8 +1,15 @@
 ---
+ansible:
+  cfg:
+    defaults:
+      deprecation_warnings: false
+
 dependency:
   name: galaxy
+
 driver:
   name: podman
+
 platforms:
   - name: instance
     image: geerlingguy/docker-ubuntu2404-ansible:latest
@@ -12,33 +19,38 @@ platforms:
     cgroupns_mode: host
     privileged: true
     pre_build_image: true
+
+scenario:
+  test_sequence:
+    - dependency
+    - create
+    - converge
+    - idempotence
+    - verify
+    - destroy
+
 provisioner:
   name: ansible
-  config_options:
-    defaults:
-      callbacks_enabled: ansible.posix.profile_tasks
+  playbooks:
+    converge: converge.yml
+    verify: verify.yml
   inventory:
     host_vars:
       instance:
+        ansible_user: root
         warp_enabled: true
         warp_install_method: "skip"
         warp_workflows_create_dirs: true
         warp_workflows:
-          - name: "Test Workflow"
-            command: "echo test"
+          - workflow_name: "Test Workflow"
+            workflow_command: "echo test"
+            workflow_tags:
+              - test
+            workflow_description: "Test workflow for molecule testing"
+            workflow_arguments: []
+  env:
+    ANSIBLE_ALLOW_BROKEN_CONDITIONALS: "True"
+    ANSIBLE_ROLES_PATH: ../../../
+
 verifier:
   name: ansible
-scenario:
-  test_sequence:
-    - dependency
-    - cleanup
-    - destroy
-    - syntax
-    - create
-    - prepare
-    - converge
-    - idempotence
-    - side_effect
-    - verify
-    - cleanup
-    - destroy

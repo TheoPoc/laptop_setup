@@ -1,2 +1,22 @@
 ---
+galaxy_info:
+  role_name: gpg
+  author: ansible-mgmt-laptop
+  namespace: local
+  description: Configures GPG agent settings
+  license: MIT
+  min_ansible_version: "2.10"
+  platforms:
+    - name: MacOSX
+      versions:
+        - all
+    - name: Ubuntu
+      versions:
+        - all
+
+  galaxy_tags:
+    - gpg
+    - security
+    - tools
+
 dependencies: []

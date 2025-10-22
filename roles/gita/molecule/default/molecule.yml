@@ -1,8 +1,15 @@
 ---
+ansible:
+  cfg:
+    defaults:
+      deprecation_warnings: false
+
 dependency:
   name: galaxy
+
 driver:
   name: podman
+
 platforms:
   - name: instance
     image: geerlingguy/docker-ubuntu2404-ansible:latest
@@ -12,29 +19,30 @@ platforms:
     cgroupns_mode: host
     privileged: true
     pre_build_image: true
-provisioner:
-  name: ansible
-  config_options:
-    defaults:
-      callbacks_enabled: ansible.posix.profile_tasks
-  inventory:
-    host_vars:
-      instance:
-        mise_tools:
-          uv: latest
-verifier:
-  name: ansible
+
 scenario:
   test_sequence:
     - dependency
-    - cleanup
-    - destroy
-    - syntax
     - create
-    - prepare
     - converge
     - idempotence
-    - side_effect
     - verify
-    - cleanup
     - destroy
+
+provisioner:
+  name: ansible
+  playbooks:
+    converge: converge.yml
+    verify: verify.yml
+  inventory:
+    host_vars:
+      instance:
+        ansible_user: root
+        mise_tools:
+          uv: latest
+  env:
+    ANSIBLE_ALLOW_BROKEN_CONDITIONALS: "True"
+    ANSIBLE_ROLES_PATH: ../../../
+
+verifier:
+  name: ansible

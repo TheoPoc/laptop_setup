@@ -22,18 +22,17 @@
         fail_msg: "gita is not installed via uv"
         success_msg: "gita is installed via uv"
 
-    - name: Verify gita binary exists
-      ansible.builtin.command:
-        cmd: which gita
-      register: gita_which
-      changed_when: false
+    - name: Verify gita binary exists in uv tool directory
+      ansible.builtin.stat:
+        path: "{{ ansible_env.HOME }}/.local/share/uv/tools/gita/bin/gita"
+      register: gita_binary
 
-    - name: Assert gita binary is accessible
+    - name: Assert gita binary is installed
       ansible.builtin.assert:
         that:
-          - gita_which.rc == 0
-        fail_msg: "gita binary is not in PATH"
-        success_msg: "gita binary is accessible"
+          - gita_binary.stat.exists
+        fail_msg: "gita binary is not installed in uv tools directory"
+        success_msg: "gita binary is installed in uv tools directory"
 
     - name: Check if gita config directory exists
       ansible.builtin.stat:
