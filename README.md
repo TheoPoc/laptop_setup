@@ -25,14 +25,9 @@ This repository contains an Ansible playbook for automating workstation setup on
    xcode-select --install
    ```
 
-2. Grant Terminal Full Disk Access:
-   - Open System Preferences > Security & Privacy > Privacy
-   - Select "Full Disk Access" from the left sidebar
-   - Click the lock icon to make changes (enter your password)
-   - Click the "+" button and add Terminal.app from /Applications/Utilities/
-   - Ensure the checkbox next to Terminal.app is checked
+2. Ensure you're logged in to your Apple ID (for App Store installations)
 
-3. Ensure you're logged in to your Apple ID (for App Store installations)
+**Note:** The setup script will automatically check for Terminal Full Disk Access and guide you through granting it if needed.
 
 #### Ubuntu
 
