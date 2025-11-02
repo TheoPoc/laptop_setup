@@ -47,6 +47,10 @@ provisioner:
           - curl
           - wget
           - unzip
+          - jq
+          - ripgrep
+          - htop
+          - shellcheck
         debian_apt_repositories: {}
         debian_deb_applications: {}
         debian_binary_applications: {}
