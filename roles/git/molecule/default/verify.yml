@@ -1,0 +1,65 @@
+---
+- name: Verify
+  hosts: all
+  gather_facts: true
+  tasks:
+    - name: Check if git is installed
+      ansible.builtin.command: which git
+      register: git_installed
+      changed_when: false
+      failed_when: git_installed.rc != 0
+
+    - name: Get git user.name configuration
+      ansible.builtin.command: git config --global user.name
+      register: git_username
+      changed_when: false
+
+    - name: Get git user.email configuration
+      ansible.builtin.command: git config --global user.email
+      register: git_email
+      changed_when: false
+
+    - name: Get git credential.helper configuration
+      ansible.builtin.command: git config --global credential.helper
+      register: git_credential_helper
+      changed_when: false
+
+    - name: Display git configuration
+      ansible.builtin.debug:
+        msg:
+          - "Git username: {{ git_username.stdout }}"
+          - "Git email: {{ git_email.stdout }}"
+          - "Git credential helper: {{ git_credential_helper.stdout }}"
+
+    - name: Verify git user.name is configured
+      ansible.builtin.assert:
+        that:
+          - git_username.stdout == "Test User"
+        fail_msg: "Git user.name is not configured correctly"
+        success_msg: "Git user.name is configured correctly"
+
+    - name: Verify git user.email is configured
+      ansible.builtin.assert:
+        that:
+          - git_email.stdout == "test@example.com"
+        fail_msg: "Git user.email is not configured correctly"
+        success_msg: "Git user.email is configured correctly"
+
+    - name: Verify git credential helper is configured
+      ansible.builtin.assert:
+        that:
+          - git_credential_helper.stdout == "libsecret"
+        fail_msg: "Git credential helper is not configured correctly for Ubuntu"
+        success_msg: "Git credential helper is configured correctly for Ubuntu"
+
+    - name: Check if .gitconfig file exists
+      ansible.builtin.stat:
+        path: "{{ ansible_env.HOME }}/.gitconfig"
+      register: gitconfig_file
+
+    - name: Verify .gitconfig exists
+      ansible.builtin.assert:
+        that:
+          - gitconfig_file.stat.exists
+        fail_msg: ".gitconfig does not exist"
+        success_msg: ".gitconfig exists"

@@ -1,0 +1,77 @@
+---
+# macOS installation tasks for base-tools using Homebrew
+
+- name: Update and upgrade packages for Homebrew
+  community.general.homebrew:
+    update_homebrew: true
+    upgrade_all: true
+  tags: base-tools, homebrew, upgrade
+
+- name: Install homebrew taps
+  community.general.homebrew_tap:
+    name: "{{ homebrew.taps }}"
+  tags: base-tools, homebrew, taps
+
+- name: Install homebrew formulae
+  community.general.homebrew:
+    name: "{{ homebrew.formulae }}"
+    state: present
+  tags: base-tools, homebrew, formulae
+
+- name: Install homebrew casks
+  community.general.homebrew_cask:
+    name: "{{ homebrew.casks }}"
+    state: present
+  tags: base-tools, homebrew, casks
+
+# Native installation of AWS Session Manager Plugin
+- name: Check if AWS Session Manager Plugin is already installed
+  ansible.builtin.stat:
+    path: /usr/local/sessionmanagerplugin/bin/session-manager-plugin
+  register: session_manager_installed
+  tags: base-tools, session-manager
+
+- name: Download AWS Session Manager Plugin package
+  ansible.builtin.get_url:
+    url: https://s3.amazonaws.com/session-manager-downloads/plugin/latest/mac_arm64/sessionmanager-bundle.zip
+    dest: /tmp/sessionmanager-bundle.zip
+    mode: "0644"
+  when:
+    - not session_manager_installed.stat.exists
+    - ansible_machine == 'arm64'
+  tags: base-tools, session-manager
+
+- name: Download AWS Session Manager Plugin package (Intel)
+  ansible.builtin.get_url:
+    url: https://s3.amazonaws.com/session-manager-downloads/plugin/latest/mac/sessionmanager-bundle.zip
+    dest: /tmp/sessionmanager-bundle.zip
+    mode: "0644"
+  when:
+    - not session_manager_installed.stat.exists
+    - ansible_machine != 'arm64'
+  tags: base-tools, session-manager
+
+- name: Unzip AWS Session Manager Plugin package
+  ansible.builtin.unarchive:
+    src: /tmp/sessionmanager-bundle.zip
+    dest: /tmp/
+    remote_src: true
+  when: not session_manager_installed.stat.exists
+  tags: base-tools, session-manager
+
+- name: Install AWS Session Manager Plugin
+  ansible.builtin.command:
+    cmd: sudo /tmp/sessionmanager-bundle/install -i /usr/local/sessionmanagerplugin -b /usr/local/bin/session-manager-plugin
+  become: true
+  when: not session_manager_installed.stat.exists
+  tags: base-tools, session-manager
+
+- name: Clean up Session Manager installation files
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: absent
+  loop:
+    - /tmp/sessionmanager-bundle.zip
+    - /tmp/sessionmanager-bundle
+  when: not session_manager_installed.stat.exists
+  tags: base-tools, session-manager

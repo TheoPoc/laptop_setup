@@ -1,0 +1,574 @@
+---
+# Debian/Ubuntu installation tasks for base-tools
+
+- name: Install base packages via apt
+  ansible.builtin.apt:
+    name: "{{ debian_apt_packages }}"
+    state: present
+    update_cache: true
+    cache_valid_time: 3600
+  become: true
+  tags: base-tools, apt
+
+# Install applications from third-party APT repositories (using modern signed-by method)
+- name: Create keyrings directory for APT keys
+  ansible.builtin.file:
+    path: /etc/apt/keyrings
+    state: directory
+    mode: "0755"
+  become: true
+  when:
+    - debian_apt_repositories is defined
+    - debian_apt_repositories | length > 0
+  tags: base-tools, desktop-apps
+
+- name: Download and convert GPG keys for third-party repositories
+  ansible.builtin.shell: |
+    curl -fsSL "{{ item.value.key_url }}" | gpg --dearmor --yes -o /etc/apt/keyrings/{{ item.key }}.gpg
+    chmod 644 /etc/apt/keyrings/{{ item.key }}.gpg
+  args:
+    creates: "/etc/apt/keyrings/{{ item.key }}.gpg"
+  become: true
+  loop: "{{ debian_apt_repositories | dict2items }}"
+  when:
+    - debian_apt_repositories is defined
+    - debian_apt_repositories | length > 0
+    - item.value.enabled | default(true)
+  tags: base-tools, desktop-apps
+
+- name: Add third-party APT repositories with signed-by
+  ansible.builtin.apt_repository:
+    repo: "deb [signed-by=/etc/apt/keyrings/{{ item.key }}.gpg{{ ' ' + item.value.repo_options if item.value.repo_options else '' }}] {{ item.value.repo_url }}"
+    state: present
+    filename: "{{ item.key }}"
+    update_cache: true
+  become: true
+  loop: "{{ debian_apt_repositories | dict2items }}"
+  when:
+    - debian_apt_repositories is defined
+    - debian_apt_repositories | length > 0
+    - item.value.enabled | default(true)
+  tags: base-tools, desktop-apps
+
+- name: Install applications from third-party repositories
+  ansible.builtin.apt:
+    name: "{{ item.value.package }}"
+    state: present
+  become: true
+  loop: "{{ debian_apt_repositories | dict2items }}"
+  when:
+    - debian_apt_repositories is defined
+    - debian_apt_repositories | length > 0
+    - item.value.enabled | default(true)
+  # Allow GUI apps to fail in containers (Chrome, Spotify need X11/Wayland dependencies)
+  failed_when: false
+  tags: base-tools, desktop-apps
+
+# Install applications via direct .deb downloads
+- name: Install applications via .deb packages
+  when:
+    - debian_deb_applications is defined
+    - debian_deb_applications | length > 0
+  tags: base-tools, desktop-apps
+
+  # Install Postman via tarball
+  block:
+    # Check if Slack package is already installed or attempted
+    - name: Check if Slack is already installed or .deb file exists
+      ansible.builtin.command: "dpkg -s slack-desktop"
+      register: slack_installed
+      when:
+        - debian_deb_applications.slack is defined
+        - debian_deb_applications.slack.enabled | default(true)
+      failed_when: false
+      changed_when: false
+      check_mode: false
+
+    - name: Check if Slack .deb file exists
+      ansible.builtin.stat:
+        path: "/tmp/slack-desktop.deb"
+      register: slack_deb_exists
+      when:
+        - debian_deb_applications.slack is defined
+        - debian_deb_applications.slack.enabled | default(true)
+
+    # Get latest versions for applications with url_pattern (only if not already installed/downloaded)
+    - name: Get latest Slack version
+      ansible.builtin.uri:
+        url: "https://slack.com/downloads/instructions/linux"
+        return_content: true
+      register: slack_page
+      check_mode: false
+      when:
+        - debian_deb_applications.slack is defined
+        - debian_deb_applications.slack.enabled | default(true)
+        - debian_deb_applications.slack.url_pattern is defined
+        - slack_installed.rc != 0
+        - not slack_deb_exists.stat.exists
+
+    - name: Extract Slack version from page
+      ansible.builtin.set_fact:
+        slack_version: "{{ slack_page.content | regex_search('desktop-releases/linux/x64/([0-9]+\\.[0-9]+\\.[0-9]+)', '\\1') | first }}"
+      when:
+        - slack_page is defined
+        - slack_page.content is defined
+
+    - name: Download Slack .deb package
+      ansible.builtin.get_url:
+        url: "{{ debian_deb_applications.slack.url_pattern | replace('{version}', slack_version | default('')) }}"
+        dest: "/tmp/slack-desktop.deb"
+        mode: "0644"
+      when:
+        - debian_deb_applications.slack is defined
+        - debian_deb_applications.slack.enabled | default(true)
+        - slack_installed.rc != 0
+        - not slack_deb_exists.stat.exists
+      # Allow downloads to fail in containers (network restrictions, old URLs, etc.)
+      failed_when: false
+      register: slack_download
+
+    - name: Install Slack .deb package
+      ansible.builtin.apt:
+        deb: "/tmp/slack-desktop.deb"
+        state: present
+      become: true
+      when:
+        - slack_download is not skipped
+        - slack_download.changed is defined
+        - slack_download.changed
+      # Allow installation to fail in containers (missing dependencies, etc.)
+      failed_when: false
+- name: Check if Postman is already installed
+  ansible.builtin.stat:
+    path: "{{ debian_binary_applications.postman.install_dir }}"
+  register: postman_installed
+  when:
+    - debian_binary_applications is defined
+    - debian_binary_applications | length > 0
+    - debian_binary_applications.postman is defined
+    - debian_binary_applications.postman.enabled | default(true)
+  tags: base-tools, desktop-apps
+
+- name: Install Postman
+  when:
+    - debian_binary_applications is defined
+    - debian_binary_applications | length > 0
+    - debian_binary_applications.postman is defined
+    - debian_binary_applications.postman.enabled | default(true)
+    - postman_installed is defined
+    - not postman_installed.stat.exists
+  # Allow Postman installation to fail in containers (GUI dependencies, network issues, etc.)
+  ignore_errors: true
+  tags: base-tools, desktop-apps
+
+  # Additional tools that need manual installation
+  block:
+    - name: Download Postman tarball
+      ansible.builtin.get_url:
+        url: "{{ debian_binary_applications.postman.url }}"
+        dest: "/tmp/postman.tar.gz"
+        mode: "0644"
+
+    - name: Create Postman installation directory
+      ansible.builtin.file:
+        path: "{{ debian_binary_applications.postman.install_dir }}"
+        state: directory
+        mode: "0755"
+      become: true
+
+    - name: Extract Postman
+      ansible.builtin.unarchive:
+        src: "/tmp/postman.tar.gz"
+        dest: "{{ debian_binary_applications.postman.install_dir }}"
+        remote_src: true
+        extra_opts: [--strip-components=1]
+      become: true
+      when: not ansible_check_mode
+
+    - name: Create Postman symlink
+      ansible.builtin.file:
+        src: "{{ debian_binary_applications.postman.install_dir }}/Postman"
+        dest: "/usr/local/bin/{{ debian_binary_applications.postman.binary_name }}"
+        state: link
+      become: true
+      when: not ansible_check_mode
+
+- name: Install additional tools from binaries
+  tags: base-tools, additional
+
+  # Cleanup temporary files from all installations
+  block:
+    - name: Check if yq is already installed
+      ansible.builtin.stat:
+        path: /usr/local/bin/yq
+      register: yq_installed
+
+    - name: Download and install yq
+      ansible.builtin.get_url:
+        url: "https://github.com/mikefarah/yq/releases/latest/download/yq_linux_{{ package_architecture }}"
+        dest: /usr/local/bin/yq
+        mode: "0755"
+      become: true
+      when: not yq_installed.stat.exists
+
+    - name: Check if lsd is already installed
+      ansible.builtin.stat:
+        path: /usr/bin/lsd
+      register: lsd_check
+
+    - name: Download and install lsd
+      when: not lsd_check.stat.exists
+      block:
+        - name: Get latest lsd release version
+          ansible.builtin.uri:
+            url: https://api.github.com/repos/lsd-rs/lsd/releases/latest
+            return_content: true
+          register: lsd_release
+          check_mode: false
+
+        - name: Download lsd deb package
+          ansible.builtin.get_url:
+            url: "https://github.com/lsd-rs/lsd/releases/download/{{ lsd_release.json.tag_name }}/lsd_{{ lsd_release.json.tag_name | replace('v', '') }}_{{ package_architecture
+              }}.deb"
+            dest: /tmp/lsd.deb
+            mode: "0644"
+          check_mode: false
+
+        - name: Install lsd via deb
+          ansible.builtin.apt:
+            deb: /tmp/lsd.deb
+            state: present
+          become: true
+          when: not ansible_check_mode
+
+    - name: Install Python CLI tools
+      ansible.builtin.pip:
+        name:
+          - tldr
+          - thefuck
+        state: present
+        executable: pip3
+      become: true
+
+    # Install dive (Docker image explorer)
+    - name: Check if dive is already installed
+      ansible.builtin.stat:
+        path: /usr/bin/dive
+      register: dive_check
+
+    - name: Download and install dive
+      when: not dive_check.stat.exists
+      block:
+        - name: Get latest dive release version
+          ansible.builtin.uri:
+            url: https://api.github.com/repos/wagoodman/dive/releases/latest
+            return_content: true
+          register: dive_release
+          check_mode: false
+
+        - name: Download dive deb package
+          ansible.builtin.get_url:
+            url: "https://github.com/wagoodman/dive/releases/download/{{ dive_release.json.tag_name }}/dive_{{ dive_release.json.tag_name | replace('v', '') }}_linux_{{
+              package_architecture }}.deb"
+            dest: /tmp/dive.deb
+            mode: "0644"
+
+        - name: Install dive via deb
+          ansible.builtin.apt:
+            deb: /tmp/dive.deb
+            state: present
+          become: true
+          when: not ansible_check_mode
+
+    # Install gopass (password manager)
+    - name: Check if gopass is already installed
+      ansible.builtin.stat:
+        path: /usr/bin/gopass
+      register: gopass_check
+
+    - name: Download and install gopass
+      when: not gopass_check.stat.exists
+      block:
+        - name: Get latest gopass release version
+          ansible.builtin.uri:
+            url: https://api.github.com/repos/gopasspw/gopass/releases/latest
+            return_content: true
+          register: gopass_release
+          check_mode: false
+
+        - name: Download gopass deb package
+          ansible.builtin.get_url:
+            url: "https://github.com/gopasspw/gopass/releases/download/{{ gopass_release.json.tag_name }}/gopass_{{ gopass_release.json.tag_name | replace('v', '')
+              }}_linux_{{ package_architecture }}.deb"
+            dest: /tmp/gopass.deb
+            mode: "0644"
+
+        - name: Install gopass via deb
+          ansible.builtin.apt:
+            deb: /tmp/gopass.deb
+            state: present
+          become: true
+          when: not ansible_check_mode
+
+    # Install s5cmd (S3 CLI tool)
+    - name: Check if s5cmd is already installed
+      ansible.builtin.stat:
+        path: /usr/local/bin/s5cmd
+      register: s5cmd_installed
+
+    - name: Download and install s5cmd
+      when: not s5cmd_installed.stat.exists
+      block:
+        - name: Get latest s5cmd release version
+          ansible.builtin.uri:
+            url: https://api.github.com/repos/peak/s5cmd/releases/latest
+            return_content: true
+          register: s5cmd_release
+          check_mode: false
+
+        - name: Download s5cmd binary
+          ansible.builtin.unarchive:
+            src: "https://github.com/peak/s5cmd/releases/download/{{ s5cmd_release.json.tag_name }}/s5cmd_{{ s5cmd_release.json.tag_name | replace('v', '') }}_Linux-{{
+              '64bit' if package_architecture == 'amd64' else package_architecture }}.tar.gz"
+            dest: /tmp
+            remote_src: true
+
+        - name: Install s5cmd binary
+          ansible.builtin.copy:
+            src: /tmp/s5cmd
+            dest: /usr/local/bin/s5cmd
+            mode: "0755"
+            remote_src: true
+          become: true
+          when: not ansible_check_mode
+
+    # Install vsh (Vault shell)
+    - name: Check if vsh is already installed
+      ansible.builtin.stat:
+        path: /usr/local/bin/vsh
+      register: vsh_installed
+
+    - name: Download and install vsh
+      when: not vsh_installed.stat.exists
+      block:
+        - name: Get latest vsh release version
+          ansible.builtin.uri:
+            url: https://api.github.com/repos/fishi0x01/vsh/releases/latest
+            return_content: true
+          register: vsh_release
+          check_mode: false
+
+        - name: Download vsh binary
+          ansible.builtin.get_url:
+            url: "https://github.com/fishi0x01/vsh/releases/download/{{ vsh_release.json.tag_name }}/vsh_linux_{{ package_architecture }}"
+            dest: /usr/local/bin/vsh
+            mode: "0755"
+          become: true
+
+    # Install vkv (Vault key-value CLI)
+    - name: Check if vkv is already installed
+      ansible.builtin.stat:
+        path: /usr/local/bin/vkv
+      register: vkv_installed
+
+    - name: Download and install vkv
+      when: not vkv_installed.stat.exists
+      block:
+        - name: Get latest vkv release version
+          ansible.builtin.uri:
+            url: https://api.github.com/repos/falcosuessgott/vkv/releases/latest
+            return_content: true
+          register: vkv_release
+          check_mode: false
+
+        - name: Download vkv binary
+          ansible.builtin.unarchive:
+            src: "https://github.com/falcosuessgott/vkv/releases/download/{{ vkv_release.json.tag_name }}/vkv_Linux_{{ 'x86_64' if package_architecture == 'amd64'
+              else package_architecture }}.tar.gz"
+            dest: /tmp
+            remote_src: true
+
+        - name: Install vkv binary
+          ansible.builtin.copy:
+            src: /tmp/vkv
+            dest: /usr/local/bin/vkv
+            mode: "0755"
+            remote_src: true
+          become: true
+          when: not ansible_check_mode
+
+    # Install safe (Vault secrets manager CLI)
+    # Note: safe only supports amd64 architecture
+    - name: Check if safe is already installed
+      ansible.builtin.stat:
+        path: /usr/local/bin/safe
+      register: safe_installed
+      when: package_architecture == 'amd64'
+
+    - name: Download and install safe
+      when:
+        - package_architecture == 'amd64'
+        - safe_installed is defined
+        - not safe_installed.stat.exists
+      block:
+        - name: Get latest safe release version
+          ansible.builtin.uri:
+            url: https://api.github.com/repos/egen/safe/releases/latest
+            return_content: true
+          register: safe_release
+          check_mode: false
+
+        - name: Download safe binary
+          ansible.builtin.get_url:
+            url: "https://github.com/egen/safe/releases/download/{{ safe_release.json.tag_name }}/safe-linux-amd64"
+            dest: /usr/local/bin/safe
+            mode: "0755"
+          become: true
+
+    # Install pug (Terraform state interactive management)
+    - name: Check if pug is already installed
+      ansible.builtin.stat:
+        path: /usr/local/bin/pug
+      register: pug_installed
+
+    - name: Download and install pug
+      when: not pug_installed.stat.exists
+      block:
+        - name: Get latest pug release version
+          ansible.builtin.uri:
+            url: https://api.github.com/repos/leg100/pug/releases/latest
+            return_content: true
+          register: pug_release
+          check_mode: false
+
+        - name: Download pug binary
+          ansible.builtin.unarchive:
+            src: "https://github.com/leg100/pug/releases/download/{{ pug_release.json.tag_name }}/pug_{{ pug_release.json.tag_name | replace('v', '') }}_linux_{{
+              package_architecture }}.zip"
+            dest: /tmp
+            remote_src: true
+
+        - name: Install pug binary
+          ansible.builtin.copy:
+            src: /tmp/pug
+            dest: /usr/local/bin/pug
+            mode: "0755"
+            remote_src: true
+          become: true
+          when: not ansible_check_mode
+
+    # Install tfautomv (Terraform automatic move suggestions)
+    - name: Check if tfautomv is already installed
+      ansible.builtin.stat:
+        path: /usr/local/bin/tfautomv
+      register: tfautomv_installed
+
+    - name: Download and install tfautomv
+      when: not tfautomv_installed.stat.exists
+      block:
+        - name: Get latest tfautomv release version
+          ansible.builtin.uri:
+            url: https://api.github.com/repos/busser/tfautomv/releases/latest
+            return_content: true
+          register: tfautomv_release
+          check_mode: false
+
+        - name: Download tfautomv binary
+          ansible.builtin.unarchive:
+            src: "https://github.com/busser/tfautomv/releases/download/{{ tfautomv_release.json.tag_name }}/tfautomv_{{ tfautomv_release.json.tag_name | replace('v',
+              '') }}_linux_{{ package_architecture }}.tar.gz"
+            dest: /tmp
+            remote_src: true
+
+        - name: Install tfautomv binary
+          ansible.builtin.copy:
+            src: /tmp/tfautomv
+            dest: /usr/local/bin/tfautomv
+            mode: "0755"
+            remote_src: true
+          become: true
+          when: not ansible_check_mode
+
+    # Install tfmv (Terraform state mv generator)
+    - name: Check if tfmv is already installed
+      ansible.builtin.stat:
+        path: /usr/local/bin/tfmv
+      register: tfmv_installed
+
+    - name: Download and install tfmv
+      when: not tfmv_installed.stat.exists
+      block:
+        - name: Get latest tfmv release version
+          ansible.builtin.uri:
+            url: https://api.github.com/repos/suzuki-shunsuke/tfmv/releases/latest
+            return_content: true
+          register: tfmv_release
+          check_mode: false
+
+        - name: Download tfmv binary
+          ansible.builtin.unarchive:
+            src: "https://github.com/suzuki-shunsuke/tfmv/releases/download/{{ tfmv_release.json.tag_name }}/tfmv_linux_{{ package_architecture }}.tar.gz"
+            dest: /tmp
+            remote_src: true
+
+        - name: Install tfmv binary
+          ansible.builtin.copy:
+            src: /tmp/tfmv
+            dest: /usr/local/bin/tfmv
+            mode: "0755"
+            remote_src: true
+          become: true
+          when: not ansible_check_mode
+
+    # Install hcledit (HCL file editor)
+    - name: Check if hcledit is already installed
+      ansible.builtin.stat:
+        path: /usr/local/bin/hcledit
+      register: hcledit_installed
+
+    - name: Download and install hcledit
+      when: not hcledit_installed.stat.exists
+      block:
+        - name: Get latest hcledit release version
+          ansible.builtin.uri:
+            url: https://api.github.com/repos/minamijoyo/hcledit/releases/latest
+            return_content: true
+          register: hcledit_release
+          check_mode: false
+
+        - name: Download hcledit binary
+          ansible.builtin.unarchive:
+            src: "https://github.com/minamijoyo/hcledit/releases/download/{{ hcledit_release.json.tag_name }}/hcledit_{{ hcledit_release.json.tag_name | replace('v',
+              '') }}_linux_{{ package_architecture }}.tar.gz"
+            dest: /tmp
+            remote_src: true
+
+        - name: Install hcledit binary
+          ansible.builtin.copy:
+            src: /tmp/hcledit
+            dest: /usr/local/bin/hcledit
+            mode: "0755"
+            remote_src: true
+          become: true
+          when: not ansible_check_mode
+
+- name: Clean up temporary download files
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: absent
+  loop:
+    - /tmp/postman.tar.gz
+    - /tmp/lsd.deb
+    - /tmp/dive.deb
+    - /tmp/gopass.deb
+    - /tmp/s5cmd
+    - /tmp/vkv
+    - /tmp/pug
+    - /tmp/tfautomv
+    - /tmp/tfmv
+    - /tmp/hcledit
+  failed_when: false
+  tags: base-tools, cleanup
+
+# Note: We do NOT cleanup Slack .deb file to maintain idempotence
+# The file presence check prevents re-downloading on subsequent runs

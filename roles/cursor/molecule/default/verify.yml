@@ -1,0 +1,64 @@
+---
+- name: Verify
+  hosts: all
+  gather_facts: true
+  tasks:
+    - name: Check if Cursor binary exists
+      ansible.builtin.stat:
+        path: "/usr/bin/cursor"
+      register: cursor_binary
+
+    - name: Verify Cursor binary exists
+      ansible.builtin.assert:
+        that:
+          - cursor_binary.stat.exists
+          - cursor_binary.stat.executable
+        fail_msg: "Cursor binary does not exist or is not executable"
+        success_msg: "Cursor binary exists and is executable"
+
+    - name: Check if Cursor config directory exists
+      ansible.builtin.stat:
+        path: "{{ ansible_env.HOME }}/.config/Cursor"
+      register: cursor_config_dir
+
+    - name: Verify Cursor config directory exists
+      ansible.builtin.assert:
+        that:
+          - cursor_config_dir.stat.exists
+          - cursor_config_dir.stat.isdir
+        fail_msg: "Cursor config directory does not exist"
+        success_msg: "Cursor config directory exists"
+
+    - name: Check if Cursor User directory exists
+      ansible.builtin.stat:
+        path: "{{ ansible_env.HOME }}/.config/Cursor/User"
+      register: cursor_user_dir
+
+    - name: Verify Cursor User directory exists
+      ansible.builtin.assert:
+        that:
+          - cursor_user_dir.stat.exists
+          - cursor_user_dir.stat.isdir
+        fail_msg: "Cursor User directory does not exist"
+        success_msg: "Cursor User directory exists"
+
+    - name: Check if Cursor settings file exists
+      ansible.builtin.stat:
+        path: "{{ ansible_env.HOME }}/.config/Cursor/User/settings.json"
+      register: cursor_settings_file
+
+    - name: Verify Cursor settings file exists
+      ansible.builtin.assert:
+        that:
+          - cursor_settings_file.stat.exists
+        fail_msg: "Cursor settings.json does not exist"
+        success_msg: "Cursor settings.json exists"
+
+    - name: Verify Cursor settings content
+      ansible.builtin.command: cat {{ ansible_env.HOME }}/.config/Cursor/User/settings.json
+      register: cursor_settings_content
+      changed_when: false
+
+    - name: Display Cursor settings
+      ansible.builtin.debug:
+        msg: "{{ cursor_settings_content.stdout }}"

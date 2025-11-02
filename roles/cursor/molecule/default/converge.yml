@@ -1,0 +1,15 @@
+---
+- name: Converge
+  hosts: all
+  become: true
+  gather_facts: true
+  vars:
+    cursor_settings:
+      "editor.fontSize": 14
+      "editor.tabSize": 2
+    cursor_keybindings: []
+    cursor_extensions: []
+  tasks:
+    - name: Include cursor role
+      ansible.builtin.include_role:
+        name: cursor

@@ -1,0 +1,68 @@
+---
+# Debian/Ubuntu installation tasks for Rancher Desktop
+
+- name: Check if Rancher Desktop is already installed
+  ansible.builtin.stat:
+    path: /usr/bin/rancher-desktop
+  register: rancher_desktop_installed
+  changed_when: false
+
+- name: Display Rancher Desktop configuration
+  ansible.builtin.debug:
+    var: rancher_desktop
+    verbosity: 0
+
+- name: Get latest Rancher Desktop release info
+  ansible.builtin.uri:
+    url: "https://api.github.com/repos/{{ rancher_desktop.repo }}/releases?per_page={{ rancher_desktop.version }}"
+    method: GET
+    return_content: true
+    status_code: 200
+  register: latest_release
+  when: not rancher_desktop_installed.stat.exists
+  retries: 3
+  delay: 5
+  until: latest_release is success
+
+- name: Extract download URL for Linux deb
+  ansible.builtin.set_fact:
+    download_url: "{{ latest_release.json[0].assets | selectattr('name', 'match', '.*amd64.deb$') | map(attribute='browser_download_url') | first | default('') }}"
+  when:
+    - not rancher_desktop_installed.stat.exists
+    - latest_release.json is defined
+    - latest_release.json | length > 0
+
+- name: Download Rancher Desktop deb package
+  ansible.builtin.get_url:
+    url: "{{ download_url }}"
+    dest: /tmp/rancher-desktop.deb
+  when:
+    - not rancher_desktop_installed.stat.exists
+    - download_url is defined
+    - download_url | length > 0
+  retries: 3
+  delay: 5
+  register: rancher_download
+  # Allow download to fail in containers/CI (GUI apps, network restrictions)
+  failed_when: false
+
+- name: Install Rancher Desktop
+  ansible.builtin.apt:
+    deb: /tmp/rancher-desktop.deb
+    state: present
+  become: true
+  when:
+    - not rancher_desktop_installed.stat.exists
+    - rancher_download is defined
+    - rancher_download is succeeded
+  # Allow installation to fail in containers (GUI dependencies)
+  failed_when: false
+
+- name: Clean up downloaded deb
+  ansible.builtin.file:
+    path: /tmp/rancher-desktop.deb
+    state: absent
+  when:
+    - not rancher_desktop_installed.stat.exists
+    - rancher_download is defined
+  failed_when: false

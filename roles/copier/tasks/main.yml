@@ -1,16 +1,26 @@
 ---
+- name: Get uv path from mise
+  ansible.builtin.command:
+    cmd: "mise which uv"
+  register: uv_path
+  changed_when: false
+  check_mode: false
+  tags:
+    - copier
+
 - name: Check if copier is installed
   ansible.builtin.shell:
-    cmd: "uv tool list | grep -E 'copier$'"
+    cmd: "{{ uv_path.stdout }} tool list | grep -E 'copier$'"
   register: is_copier_installed
   changed_when: false
   failed_when: false
+  check_mode: false
   tags:
     - copier
 
 - name: Install copier using uv
   ansible.builtin.command:
-    cmd: "uv tool install copier"
+    cmd: "{{ uv_path.stdout }} tool install copier"
   when: is_copier_installed.rc != 0
   tags:
     - copier

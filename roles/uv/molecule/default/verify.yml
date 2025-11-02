@@ -1,0 +1,29 @@
+---
+- name: Verify
+  hosts: all
+  gather_facts: true
+  tasks:
+    - name: Check if uv is installed via mise
+      ansible.builtin.command: mise which uv
+      register: uv_installed
+      changed_when: false
+      failed_when: uv_installed.rc != 0
+
+    - name: Verify uv version
+      ansible.builtin.command: "{{ uv_installed.stdout }} --version"
+      register: uv_version
+      changed_when: false
+
+    - name: Display uv version
+      ansible.builtin.debug:
+        msg: "uv version: {{ uv_version.stdout }}"
+
+    - name: Verify uv is in mise list
+      ansible.builtin.command: mise list
+      register: mise_list
+      changed_when: false
+      failed_when: "'uv' not in mise_list.stdout"
+
+    - name: Display installed mise tools
+      ansible.builtin.debug:
+        msg: "{{ mise_list.stdout_lines }}"

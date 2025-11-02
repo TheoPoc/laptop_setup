@@ -1,0 +1,8 @@
+---
+# macOS-specific installation for Cursor
+
+- name: Install Cursor via Homebrew Cask
+  community.general.homebrew_cask:
+    name: cursor
+    state: present
+  tags: ["cursor"]

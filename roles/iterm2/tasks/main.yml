@@ -37,6 +37,7 @@
     /usr/libexec/PlistBuddy -c 'Print :"New Bookmarks":0:"Normal Font"' {{ iterm2_plist_path }}
   register: iterm2_current_font
   changed_when: false
+  check_mode: false
   tags: iterm2, fonts
 
 - name: Set iterm2 font
@@ -58,9 +59,10 @@
 
 - name: Check iterm2 theme
   ansible.builtin.shell: |
-     defaults read com.googlecode.iterm2 | grep "{{ iterm2_color_schemes.selected_theme }}"
+    defaults read com.googlecode.iterm2 | grep "{{ iterm2_color_schemes.selected_theme }}"
   register: iterm2_theme
   changed_when: false
+  check_mode: false
   ignore_errors: true
   tags: iterm2, schemes
 

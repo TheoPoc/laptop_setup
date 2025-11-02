@@ -1,41 +1,43 @@
 ---
-- name: Bootstrap mac
-  hosts: mymac
+- name: Bootstrap workstation
+  hosts: all
   connection: local
   gather_facts: true
   roles:
-    - role: homebrew
-      tags: ['homebrew']
-    - role: appstore
-      tags: ['appstore']
+    - role: base-tools
+      tags: ["base-tools"]
+    ###    - role: appstore
+    ###      tags: ['appstore']
+    ###      when: ansible_os_family == 'Darwin'
     - role: rosetta
-      when: ansible_machine == 'arm64'
-      tags: ['rosetta']
+      when: ansible_os_family == 'Darwin' and ansible_machine == 'arm64'
+      tags: ["rosetta"]
     - role: vim
-      tags: ['vim']
+      tags: ["vim"]
     - role: iterm2
-      tags: ['iterm2']
-      when: iterm2_enabled | bool
+      tags: ["iterm2"]
+      when: ansible_os_family == 'Darwin' and iterm2_enabled | bool
     - role: warp
-      tags: ['warp']
+      tags: ["warp"]
       when: warp_enabled | bool
     - role: cursor
-      tags: ['cursor']
+      tags: ["cursor"]
     - role: mise
-      tags: ['mise']
+      tags: ["mise"]
     - role: gita
-      tags: ['gita']
+      tags: ["gita"]
     - role: copier
-      tags: ['copier']
+      tags: ["copier"]
     - role: uv
-      tags: ['uv']
+      tags: ["uv"]
     - role: zsh
-      tags: ['zsh']
+      tags: ["zsh"]
     - role: macos_settings
-      tags: ['macos_settings']
+      tags: ["macos_settings"]
+      when: ansible_os_family == 'Darwin'
     - role: git
-      tags: ['git']
+      tags: ["git"]
     - role: rancher-desktop
-      tags: ['rancher-desktop']
+      tags: ["rancher-desktop"]
     - role: gpg
-      tags: ['gpg']
+      tags: ["gpg"]

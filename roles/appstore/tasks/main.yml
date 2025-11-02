@@ -3,19 +3,20 @@
   community.general.homebrew:
     name: mas
     state: present
-  tags: ['mas']
+  tags: ["mas"]
 
 - name: Check if user is signed into Mac App Store
-  command: mas account
-  register: mas_account
-  ignore_errors: true
+  ansible.builtin.command: mas account
+  register: appstore_mas_account
+  failed_when: false
   changed_when: false
+  check_mode: false
 
 - name: Check if user is signed into Mac App Store
-  assert:
-    that: mas_account.rc == 0
+  ansible.builtin.assert:
+    that: appstore_mas_account.rc == 0
     fail_msg: "Please sign into the Mac App Store first!"
-  ignore_errors: true
+  failed_when: false
 
 - name: Install Mac App Store Applications
   community.general.mas:

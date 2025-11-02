@@ -1,0 +1,154 @@
+---
+# PR Labeler configuration
+# Automatically labels PRs based on changed files
+# Format for actions/labeler@v5
+
+# Role-specific labels
+'role: base-tools':
+  - changed-files:
+    - any-glob-to-any-file: 'roles/base-tools/**/*'
+
+'role: cursor':
+  - changed-files:
+    - any-glob-to-any-file: 'roles/cursor/**/*'
+
+'role: git':
+  - changed-files:
+    - any-glob-to-any-file: 'roles/git/**/*'
+
+'role: mise':
+  - changed-files:
+    - any-glob-to-any-file: 'roles/mise/**/*'
+
+'role: rancher-desktop':
+  - changed-files:
+    - any-glob-to-any-file: 'roles/rancher-desktop/**/*'
+
+'role: uv':
+  - changed-files:
+    - any-glob-to-any-file: 'roles/uv/**/*'
+
+'role: zsh':
+  - changed-files:
+    - any-glob-to-any-file: 'roles/zsh/**/*'
+
+'role: warp':
+  - changed-files:
+    - any-glob-to-any-file: 'roles/warp/**/*'
+
+'role: vim':
+  - changed-files:
+    - any-glob-to-any-file: 'roles/vim/**/*'
+
+'role: gpg':
+  - changed-files:
+    - any-glob-to-any-file: 'roles/gpg/**/*'
+
+'role: appstore':
+  - changed-files:
+    - any-glob-to-any-file: 'roles/appstore/**/*'
+
+'role: macos_settings':
+  - changed-files:
+    - any-glob-to-any-file: 'roles/macos_settings/**/*'
+
+'role: copier':
+  - changed-files:
+    - any-glob-to-any-file: 'roles/copier/**/*'
+
+'role: gita':
+  - changed-files:
+    - any-glob-to-any-file: 'roles/gita/**/*'
+
+'role: iterm2':
+  - changed-files:
+    - any-glob-to-any-file: 'roles/iterm2/**/*'
+
+'role: rosetta':
+  - changed-files:
+    - any-glob-to-any-file: 'roles/rosetta/**/*'
+
+# File type labels
+'type: documentation':
+  - changed-files:
+    - any-glob-to-any-file:
+      - '**/*.md'
+      - 'docs/**/*'
+      - 'CLAUDE.md'
+      - 'README.md'
+      - 'CHANGELOG.md'
+
+'type: configuration':
+  - changed-files:
+    - any-glob-to-any-file:
+      - 'group_vars/**/*'
+      - 'hosts'
+      - 'ansible.cfg'
+      - '**/*.cfg'
+
+'type: workflow':
+  - changed-files:
+    - any-glob-to-any-file:
+      - '.github/**/*'
+      - '.pre-commit-config.yaml'
+
+'type: molecule tests':
+  - changed-files:
+    - any-glob-to-any-file: '**/molecule/**/*'
+
+'type: playbook':
+  - changed-files:
+    - any-glob-to-any-file:
+      - '*.yml'
+      - '*.yaml'
+      - 'main.yml'
+
+'type: scripts':
+  - changed-files:
+    - any-glob-to-any-file:
+      - 'scripts/**/*'
+      - '**/*.sh'
+
+# Platform labels
+'platform: macOS':
+  - changed-files:
+    - any-glob-to-any-file:
+      - '**/Darwin.yml'
+      - '**/install-Darwin.yml'
+      - 'roles/appstore/**/*'
+      - 'roles/macos_settings/**/*'
+
+'platform: Ubuntu':
+  - changed-files:
+    - any-glob-to-any-file:
+      - '**/Debian.yml'
+      - '**/install-Debian.yml'
+
+# Priority labels
+'priority: high':
+  - changed-files:
+    - any-glob-to-any-file:
+      - 'main.yml'
+      - 'group_vars/all.yml'
+      - 'requirements.yml'
+
+# Area labels
+'area: cicd':
+  - changed-files:
+    - any-glob-to-any-file:
+      - '.github/workflows/**/*'
+      - '.pre-commit-config.yaml'
+      - '.yamllint'
+
+'area: testing':
+  - changed-files:
+    - any-glob-to-any-file:
+      - '**/molecule/**/*'
+      - '**/verify.yml'
+      - '**/converge.yml'
+
+'area: security':
+  - changed-files:
+    - any-glob-to-any-file:
+      - 'roles/gpg/**/*'
+      - '**/vault/**/*'

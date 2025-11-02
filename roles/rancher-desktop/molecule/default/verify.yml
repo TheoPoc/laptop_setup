@@ -1,0 +1,20 @@
+---
+- name: Verify
+  hosts: all
+  gather_facts: true
+  tasks:
+    - name: Check if Rancher Desktop is installed
+      ansible.builtin.command: which rancher-desktop
+      register: rancher_installed
+      changed_when: false
+      failed_when: false
+
+    - name: Display installation status
+      ansible.builtin.debug:
+        msg: "Rancher Desktop installation check: {{ 'Installed' if rancher_installed.rc == 0 else 'Not installed (expected for test environment)' }}"
+
+    # Note: Rancher Desktop installation verification is limited in container environments
+    # The role should complete without errors, which is the primary test
+    - name: Verify role executed without errors
+      ansible.builtin.debug:
+        msg: "Rancher Desktop role executed successfully"

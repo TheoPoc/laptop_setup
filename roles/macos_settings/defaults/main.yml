@@ -58,11 +58,11 @@ systemuiserver:
 ##
 clock:
   defaults: []
-    # - { name: Set flash date separators, key: FlashDateSeparators, type: int, value: 0 }
-    # - { name: Show AM/PM, key: ShowAMPM, type: int, value: 0 }
-    # - { name: Show Date, key: ShowDate, type: int, value: 0 }
-    # - { name: Show Day of week, key: ShowDatOfWeek, type: int, value: 1 }
-    # - { name: Show seconds, key: ShowSeconds, type: int, value: 1 }
+# - { name: Set flash date separators, key: FlashDateSeparators, type: int, value: 0 }
+# - { name: Show AM/PM, key: ShowAMPM, type: int, value: 0 }
+# - { name: Show Date, key: ShowDate, type: int, value: 0 }
+# - { name: Show Day of week, key: ShowDatOfWeek, type: int, value: 1 }
+# - { name: Show seconds, key: ShowSeconds, type: int, value: 1 }
 
 ##
 # Dock settings
@@ -83,15 +83,13 @@ dock:
     - { name: Hot corners - Bottom right corner 1/2, key: wvous-br-corner, type: int, value: 13 } # Lockscreen
     - { name: Hot corners - Bottom right corner 2/2, key: wvous-br-modifier, type: int, value: 0 }
     - { name: Don't show Dashboard as a Space, key: dashboard-in-overlay, type: bool, value: true }
-    - { name: Show indicator lights for open applications, key: show-process-indicators, type: bool, value: true}
+    - { name: Show indicator lights for open applications, key: show-process-indicators, type: bool, value: true }
 
   # Reset Launchpad
   reset_launchpad: false
 
-  # Set applications in Dock
+# Set applications in Dock
 display_applications: []
-
-
 ##
 # Finder settings
 ##
@@ -103,7 +101,7 @@ finder:
     - { name: Show path bar, key: ShowPathbar, type: bool, value: true }
     - { name: Use list view in all Finder windows by default, key: FXPreferredViewStyle, type: string, value: Nlsv }
     - { name: Keep folders on top when sorting by name, key: _FXSortFoldersFirst, type: bool, value: true }
-    - { name: When performing a search, search the current folder by default, key: FXDefaultSearchScope, type: string, value: SCcf }
+    - { name: When performing a search, search the current folder by default: !!null "", key: FXDefaultSearchScope, type: string, value: SCcf }
     - { name: Disable the warning when changing a file extension, key: FXEnableExtensionChangeWarning, type: bool, value: false }
     - { name: Disable disable Recent Tags, key: ShowRecentTags, type: bool, value: false }
     - { name: Don't show icon for external hard drives, key: ShowExternalHardDrivesOnDesktop, type: bool, value: false }
@@ -136,44 +134,44 @@ iterm2:
 ##
 safari:
   defaults: []
-    # - { name: Don't send search queries to Apple 1/2, key: UniversalSearchEnabled, type: bool, value: false }
-    # - { name: Don't send search queries to Apple 2/2, key: SuppressSearchSuggestions, type: bool, value: true }
-    # - { name: Enable restore session at launch, key: AlwaysRestoreSessionAtLaunch, type: bool, value: false }
-    # - { name: Don't launch private window on start-up, key: OpenPrivateWindowWhenNotRestoringSessionAtLaunch, type: bool, value: false }
-    # - { name: Always show tab bar, key: AlwaysShowTabBar, type: bool, value: true }
-    # - { name: Disable auto fill passwords, key: AutoFillPasswords, type: bool, value: false }
-    # - { name: Don't open downloads automatically, key: AutoOpenSafeDownloads, type: bool, value: false }
-    # - { name: Change the Safari search to find strings contained in other words, key: FindOnPageMatchesWordStartsOnly, type: bool, value: false }
-    # - { name: Auto clear downloads, key: DownloadsClearingPolicy, type: int, value: 2 }
-    # - { name: Show developer tools, key: ShowDevelopMenu, type: bool, value: true }
-    # - { name: Show full URL in Safari, key: ShowFullURLInSmartSearchField, type: bool, value: true }
-    # - { name: Show status bar, key: ShowStatusBar, type: bool, value: true }
-    # - { name: Show overlay status bar, key: ShowOverlayStatusBar, type: bool, value: true }
-    # - { name: Show status bar in full screen, key: ShowStatusBarInFullScreen, type: bool, value: true }
-    # - { name: Set Duckduckgo as a search engine, key: SearchProviderIdentifier, type: string, value: "com.duckduckgo" }
-    # # 0: Homepage, 1: Empty Page, 2: Same Page, 4: Start Page
-    # - { name: Setup new window behaviour, key: NewTabBehavior, type: int, value: 4 }
-    # - { name: Setup new tab behaviour, key: NewWindowBehavior, type: int, value: 4 }
-    # # 6 top sites: 0, 12 top sites: 1, 24 top sites: 2
-    # - { name: Setup top sites grid arrangement, key: TopSitesGridArrangement, type: int, value: 0 }
-    # # 0: Never, 1: Automatically, 2: Always
-    # - { name: Open pages in tabs instead of windows, key: TabCreationPolicy, type: int, value: 2 }
-    # - { name: ⌘ + click open a new tab, key: CommandClickMakesTabs, type: bool, value: true }
-    # - { name: Don't make new tab or window active, key: OpenNewTabsInFront, type: bool, value: false }
-    # - { name: Use ⌘ + number to switch tab, key: Command1Through9SwitchesTabs, type: bool, value: true }
-    # - { name: Set Safari's home page to `about:blank` for faster loading, key: HomePage, type: string, value: "" }
-    # - { name: Enable debug menu, key: IncludeInternalDebugMenu, type: bool, value: true }
-    # - { name: Enable developer menu, key: IncludeDevelopMenu, type: bool, value: true }
-    # - { name: Enable WebKit developer menu 1/2, key: WebKitDeveloperExtrasEnabledPreferenceKey, type: bool, value: true }
-    # - { name: Enable WebKit developer menu 2/2, key: com.apple.Safari.ContentPageGroupIdentifier.WebKit2DeveloperExtrasEnabled, type: bool, value: true }
-    # - { name: Enable continuous spellchecking, key: WebContinuousSpellCheckingEnabled, type: bool, value: true }
-    # - { name: Disable auto-correction, key: WebAutomaticSpellingCorrectionEnabled, type: bool, value: false }
-    # - { name: Disable autofill for passwords, key: AutoFillPasswords, type: bool, value: false }
-    # - { name: Disable autofill for address book, key: AutoFillFromAddressBook, type: bool, value: false }
-    # - { name: Disable autofill for credit card, key: AutoFillCreditCardData, type: bool, value: false }
-    # - { name: Disable autofill for miscellaneous, key: AutoFillMiscellaneousForms, type: bool, value: false }
-    # - { name: Enable 'Do Not Track', key: SendDoNotTrackHTTPHeader, type: bool, value: true }
-    # - { name: Update extensions automatically, key: InstallExtensionUpdatesAutomatically, type: bool, value: true }
+# - { name: Don't send search queries to Apple 1/2, key: UniversalSearchEnabled, type: bool, value: false }
+# - { name: Don't send search queries to Apple 2/2, key: SuppressSearchSuggestions, type: bool, value: true }
+# - { name: Enable restore session at launch, key: AlwaysRestoreSessionAtLaunch, type: bool, value: false }
+# - { name: Don't launch private window on start-up, key: OpenPrivateWindowWhenNotRestoringSessionAtLaunch, type: bool, value: false }
+# - { name: Always show tab bar, key: AlwaysShowTabBar, type: bool, value: true }
+# - { name: Disable auto fill passwords, key: AutoFillPasswords, type: bool, value: false }
+# - { name: Don't open downloads automatically, key: AutoOpenSafeDownloads, type: bool, value: false }
+# - { name: Change the Safari search to find strings contained in other words, key: FindOnPageMatchesWordStartsOnly, type: bool, value: false }
+# - { name: Auto clear downloads, key: DownloadsClearingPolicy, type: int, value: 2 }
+# - { name: Show developer tools, key: ShowDevelopMenu, type: bool, value: true }
+# - { name: Show full URL in Safari, key: ShowFullURLInSmartSearchField, type: bool, value: true }
+# - { name: Show status bar, key: ShowStatusBar, type: bool, value: true }
+# - { name: Show overlay status bar, key: ShowOverlayStatusBar, type: bool, value: true }
+# - { name: Show status bar in full screen, key: ShowStatusBarInFullScreen, type: bool, value: true }
+# - { name: Set Duckduckgo as a search engine, key: SearchProviderIdentifier, type: string, value: "com.duckduckgo" }
+# # 0: Homepage, 1: Empty Page, 2: Same Page, 4: Start Page
+# - { name: Setup new window behaviour, key: NewTabBehavior, type: int, value: 4 }
+# - { name: Setup new tab behaviour, key: NewWindowBehavior, type: int, value: 4 }
+# # 6 top sites: 0, 12 top sites: 1, 24 top sites: 2
+# - { name: Setup top sites grid arrangement, key: TopSitesGridArrangement, type: int, value: 0 }
+# # 0: Never, 1: Automatically, 2: Always
+# - { name: Open pages in tabs instead of windows, key: TabCreationPolicy, type: int, value: 2 }
+# - { name: ⌘ + click open a new tab, key: CommandClickMakesTabs, type: bool, value: true }
+# - { name: Don't make new tab or window active, key: OpenNewTabsInFront, type: bool, value: false }
+# - { name: Use ⌘ + number to switch tab, key: Command1Through9SwitchesTabs, type: bool, value: true }
+# - { name: Set Safari's home page to `about:blank` for faster loading, key: HomePage, type: string, value: "" }
+# - { name: Enable debug menu, key: IncludeInternalDebugMenu, type: bool, value: true }
+# - { name: Enable developer menu, key: IncludeDevelopMenu, type: bool, value: true }
+# - { name: Enable WebKit developer menu 1/2, key: WebKitDeveloperExtrasEnabledPreferenceKey, type: bool, value: true }
+# - { name: Enable WebKit developer menu 2/2, key: com.apple.Safari.ContentPageGroupIdentifier.WebKit2DeveloperExtrasEnabled, type: bool, value: true }
+# - { name: Enable continuous spellchecking, key: WebContinuousSpellCheckingEnabled, type: bool, value: true }
+# - { name: Disable auto-correction, key: WebAutomaticSpellingCorrectionEnabled, type: bool, value: false }
+# - { name: Disable autofill for passwords, key: AutoFillPasswords, type: bool, value: false }
+# - { name: Disable autofill for address book, key: AutoFillFromAddressBook, type: bool, value: false }
+# - { name: Disable autofill for credit card, key: AutoFillCreditCardData, type: bool, value: false }
+# - { name: Disable autofill for miscellaneous, key: AutoFillMiscellaneousForms, type: bool, value: false }
+# - { name: Enable 'Do Not Track', key: SendDoNotTrackHTTPHeader, type: bool, value: true }
+# - { name: Update extensions automatically, key: InstallExtensionUpdatesAutomatically, type: bool, value: true }
 
 ##
 # Textedit settings
@@ -194,12 +192,12 @@ textedit:
 ##
 
 network_configuration: []
-  # - interface_name: Ethernet
-  #   dns_servers:
-  #     - 9.9.9.9
-  #     - 149.112.112.112
-  #     - 2620:fe::fe
-  #     - 2620:fe::9
+# - interface_name: Ethernet
+#   dns_servers:
+#     - 9.9.9.9
+#     - 149.112.112.112
+#     - 2620:fe::fe
+#     - 2620:fe::9
 
 ##
 # Siri
@@ -208,13 +206,13 @@ siri:
   defaults: []
   #   - { name: Disable Siri 1/2, domain: com.apple.assistant.support, key: "Assistant Enabled", type: int, value: 0 }
   #   - { name: Disable Siri 2/2, domain: com.apple.Siri, key: SiriPrefStashedStatusMenuVisible, type: bool, value: false }
-    # - { name: Disable voice feedback, domain: com.apple.assistant.backedup, key: "Use device speaker for TTS", type: int, value: 3 }
-    # - { name: Opt out of voice data sharing, domain: com.apple.assistant.support, key: "Siri Data Sharing Opt-In Status", type: int, value: 2 }
-    # - { name: No Siri on lockscreen, domain: com.apple.Siri, key: LockscreenEnabled, type: int, value: 0 }
-    # - { name: Disable Type to Siri, domain: com.apple.Siri, key: TypeToSiriEnabled, type: int, value: 0 }
-    # - { name: Disable Siri visible in Menu Bar, domain: com.apple.Siri, key: StatusMenuVisible, type: int, value: 0 }
-    # - { name: Don't listen for "Hey Siri", domain: com.apple.voicetrigger, key: "VoiceTrigger Enabled", type: int, value: 0 }
-    # - { name: Don't listen for "Hey Siri" on headphones, domain: com.apple.voicetrigger, key: VoiceTriggerUserEnabled, type: int, value: 0 }
+# - { name: Disable voice feedback, domain: com.apple.assistant.backedup, key: "Use device speaker for TTS", type: int, value: 3 }
+# - { name: Opt out of voice data sharing, domain: com.apple.assistant.support, key: "Siri Data Sharing Opt-In Status", type: int, value: 2 }
+# - { name: No Siri on lockscreen, domain: com.apple.Siri, key: LockscreenEnabled, type: int, value: 0 }
+# - { name: Disable Type to Siri, domain: com.apple.Siri, key: TypeToSiriEnabled, type: int, value: 0 }
+# - { name: Disable Siri visible in Menu Bar, domain: com.apple.Siri, key: StatusMenuVisible, type: int, value: 0 }
+# - { name: Don't listen for "Hey Siri", domain: com.apple.voicetrigger, key: "VoiceTrigger Enabled", type: int, value: 0 }
+# - { name: Don't listen for "Hey Siri" on headphones, domain: com.apple.voicetrigger, key: VoiceTriggerUserEnabled, type: int, value: 0 }
 
 ##
 # Arc Browser settings
@@ -222,7 +220,11 @@ siri:
 arc:
   defaults:
     - { name: Set Arc Browser icon, domain: company.thebrowser.Browser, key: "currentAppIconName", type: string, value: "hologram" }
-    - { name: Set auto archive little arc time threshold, domain: company.thebrowser.Browser, key: "autoArchiveLittleArcTimeThreshold", type: string, value: "twelveHours" }
+    - name: Set auto archive little arc time threshold
+      domain: company.thebrowser.Browser
+      key: "autoArchiveLittleArcTimeThreshold"
+      type: string
+      value: "twelveHours"
     - { name: Set Arc Max, domain: company.thebrowser.Browser, key: "arcMaxAutoOptInEnabled", type: bool, value: true }
     - { name: Native adblock enable, domain: company.thebrowser.Browser, key: "nativeAdblockEnabled", type: bool, value: true }
     - { name: Native adblock enable, domain: company.thebrowser.Browser, key: "nativeAdblockEnabled", type: bool, value: true }
@@ -233,8 +235,16 @@ arc:
 others:
   defaults:
     # Avoid creating .DS_Store
-    - { name: Avoid creating .DS_Store files on network, domain: com.apple.desktopservices, key: DSDontWriteNetworkStores, type: bool, value: true }
-    - { name: Avoid creating .DS_Store files on USB volumes, domain: com.apple.desktopservices, key: DSDontWriteUSBStores, type: bool, value: true }
+    - name: Avoid creating .DS_Store files on network
+      domain: com.apple.desktopservices
+      key: DSDontWriteNetworkStores
+      type: bool
+      value: true
+    - name: Avoid creating .DS_Store files on USB volumes
+      domain: com.apple.desktopservices
+      key: DSDontWriteUSBStores
+      type: bool
+      value: true
     # Setup controlcenter : 18 = on, 24 = off
     - { name: Show Bluetooth, domain: com.apple.controlcenter, key: Bluetooth, type: int, value: 18 }
     - { name: Show Battery, domain: com.apple.controlcenter, key: Battery, type: int, value: 18 }
@@ -247,10 +257,19 @@ others:
     - { name: Show Keyboard Brightness, domain: com.apple.controlcenter, key: KeyboardBrightness, type: int, value: 18 }
     - { name: Don't show Now Playing, domain: com.apple.controlcenter, key: NowPlaying, type: int, value: 24 }
     # Battery
-    - { name: Show battery percentage, host: currentHost, domain: com.apple.controlcenter, key: BatteryShowPercentage, type: bool, value: true }
+    - name: Show battery percentage
+      host: currentHost
+      domain: com.apple.controlcenter
+      key: BatteryShowPercentage
+      type: bool
+      value: true
     # Screensaver
     - { name: Require password after sleep or screen saver begins, domain: com.apple.screensaver, key: askForPassword, type: int, value: 1 }
-    - { name: Require password immediately after sleep or screen saver begins, domain: com.apple.screensaver, key: askForPasswordDelay, type: int, value: 0 }
+    - name: Require password immediately after sleep or screen saver begins
+      domain: com.apple.screensaver
+      key: askForPasswordDelay
+      type: int
+      value: 0
     - { name: Start screen saver after 5 minutes, host: currentHost, domain: com.apple.screensaver, key: idleTime, type: int, value: 300 }
     # Screenshots
     - { name: Save screenshots to the Downloads folder, domain: com.apple.screencapture, key: location, type: string, value: ~/Desktop }
@@ -259,33 +278,78 @@ others:
     # Dashboard
     - { name: Disable Dashboard, domain: com.apple.dashboard, key: mcx-disabled, type: bool, value: true }
     # Trackpad: enable tap to click for this user and for the login screen
-    - { name: Enable tap to click for this user and for the login screen 1/4, domain: com.apple.driver.AppleBluetoothMultitouch.trackpad, key: Clicking,
-        type: int, value: 1 }
-    - { name: Enable tap to click for this user and for the login screen 2/4, domain: com.apple.AppleMultitouchTrackpad, key: Clicking,
-        type: int, value: 1 }
-    - { name: Enable tap to click for this user and for the login screen 3/4, host: currentHost, domain: NSGlobalDomain, key: com.apple.mouse.tapBehavior,
-        type: int, value: 1 }
-    - { name: Enable tap to click for this user and for the login screen 4/4, domain: NSGlobalDomain, key: com.apple.mouse.tapBehavior,
-        type: int, value: 1 }
+    - name: Enable tap to click for this user and for the login screen 1/4
+      domain: com.apple.driver.AppleBluetoothMultitouch.trackpad
+      key: Clicking
+      type: int
+      value: 1
+    - name: Enable tap to click for this user and for the login screen 2/4
+      domain: com.apple.AppleMultitouchTrackpad
+      key: Clicking
+      type: int
+      value: 1
+    - name: Enable tap to click for this user and for the login screen 3/4
+      host: currentHost
+      domain: NSGlobalDomain
+      key: com.apple.mouse.tapBehavior
+      type: int
+      value: 1
+    - name: Enable tap to click for this user and for the login screen 4/4
+      domain: NSGlobalDomain
+      key: com.apple.mouse.tapBehavior
+      type: int
+      value: 1
     # Trackpad: enable right-click by tapping with two fingers
-    - { name: Enable right-click by tapping with two fingers 1/4, domain: com.apple.driver.AppleBluetoothMultitouch.trackpad, key: TrackpadCornerSecondaryClick,
-        type: int, value: 0 }
-    - { name: Enable right-click by tapping with two fingers 2/4, domain: com.apple.driver.AppleBluetoothMultitouch.trackpad, key: TrackpadRightClick,
-        type: bool, value: true }
-    - { name: Enable right-click by tapping with two fingers 3/4, host: currentHost, domain: NSGlobalDomain,
-        key: com.apple.trackpad.trackpadCornerClickBehavior, type: int, value: 1 }
-    - { name: Enable right-click by tapping with two fingers 4/4, host: currentHost, domain: NSGlobalDomain, key: com.apple.trackpad.enableSecondaryClick,
-        type: bool, value: true }
+    - name: Enable right-click by tapping with two fingers 1/4
+      domain: com.apple.driver.AppleBluetoothMultitouch.trackpad
+      key: TrackpadCornerSecondaryClick
+      type: int
+      value: 0
+    - name: Enable right-click by tapping with two fingers 2/4
+      domain: com.apple.driver.AppleBluetoothMultitouch.trackpad
+      key: TrackpadRightClick
+      type: bool
+      value: true
+    - name: Enable right-click by tapping with two fingers 3/4
+      host: currentHost
+      domain: NSGlobalDomain
+      key: com.apple.trackpad.trackpadCornerClickBehavior
+      type: int
+      value: 1
+    - name: Enable right-click by tapping with two fingers 4/4
+      host: currentHost
+      domain: NSGlobalDomain
+      key: com.apple.trackpad.enableSecondaryClick
+      type: bool
+      value: true
     # Trackpad: Enable swipe between pages with three fingers
-    - { name: Enable swipe between pages with three fingers 1/3, domain: NSGlobalDomain, key: AppleEnableSwipeNavigateWithScrolls,
-        type: bool, value: true }
-    - { name: Enable swipe between pages with three fingers 2/3, domain: NSGlobalDomain, key: com.apple.trackpad.threeFingerHorizSwipeGesture,
-        type: int, value: 2 }
-    - { name: Enable swipe between pages with three fingers 3/3, host: currentHost, domain: NSGlobalDomain,
-        key: com.apple.trackpad.threeFingerHorizSwipeGesture, type: int, value: 2 }
+    - name: Enable swipe between pages with three fingers 1/3
+      domain: NSGlobalDomain
+      key: AppleEnableSwipeNavigateWithScrolls
+      type: bool
+      value: true
+    - name: Enable swipe between pages with three fingers 2/3
+      domain: NSGlobalDomain
+      key: com.apple.trackpad.threeFingerHorizSwipeGesture
+      type: int
+      value: 2
+    - name: Enable swipe between pages with three fingers 3/3
+      host: currentHost
+      domain: NSGlobalDomain
+      key: com.apple.trackpad.threeFingerHorizSwipeGesture
+      type: int
+      value: 2
     # Disk auto mount
-    - { name: Disable auto mount for read only devices, domain: com.apple.frameworks.diskimages, key: auto-open-ro-root, type: bool, value: false }
-    - { name: Disable auto mount for read write devices, domain: com.apple.frameworks.diskimages, key: auto-open-rw-root, type: bool, value: false }
+    - name: Disable auto mount for read only devices
+      domain: com.apple.frameworks.diskimages
+      key: auto-open-ro-root
+      type: bool
+      value: false
+    - name: Disable auto mount for read write devices
+      domain: com.apple.frameworks.diskimages
+      key: auto-open-rw-root
+      type: bool
+      value: false
     # Crash reporter
     - { name: Disable Crash Reporter, domain: com.apple.CrashReporter, key: DialogType, type: string, value: none }
 
