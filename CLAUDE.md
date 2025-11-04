@@ -188,6 +188,72 @@ Some roles have dependencies managed through `meta/main.yml`:
 - Boolean flags use `_enabled` suffix (e.g., `cursor_mcp_enabled`, `git_enabled`)
 - Common variable: `username: "{{ ansible_user_id }}"` for user-specific paths
 
+### Git Workflow
+
+**IMPORTANT: All features must go through Pull Requests**
+
+This repository follows a strict PR-based workflow for all code changes:
+
+**Branch Workflow:**
+
+1. **Create a feature branch** from `main`:
+   ```bash
+   git checkout -b <type>/<description>
+   ```
+
+2. **Branch naming convention:**
+   - `feat/<description>` - New features (e.g., `feat/add-vim-role`)
+   - `fix/<description>` - Bug fixes (e.g., `fix/cursor-extensions`)
+   - `refactor/<description>` - Code refactoring
+   - `ci/<description>` - CI/CD changes
+   - `docs/<description>` - Documentation updates
+   - `test/<description>` - Test additions/updates
+
+3. **Make your changes** following the testing workflow above
+
+4. **Commit with conventional format:**
+   ```bash
+   git commit -m "type(scope): description"
+   ```
+
+5. **Push and create a Pull Request:**
+   ```bash
+   git push -u origin <branch-name>
+   # Then create PR via GitHub UI or gh CLI
+   ```
+
+**Pull Request Requirements:**
+
+- ✅ Must have a descriptive title using conventional commit format
+- ✅ Must include a summary of changes in the description
+- ✅ Must pass all CI checks (lint, test-roles, integration-test)
+- ✅ Should reference related issues if applicable
+- ✅ Molecule tests must pass for any modified roles
+
+**What NOT to do:**
+
+- ❌ Never commit directly to `main` branch for features
+- ❌ Never skip CI checks or tests
+- ❌ Never merge without passing CI
+- ❌ Never use `git push --force` on `main`
+
+**Automated PR Checks:**
+
+When you create a PR, automated checks will:
+- Validate PR title format (conventional commits)
+- Add size labels (xs, s, m, l, xl)
+- Add labels based on changed files
+- Check for missing Molecule tests
+- Run full CI pipeline (lint, test, integration)
+- Generate testing checklist
+
+**Merging:**
+
+- PRs can be merged once all CI checks pass
+- Use "Squash and merge" for clean commit history
+- The squash commit message will trigger semantic-release on `main`
+- A new version will be created automatically based on commit type
+
 ## Important Notes
 
 ### Initial Setup
