@@ -1,0 +1,117 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "description": "Renovate configuration for ansible-mgmt-laptop - manages npm, Ansible, and GitHub Actions dependencies",
+  "extends": [
+    "config:recommended"
+  ],
+  "timezone": "Europe/Paris",
+  "schedule": [
+    "before 6am on monday"
+  ],
+  "labels": [
+    "dependencies",
+    "renovate"
+  ],
+  "assignees": [
+    "TheoPoc"
+  ],
+  "semanticCommits": "enabled",
+  "commitMessagePrefix": "chore(deps):",
+  "prConcurrentLimit": 3,
+  "branchConcurrentLimit": 5,
+  "packageRules": [
+    {
+      "description": "Group all npm dependencies updates in a single PR",
+      "matchDatasources": [
+        "npm"
+      ],
+      "groupName": "npm dependencies",
+      "commitMessageTopic": "npm dependencies",
+      "schedule": [
+        "before 6am on monday"
+      ]
+    },
+    {
+      "description": "Group Ansible Galaxy collections updates",
+      "matchDatasources": [
+        "galaxy-collection"
+      ],
+      "groupName": "Ansible collections",
+      "commitMessageTopic": "Ansible collections",
+      "schedule": [
+        "before 6am on monday"
+      ]
+    },
+    {
+      "description": "Group Ansible Galaxy roles updates",
+      "matchDatasources": [
+        "galaxy"
+      ],
+      "groupName": "Ansible roles",
+      "commitMessageTopic": "Ansible roles",
+      "schedule": [
+        "before 6am on monday"
+      ]
+    },
+    {
+      "description": "Group GitHub Actions updates",
+      "matchManagers": [
+        "github-actions"
+      ],
+      "groupName": "GitHub Actions",
+      "commitMessageTopic": "GitHub Actions",
+      "schedule": [
+        "before 6am on monday"
+      ],
+      "pinDigests": true
+    },
+    {
+      "description": "Auto-merge minor and patch updates for non-major versions",
+      "matchUpdateTypes": [
+        "minor",
+        "patch"
+      ],
+      "automerge": true,
+      "automergeType": "pr",
+      "automergeStrategy": "squash"
+    },
+    {
+      "description": "Require manual approval for major updates",
+      "matchUpdateTypes": [
+        "major"
+      ],
+      "automerge": false,
+      "labels": [
+        "dependencies",
+        "renovate",
+        "major-update"
+      ]
+    }
+  ],
+  "ansible": {
+    "enabled": true
+  },
+  "ansible-galaxy": {
+    "enabled": true,
+    "fileMatch": [
+      "(^|/)requirements\\.ya?ml$"
+    ]
+  },
+  "vulnerabilityAlerts": {
+    "enabled": true,
+    "labels": [
+      "security",
+      "dependencies"
+    ],
+    "assignees": [
+      "TheoPoc"
+    ],
+    "automerge": false
+  },
+  "dependencyDashboard": true,
+  "dependencyDashboardTitle": "🤖 Dependency Updates Dashboard",
+  "dependencyDashboardLabels": [
+    "dependencies",
+    "renovate-dashboard"
+  ]
+}

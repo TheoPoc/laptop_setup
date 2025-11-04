@@ -268,6 +268,56 @@ This repository uses **semantic-release** for fully automated version management
 - Commits without release-triggering types won't create releases
 - The workflow uses `[skip ci]` to avoid infinite loops when committing CHANGELOG
 
+### Dependency Management with Renovate
+
+This repository uses **Renovate** for automated dependency updates across multiple package managers.
+
+**What Renovate manages:**
+
+1. **npm dependencies** (package.json) - semantic-release and its plugins
+2. **Ansible Galaxy roles** (requirements.yml) - Community roles like `elliotweiser.osx-command-line-tools`
+3. **Ansible Galaxy collections** (requirements.yml) - Collections like `community.general`, `geerlingguy.mac`
+4. **GitHub Actions** (.github/workflows/*.yml) - Third-party actions like `actions/checkout`, `actions/setup-node`
+
+**Configuration highlights:**
+
+- **Automated updates:** Renovate creates PRs for dependency updates automatically
+- **Grouped updates:** Dependencies are grouped by type (npm, Ansible collections, Ansible roles, GitHub Actions)
+- **Auto-merge:** Minor and patch updates are auto-merged after CI passes
+- **Manual review:** Major updates require manual approval (labeled with `major-update`)
+- **Security alerts:** Vulnerabilities are flagged immediately with `security` label
+- **Schedule:** Updates run weekly (Monday mornings before 6am Paris time)
+- **Dependency Dashboard:** Track all pending updates in a single GitHub issue
+
+**How it works:**
+
+1. Every Monday, Renovate scans all dependency files
+2. It creates grouped PRs for each dependency type
+3. Minor/patch updates auto-merge if CI passes
+4. Major updates wait for manual review
+5. Security vulnerabilities trigger immediate PRs regardless of schedule
+
+**Configuration files:**
+
+- `renovate.json` - Renovate configuration at repository root
+- Enabled datasources: npm, Ansible Galaxy (roles & collections), GitHub Actions
+
+**Important:**
+
+- Renovate respects semantic versioning
+- Conventional commits are used for dependency updates: `chore(deps): update npm dependencies`
+- The Dependency Dashboard issue is automatically created and maintained
+- You can trigger updates manually using dashboard checkboxes
+- Pin GitHub Actions digests for better security
+
+**Setup:**
+
+To enable Renovate on this repository:
+1. Install the [Renovate GitHub App](https://github.com/apps/renovate) on your repository
+2. Grant it access to this repository
+3. Renovate will automatically detect the `renovate.json` configuration
+4. The first onboarding PR will be created for review
+
 ### Commit conventions
 - Use conventionnal commit format: `type(scope): subject`
 - Each commit message is one line
