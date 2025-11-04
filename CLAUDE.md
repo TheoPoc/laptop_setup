@@ -253,6 +253,7 @@ This repository uses **semantic-release** for fully automated version management
 | `fix:` | Patch (0.1.0 → 0.1.1) | Bug fix |
 | `perf:` | Patch (0.1.0 → 0.1.1) | Performance improvement |
 | `refactor:` | Patch (0.1.0 → 0.1.1) | Code refactoring |
+| `chore(deps):` | Patch (0.1.0 → 0.1.1) | Dependency updates (Renovate) |
 | `BREAKING CHANGE:` | Major (0.1.0 → 1.0.0) | Breaking API changes |
 | `docs:`, `chore:`, `ci:`, `test:`, `style:` | No release | Documentation/maintenance |
 
@@ -267,6 +268,99 @@ This repository uses **semantic-release** for fully automated version management
 - Follow conventional commit format strictly
 - Commits without release-triggering types won't create releases
 - The workflow uses `[skip ci]` to avoid infinite loops when committing CHANGELOG
+
+### Dependency Management with Renovate
+
+This repository uses **Renovate** for automated dependency updates across multiple package managers.
+
+**What Renovate manages:**
+
+1. **npm dependencies** (package.json) - semantic-release and its plugins
+2. **Ansible Galaxy roles** (requirements.yml) - Community roles like `elliotweiser.osx-command-line-tools`
+3. **Ansible Galaxy collections** (requirements.yml) - Collections like `community.general`, `geerlingguy.mac`
+4. **GitHub Actions** (.github/workflows/*.yml) - Third-party actions like `actions/checkout`, `actions/setup-node`
+
+**Configuration highlights:**
+
+- **Automated updates:** Renovate creates PRs for dependency updates automatically
+- **Grouped updates:** Dependencies are grouped by type (npm, Ansible collections, Ansible roles, GitHub Actions)
+- **Auto-merge:** Minor and patch updates are auto-merged after CI passes
+- **Manual review:** Major updates require manual approval (labeled with `major-update`)
+- **Security alerts:** Vulnerabilities are flagged immediately with `security` label
+- **Schedule:** Updates run weekly (Monday mornings before 6am Paris time)
+- **Dependency Dashboard:** Track all pending updates in a single GitHub issue
+
+**How it works:**
+
+1. Every Monday, Renovate scans all dependency files
+2. It creates grouped PRs for each dependency type
+3. Minor/patch updates auto-merge if CI passes
+4. Major updates wait for manual review
+5. Security vulnerabilities trigger immediate PRs regardless of schedule
+6. **When a PR is auto-merged**, the commit triggers semantic-release
+7. **A new patch version is created** automatically (e.g., 1.1.0 → 1.1.1)
+8. **CHANGELOG is updated** with the dependency changes
+9. **Git tag and GitHub release** are created automatically
+
+**Integration with semantic-release:**
+
+- Renovate commits use the format `chore(deps): update <package_type>`
+- This format triggers a **patch release** thanks to the `.releaserc.json` configuration
+- Every auto-merged dependency update results in a new version
+- Releases are created automatically without manual intervention
+- Example: If Renovate updates npm packages on Monday, version bumps from 1.1.0 to 1.1.1
+
+**Configuration files:**
+
+- `renovate.json` - Renovate configuration at repository root
+- Enabled datasources: npm, Ansible Galaxy (roles & collections), GitHub Actions
+
+**Important:**
+
+- Renovate respects semantic versioning
+- Conventional commits are used for dependency updates: `chore(deps): update npm dependencies`
+- The Dependency Dashboard issue is automatically created and maintained
+- You can trigger updates manually using dashboard checkboxes
+- Pin GitHub Actions digests for better security
+
+**Auto-merge Safety:**
+
+Renovate is configured to auto-merge only when **ALL** CI checks pass:
+- Uses GitHub's native auto-merge (`platformAutomerge: true`)
+- Waits for required status checks before merging
+- Respects branch protection rules automatically
+
+**Required CI checks:**
+- `lint` - Ansible linting and validation
+- `test-roles` - Molecule tests for all roles
+- `integration-test` - Full playbook integration test
+- `pr-checks` - PR automation checks
+
+**Setup:**
+
+To enable Renovate on this repository:
+
+1. **Install Renovate**
+   - Install the [Renovate GitHub App](https://github.com/apps/renovate)
+   - Grant it access to this repository
+   - Renovate will automatically detect the `renovate.json` configuration
+   - Review and merge the first onboarding PR
+
+2. **Configure Branch Protection (CRITICAL for auto-merge)**
+   - Go to: Settings → Branches → Add rule for `main`
+   - Enable: "Require status checks to pass before merging"
+   - Select required checks:
+     - ✅ `lint`
+     - ✅ `test-roles` (or individual role tests)
+     - ✅ `integration-test`
+     - ✅ `pr-checks`
+   - Enable: "Require branches to be up to date before merging"
+   - **Without branch protection, auto-merge will happen without waiting for CI!**
+
+3. **Enable Auto-merge on Repository**
+   - Go to: Settings → General → Pull Requests
+   - Enable: "Allow auto-merge"
+   - This allows Renovate to use GitHub's native auto-merge feature
 
 ### Commit conventions
 - Use conventionnal commit format: `type(scope): subject`
