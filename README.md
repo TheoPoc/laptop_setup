@@ -3,6 +3,8 @@
 [![CI/CD Pipeline](https://github.com/TheoPoc/ansible-mgmt-laptop/actions/workflows/ci.yml/badge.svg)](https://github.com/TheoPoc/ansible-mgmt-laptop/actions/workflows/ci.yml)
 [![Pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white)](https://github.com/pre-commit/pre-commit)
 [![Ansible Lint](https://img.shields.io/badge/ansible--lint-passing-success)](https://github.com/ansible/ansible-lint)
+[![semantic-release: angular](https://img.shields.io/badge/semantic--release-angular-e10079?logo=semantic-release)](https://github.com/semantic-release/semantic-release)
+[![Renovate enabled](https://img.shields.io/badge/renovate-enabled-brightgreen?logo=renovatebot&logoColor=white)](https://renovatebot.com/)
 
 This repository contains an Ansible playbook for automating workstation setup on both macOS and Ubuntu. It installs essential development tools, configures your development environment, and manages applications.
 
