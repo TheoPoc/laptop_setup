@@ -5,6 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.2](https://github.com/TheoPoc/ansible-mgmt-laptop/compare/v1.2.1...v1.2.2) (2025-11-05)
+
+### 📚 Documentation
+
+* add Git workflow section with mandatory PR policy to CLAUDE.md ([c11a902](https://github.com/TheoPoc/ansible-mgmt-laptop/commit/c11a9025e05f8d4a4004697d8c85e08c16ddd358))
+* add Semantic Release and Renovate badges to README ([85f46cc](https://github.com/TheoPoc/ansible-mgmt-laptop/commit/85f46cce436b1edffdda312c48034863c75a5ac3))
+
+### ♻️ Code Refactoring
+
+* use native GitHub Actions branch filters to control CI execution ([ed05e1e](https://github.com/TheoPoc/ansible-mgmt-laptop/commit/ed05e1e5d9975548e015863f887ab93e2c69e1a7))
+
 ## [1.2.1](https://github.com/TheoPoc/ansible-mgmt-laptop/compare/v1.2.0...v1.2.1) (2025-11-04)
 
 ### 🐛 Bug Fixes
