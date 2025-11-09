@@ -65,17 +65,24 @@ This repository contains an Ansible playbook for automating workstation setup on
    ./setup.sh
    ```
 
-4. Configure settings:
-   - Edit [group_vars/all.yml](group_vars/all.yml)
-   - Update your Git configuration:
+4. **IMPORTANT: Configure your personal settings**
 
-     ```yaml
-     git_username: "Your Name"  # Replace with your full name
-     git_email: "your.email@example.com"  # Replace with your email
-     ```
+   Edit [group_vars/all.yml](group_vars/all.yml) and update the following:
 
-   - Customize packages, tools, and applications for your needs
-   - If you don't want to configure Git, set `git_enabled: false`
+   **Git Configuration (Required):**
+
+   ```yaml
+   git_username: "Your Name"  # Replace with your full name
+   git_email: "your.email@example.com"  # Replace with your actual email address
+   ```
+
+   > **Note:** These values will be used to configure your global Git identity. Make sure to use your real name and email address.
+   > If you don't want to configure Git, set `git_enabled: false`
+
+   **Optional Customizations:**
+   - Customize packages, tools, and applications in the same file
+   - Review and modify the list of Homebrew packages (macOS) or APT packages (Ubuntu)
+   - Adjust IDE extensions, terminal workflows, and other preferences
 
 ## Execution
 
