@@ -1,2 +1,9 @@
+# Ansible Inventory File
+# Replace 'your_username' with your actual system username
+
 [all]
-127.0.0.1 ansible_user=saewyn
+127.0.0.1 ansible_user=your_username
+
+# Examples:
+# For macOS user 'john': 127.0.0.1 ansible_user=john
+# For Ubuntu user 'jane': 127.0.0.1 ansible_user=jane
