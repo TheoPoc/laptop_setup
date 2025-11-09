@@ -5,6 +5,36 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.3](https://github.com/TheoPoc/laptop_setup/compare/v1.2.2...v1.2.3) (2025-11-09)
+
+### 🐛 Bug Fixes
+
+* **vim:** restore OS-specific vim_group variable ([0fa3058](https://github.com/TheoPoc/laptop_setup/commit/0fa30587e0fbf3e0137aa96b686cb923ce9ac722))
+
+### 📚 Documentation
+
+* emphasize Git configuration requirement in README ([c21c05e](https://github.com/TheoPoc/laptop_setup/commit/c21c05e923f9f6455d0c2aae1b24ce0b89910c17))
+* prepare repository for public release ([f061da4](https://github.com/TheoPoc/laptop_setup/commit/f061da486c3d6a4d051756c9960d363fda578ef4))
+* remove SSH key generation steps for public repository ([015fb6c](https://github.com/TheoPoc/laptop_setup/commit/015fb6cc93372f4d0a5a0836c420c37e6ed9a286))
+* update repository references from ansible-mgmt-laptop to laptop_setup ([fcb786c](https://github.com/TheoPoc/laptop_setup/commit/fcb786c76accdfdc617016b3c3880287b3d459cd))
+
+### ♻️ Code Refactoring
+
+* remove unnecessary ansible_user from inventory ([08d324c](https://github.com/TheoPoc/laptop_setup/commit/08d324ce0ef1f8f476d8ad851c7246ed41bffcbc))
+* use ansible_user_id directly instead of intermediate variables ([132d0a4](https://github.com/TheoPoc/laptop_setup/commit/132d0a4b900ea09386c0b680abad1eaad71c2792))
+* **zsh:** use ansible_user_id instead of ansible_user ([690c259](https://github.com/TheoPoc/laptop_setup/commit/690c259851b6d4b2cfe663efef10ec9791652472))
+
+### 👷 CI/CD
+
+* remove dependabot auto-approve job and references ([4f53e4f](https://github.com/TheoPoc/laptop_setup/commit/4f53e4f336856dfc5ec289763cc2ba729474d03e))
+* **workflow:** simplify CI workflow triggers ([8599e31](https://github.com/TheoPoc/laptop_setup/commit/8599e313a88b8816af97da6970e44c9aaca0fbc8))
+
+### 🔧 Chores
+
+* **deps:** Update GitHub Actions ([71c67b0](https://github.com/TheoPoc/laptop_setup/commit/71c67b0398c47f7b0ab5bc8f92013dd4df76caf2))
+* **deps:** Update npm dependencies ([702801f](https://github.com/TheoPoc/laptop_setup/commit/702801fa54895b399f280e0f435e146e687d60cf))
+* **renovate:** disable pin digest updates for GitHub Actions ([8908c41](https://github.com/TheoPoc/laptop_setup/commit/8908c41d33f8d371653afb1f700f9c679478639c))
+
 ## [1.2.2](https://github.com/TheoPoc/ansible-mgmt-laptop/compare/v1.2.1...v1.2.2) (2025-11-05)
 
 ### 📚 Documentation
