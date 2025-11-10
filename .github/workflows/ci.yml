@@ -79,6 +79,8 @@ jobs:
         uses: robertdebock/molecule-action@6.0.0
         with:
           command: test
+          image: ubuntu
+          tag: "24.04"
         env:
           ANSIBLE_ROLES_PATH: roles/${{ matrix.role }}
 
