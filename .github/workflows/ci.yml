@@ -72,6 +72,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v5
+        with:
+          path: "${{ github.repository }}"
 
       - name: Run Molecule tests
         uses: robertdebock/molecule-action@6.0.0
