@@ -102,7 +102,7 @@ jobs:
       - name: Run Molecule tests
         run: |
           cd roles/${{ matrix.role }}
-          molecule test
+          molecule --debug test
         env:
           PY_COLORS: "1"
           ANSIBLE_FORCE_COLOR: "1"
