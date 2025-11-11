@@ -4,7 +4,7 @@ dependency:
   options:
     requirements-file: ${MOLECULE_SCENARIO_DIRECTORY}/requirements.yml
 driver:
-  name: podman
+  name: docker
 platforms:
   - name: ubuntu-mise
     image: geerlingguy/docker-ubuntu2404-ansible:latest
