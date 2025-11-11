@@ -76,13 +76,11 @@ jobs:
           path: "${{ github.repository }}"
 
       - name: Run Molecule tests
-        uses: robertdebock/molecule-action@6.0.0
+        uses: gofrolist/molecule-action@v2
         with:
-          command: --debug
-          image: ubuntu
-          tag: "24.04"
-        env:
-          ANSIBLE_ROLES_PATH: roles/${{ matrix.role }}
+          molecule_options: --debug
+          molecule_command: test
+          molecule_working_dir: "${{ github.repository }}/roles/${{ matrix.role }}"
 
 
   # Integration test - full playbook execution
