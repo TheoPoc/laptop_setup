@@ -35,21 +35,15 @@ jobs:
         with:
           config_file: .yamllint
 
-      - name: Set up Python for syntax validation
-        uses: actions/setup-python@v6
-        with:
-          python-version: ${{ env.PYTHON_VERSION }}
-
-      - name: Install Ansible for syntax validation
-        run: |
-          python -m pip install --upgrade pip
-          pip install ansible
-
-      - name: Install Ansible Galaxy dependencies
-        run: ansible-galaxy install -r requirements.yml
-
       - name: Validate Ansible syntax
-        run: ansible-playbook main.yml --syntax-check -i hosts
+        uses: dawidd6/action-ansible-playbook@v5
+        with:
+          playbook: main.yml
+          directory: ./
+          requirements: requirements.yml
+          options: |
+            -i hosts
+            --syntax-check
 
   # Test matrix for all roles with Molecule
   test-roles:
