@@ -57,12 +57,22 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v5
 
-      - name: Get list of roles
+      - name: Get list of roles with Molecule tests
         id: get-roles
         run: |
-          roles=$(ls -1 roles/ | jq -R -s -c 'split("\n")[:-1]')
+          # Only include roles that have a molecule directory
+          testable_roles=()
+          for role in roles/*/; do
+            role_name=$(basename "$role")
+            if [ -d "roles/${role_name}/molecule" ]; then
+              testable_roles+=("$role_name")
+            else
+              echo "Skipping $role_name (no molecule tests)"
+            fi
+          done
+          roles=$(printf '%s\n' "${testable_roles[@]}" | jq -R -s -c 'split("\n")[:-1]')
           echo "roles=$roles" >> $GITHUB_OUTPUT
-          echo "Found roles: $roles"
+          echo "Found testable roles: $roles"
 
       - name: Generate path filters dynamically
         id: generate-filters
@@ -70,7 +80,10 @@ jobs:
           filters=""
           for role in roles/*/; do
             role_name=$(basename "$role")
-            filters="${filters}${role_name}:\n  - 'roles/${role_name}/**'\n"
+            # Only generate filters for roles with molecule tests
+            if [ -d "roles/${role_name}/molecule" ]; then
+              filters="${filters}${role_name}:\n  - 'roles/${role_name}/**'\n"
+            fi
           done
           echo "filters<<EOF" >> $GITHUB_OUTPUT
           echo -e "$filters" >> $GITHUB_OUTPUT
