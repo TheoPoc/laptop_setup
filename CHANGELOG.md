@@ -5,6 +5,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.5.1](https://github.com/TheoPoc/laptop_setup/compare/v1.5.0...v1.5.1) (2025-11-12)
+
+### ⚡ Performance Improvements
+
+* **ci:** ensure all roles tested on main branch ([89385b3](https://github.com/TheoPoc/laptop_setup/commit/89385b3bb4fcc736c4f2d4a69208b0897aedcb4c))
+* **ci:** optimize pipeline to test only changed roles ([edf0e24](https://github.com/TheoPoc/laptop_setup/commit/edf0e24237b17e04036ec8234ac20c70adac2efa))
+
+### ♻️ Code Refactoring
+
+* **ci:** make role discovery fully dynamic ([c3d42b2](https://github.com/TheoPoc/laptop_setup/commit/c3d42b221beeb4eac1859e5b6be037ba308a5e07))
+
+### 👷 CI/CD
+
+* **renovate:** change schedule to saturday at 2pm ([9f7610a](https://github.com/TheoPoc/laptop_setup/commit/9f7610a9b519b6d4a34feb5001ee40adf584521a))
+
 ## [1.5.0](https://github.com/TheoPoc/laptop_setup/compare/v1.4.0...v1.5.0) (2025-11-12)
 
 ### ✨ Features
