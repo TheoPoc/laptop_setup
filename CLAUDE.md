@@ -188,6 +188,37 @@ Some roles have dependencies managed through `meta/main.yml`:
 - Boolean flags use `_enabled` suffix (e.g., `cursor_mcp_enabled`, `git_enabled`)
 - Use `ansible_user_id` directly in roles for user-specific paths (no intermediate variables)
 
+### GitHub CI/CD Workflow Investigation
+
+**IMPORTANT: Use GitHub MCP for investigating pipeline failures**
+
+When investigating CI/CD pipeline issues, use the GitHub MCP tools to gather information:
+
+**For workflow runs:**
+```
+- Use mcp__github__list_workflow_runs to see recent workflow executions
+- Use mcp__github__get_workflow_run to get details about a specific run
+- Use mcp__github__list_workflow_jobs to see jobs in a workflow run
+- Use mcp__github__get_job_logs with failed_only=true to get only failed job logs
+```
+
+**Common investigation workflow:**
+
+1. **List recent workflow runs** to identify the failing run
+2. **Get workflow run details** to understand the failure
+3. **Get failed job logs** to see specific error messages
+4. **Analyze the logs** to identify root cause
+5. **Fix the issue** in the workflow or code
+6. **Create a PR** with the fix using `mcp__github__create_pull_request`
+
+**Example:**
+```
+1. mcp__github__list_workflow_runs(owner="TheoPoc", repo="laptop_setup", workflow_id="ci.yml")
+2. mcp__github__get_job_logs(owner="TheoPoc", repo="laptop_setup", run_id=123456, failed_only=true)
+3. Analyze logs, fix issue
+4. mcp__github__create_pull_request(owner="TheoPoc", repo="laptop_setup", title="fix(ci): ...", head="fix/branch", base="main")
+```
+
 ### Git Workflow
 
 **IMPORTANT: All features must go through Pull Requests**
@@ -219,7 +250,7 @@ This repository follows a strict PR-based workflow for all code changes:
 5. **Push and create a Pull Request:**
    ```bash
    git push -u origin <branch-name>
-   # Then create PR via GitHub UI or gh CLI
+   # Then create PR using mcp__github__create_pull_request
    ```
 
 **Pull Request Requirements:**
