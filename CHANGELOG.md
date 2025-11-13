@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.5.2](https://github.com/TheoPoc/laptop_setup/compare/v1.5.1...v1.5.2) (2025-11-13)
+
+### 🐛 Bug Fixes
+
+* **ci:** correct output reference after step consolidation ([d2ff0ab](https://github.com/TheoPoc/laptop_setup/commit/d2ff0abab60991237348d168e519a36120edffd7))
+* **ci:** exclude macOS-only roles from Ubuntu CI tests ([81d0694](https://github.com/TheoPoc/laptop_setup/commit/81d069401683b1f7058d35cdae12d3cb029eefad))
+* **ci:** skip test-roles job when no roles to test ([5b00770](https://github.com/TheoPoc/laptop_setup/commit/5b007709c28b6d1bca81baa040d918400288e848))
+
+### ♻️ Code Refactoring
+
+* **ci:** combine role discovery and filter generation into single step ([e2ac544](https://github.com/TheoPoc/laptop_setup/commit/e2ac54420c418a0c596d42671d17f0277abf4d71))
+
 ## [1.5.1](https://github.com/TheoPoc/laptop_setup/compare/v1.5.0...v1.5.1) (2025-11-12)
 
 ### ⚡ Performance Improvements
