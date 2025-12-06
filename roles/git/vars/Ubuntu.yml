@@ -1,0 +1,4 @@
+---
+# Debian/Ubuntu-specific variables for git role
+
+git_credential_helper: libsecret

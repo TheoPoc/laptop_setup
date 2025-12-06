@@ -1,6 +1,6 @@
 ---
-- name: Include OS-specific installation tasks
-  ansible.builtin.include_tasks: "install-{{ ansible_os_family }}.yml"
+- name: Include distribution-specific installation tasks
+  ansible.builtin.include_tasks: "install-{{ ansible_distribution }}.yml"
 
 - name: Configure mise
   ansible.builtin.include_tasks: configure-mise.yml

@@ -1,0 +1,49 @@
+---
+# Debian/Ubuntu-specific installation for Cursor
+
+- name: Check if Cursor is already installed
+  ansible.builtin.stat:
+    path: "/usr/bin/cursor"
+  register: cursor_installed
+
+- name: Check if .deb file already exists in /tmp
+  ansible.builtin.stat:
+    path: "/tmp/cursor.deb"
+  register: cursor_tmp_file
+
+- name: Download Cursor .deb package
+  ansible.builtin.get_url:
+    url: "{{ cursor_download_url }}"
+    dest: "/tmp/cursor.deb"
+    mode: "0644"
+  when:
+    - not cursor_installed.stat.exists
+    - not cursor_tmp_file.stat.exists
+  retries: 3
+  delay: 5
+  register: cursor_download
+  tags: ["cursor"]
+
+- name: Install Cursor .deb package with dpkg
+  ansible.builtin.command: dpkg --force-architecture --force-depends -i /tmp/cursor.deb
+  become: true
+  when: cursor_tmp_file.stat.exists or cursor_download is changed
+  register: cursor_dpkg_install
+  changed_when: cursor_dpkg_install.rc == 0
+  failed_when: false
+  tags: ["cursor"]
+
+- name: Fix Cursor dependencies if needed
+  ansible.builtin.apt:
+    fix_broken: true
+  become: true
+  when: cursor_dpkg_install is changed
+  failed_when: false
+  tags: ["cursor"]
+
+- name: Clean up downloaded .deb file
+  ansible.builtin.file:
+    path: "/tmp/cursor.deb"
+    state: absent
+  when: cursor_download is changed
+  tags: ["cursor"]

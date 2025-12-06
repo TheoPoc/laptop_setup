@@ -1,6 +1,6 @@
 ---
-# Debian installation tasks for mise
-- name: Install required dependencies for mise on Debian
+# Ubuntu installation tasks for mise
+- name: Install required dependencies for mise on Ubuntu
   ansible.builtin.apt:
     name:
       - curl

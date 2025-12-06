@@ -1,5 +1,5 @@
 ---
-# Debian installation tasks for base-tools
+# Ubuntu installation tasks for base-tools
 
 - name: Install base packages via apt
   ansible.builtin.apt:
