@@ -64,8 +64,12 @@
   failed_when: false
   tags: base-tools, desktop-apps
 
-
-  # Install Slack via tarball
+# Install applications via direct .deb downloads
+- name: Install Slack application
+  when:
+    - debian_deb_applications is defined
+    - debian_deb_applications | length > 0
+  tags: base-tools, desktop-apps
   block:
     # Check if Slack package is already installed or attempted
     - name: Check if Slack is already installed or .deb file exists
@@ -145,6 +149,16 @@
   tags: base-tools, desktop-apps
 
 - name: Install Postman
+  when:
+    - debian_binary_applications is defined
+    - debian_binary_applications | length > 0
+    - debian_binary_applications.postman is defined
+    - debian_binary_applications.postman.enabled | default(true)
+    - postman_installed is defined
+    - not postman_installed.stat.exists
+  # Allow Postman installation to fail in containers (GUI dependencies, network issues, etc.)
+  ignore_errors: true
+  tags: base-tools, desktop-apps
   block:
     - name: Download Postman tarball
       ansible.builtin.get_url:
