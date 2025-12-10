@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.7.2](https://github.com/TheoPoc/laptop_setup/compare/v1.7.1...v1.7.2) (2025-12-10)
+
+### 🐛 Bug Fixes
+
+* firefox and apt transport https for debian ([aab5dab](https://github.com/TheoPoc/laptop_setup/commit/aab5dab949b47851b73f32bc90ef25210ac152a4))
+
 ## [1.7.1](https://github.com/TheoPoc/laptop_setup/compare/v1.7.0...v1.7.1) (2025-12-10)
 
 ### 🐛 Bug Fixes
