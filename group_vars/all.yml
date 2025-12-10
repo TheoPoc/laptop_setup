@@ -70,7 +70,7 @@ debian_apt_packages:
   - autojump # Fast directory navigation
   - ca-certificates # Common CA certificates
   - ripgrep # Fast grep alternative
-  - mysql-client # MySQL client
+  - default-mysql-client # MySQL client
   - shellcheck # Shell script static analysis
   - ipcalc # IP address calculator
   - zsh # Z shell
