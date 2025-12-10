@@ -1,4 +1,0 @@
----
-# Debian/Ubuntu-specific variables for gita role
-
-gita_config_dir: "{{ ansible_env.HOME }}/.config/gita"

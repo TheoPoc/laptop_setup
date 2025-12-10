@@ -1,8 +1,0 @@
----
-# Debian/Ubuntu-specific configuration for uv
-# Note: uv is installed via mise, this role only configures shell integration
-
-- name: Configure uv shell integration
-  ansible.builtin.debug:
-    msg: "uv is installed via mise - no Debian-specific installation needed, only shell configuration"
-  tags: uv

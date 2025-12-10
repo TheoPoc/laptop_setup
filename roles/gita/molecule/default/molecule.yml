@@ -6,7 +6,7 @@ driver:
   name: docker
 
 platforms:
-  - name: ubuntu-gita
+  - name: ubuntu-24-04
     image: geerlingguy/docker-ubuntu2404-ansible:latest
     command: ""
     volumes:
@@ -14,7 +14,7 @@ platforms:
     cgroupns_mode: host
     privileged: true
     pre_build_image: true
-  - name: debian-gita
+  - name: debian-12
     image: geerlingguy/docker-debian12-ansible:latest
     command: ""
     volumes:
@@ -37,16 +37,6 @@ provisioner:
   playbooks:
     converge: converge.yml
     verify: verify.yml
-  inventory:
-    host_vars:
-      ubuntu-gita:
-        ansible_user: root
-        mise_tools:
-          uv: latest
-      debian-gita:
-        ansible_user: root
-        mise_tools:
-          uv: latest
   env:
     ANSIBLE_ALLOW_BROKEN_CONDITIONALS: "True"
     ANSIBLE_ROLES_PATH: ../../../

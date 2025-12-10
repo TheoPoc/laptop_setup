@@ -1,12 +1,13 @@
 ---
 - name: Include OS-specific variables
-  ansible.builtin.include_vars: "{{ ansible_os_family }}.yml"
-  when: ansible_os_family in ['Darwin', 'Debian']
-  tags: uv
-
-- name: Include OS-specific installation tasks
-  ansible.builtin.include_tasks: "install-{{ ansible_os_family }}.yml"
-  when: ansible_os_family in ['Darwin', 'Debian']
+  ansible.builtin.include_vars: "{{ lookup('ansible.builtin.first_found', params) }}"
+  vars:
+    params:
+      files:
+        - "{{ ansible_os_family }}.yml"
+        - "main.yml"
+      paths:
+        - "vars"
   tags: uv
 
 - name: Get uv path from mise
@@ -35,5 +36,6 @@
     - uv_path.rc == 0
     - uv_path.stdout is defined
     - uv_path.stdout | length > 0
+    - uv_update_shell | bool
   tags:
     - uv

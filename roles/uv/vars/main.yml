@@ -1,5 +1,5 @@
 ---
-# Debian/Ubuntu-specific variables for uv role
+# General variables for uv role
 
 uv_shell_config_paths:
   - "{{ ansible_env.HOME }}/.bashrc"

@@ -6,7 +6,7 @@ driver:
   name: docker
 
 platforms:
-  - name: ubuntu-gpg
+  - name: ubuntu-24-04
     image: geerlingguy/docker-ubuntu2404-ansible:latest
     command: ""
     volumes:
@@ -14,7 +14,7 @@ platforms:
     cgroupns_mode: host
     privileged: true
     pre_build_image: true
-  - name: debian-gpg
+  - name: debian-12
     image: geerlingguy/docker-debian12-ansible:latest
     command: ""
     volumes:

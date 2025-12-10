@@ -2,26 +2,35 @@
 # tasks file for roles/gpg
 
 - name: Include OS-specific variables
-  ansible.builtin.include_vars: "{{ ansible_os_family }}.yml"
-  when: ansible_os_family in ['Darwin', 'Debian']
+  ansible.builtin.include_vars: "{{ lookup('ansible.builtin.first_found', params) }}"
+  vars:
+    params:
+      files:
+        - "{{ ansible_os_family }}.yml"
+        - "main.yml"
+      paths:
+        - "vars"
   tags: gpg
 
-- name: Include OS-specific installation tasks
-  ansible.builtin.include_tasks: "install-{{ ansible_os_family }}.yml"
-  when: ansible_os_family in ['Darwin', 'Debian']
+- name: Install GPG using OS-specific tasks
+  ansible.builtin.include_tasks: "{{ lookup('ansible.builtin.first_found', params) }}"
+  vars:
+    params:
+      files:
+        - "install-{{ ansible_os_family }}.yml"
+        - "install.yml"
+      paths:
+        - "tasks"
   tags: gpg
 
-- name: Create GPG configuration directory
-  ansible.builtin.file:
-    path: "{{ gpg_config_dir }}"
-    state: directory
-    mode: "0700"
+- name: Configure GPG using OS-specific tasks
+  ansible.builtin.include_tasks: "{{ lookup('ansible.builtin.first_found', params) }}"
+  vars:
+    params:
+      files:
+        - "setup-{{ ansible_os_family }}.yml"
+        - "setup.yml"
+      paths:
+        - "tasks"
   when: gpg_enabled | bool
-
-- name: Configure GPG agent cache timeout
-  ansible.builtin.template:
-    src: gpg-agent.conf.j2
-    dest: "{{ gpg_config_dir }}/gpg-agent.conf"
-    mode: "0600"
-  when: gpg_enabled | bool
-  notify: Reload GPG agent
+  tags: gpg

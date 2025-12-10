@@ -5,4 +5,3 @@ gpg_packages:
   - gnupg
   - gpg-agent
   - pinentry-curses
-gpg_config_dir: "{{ ansible_env.HOME }}/.gnupg"

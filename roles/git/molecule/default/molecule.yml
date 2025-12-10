@@ -8,7 +8,7 @@ driver:
   name: docker
 
 platforms:
-  - name: ubuntu-git
+  - name: ubuntu-24-04
     image: geerlingguy/docker-ubuntu2404-ansible:latest
     command: ""
     volumes:
@@ -16,7 +16,7 @@ platforms:
     cgroupns_mode: host
     privileged: true
     pre_build_image: true
-  - name: debian-git
+  - name: debian-12
     image: geerlingguy/docker-debian12-ansible:latest
     command: ""
     volumes:
@@ -39,18 +39,6 @@ provisioner:
   playbooks:
     converge: converge.yml
     verify: verify.yml
-  inventory:
-    host_vars:
-      ubuntu-git:
-        ansible_user: root
-        git_enabled: true
-        git_username: "Test User"
-        git_email: "test@example.com"
-      debian-git:
-        ansible_user: root
-        git_enabled: true
-        git_username: "Test User"
-        git_email: "test@example.com"
   env:
     ANSIBLE_ALLOW_BROKEN_CONDITIONALS: "True"
     ANSIBLE_ROLES_PATH: ../../../

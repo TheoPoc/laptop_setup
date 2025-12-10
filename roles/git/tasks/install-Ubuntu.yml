@@ -1,5 +1,5 @@
 ---
-# Debian-specific installation for git
+# Ubuntu-specific installation for git
 
 - name: Install git via apt
   ansible.builtin.apt:

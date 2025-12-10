@@ -1,6 +1,0 @@
----
-# Debian/Ubuntu-specific variables for copier role
-
-copier_dependencies:
-  - python3-pip
-  - python3-venv
