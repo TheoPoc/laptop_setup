@@ -3,6 +3,11 @@
   ansible.builtin.include_vars: "{{ ansible_os_family }}.yml"
   tags: vim
 
+- name: Include OS-specific installation tasks
+  ansible.builtin.include_tasks: "install-{{ ansible_os_family }}.yml"
+  when: ansible_os_family in ['Darwin', 'Debian']
+  tags: vim
+
 - name: Copy vim settings
   ansible.builtin.copy:
     src: ".vimrc"

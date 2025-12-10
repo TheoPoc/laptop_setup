@@ -1,0 +1,10 @@
+---
+# Debian/Ubuntu-specific installation for git
+
+- name: Install git via apt
+  ansible.builtin.apt:
+    name: git
+    state: present
+    update_cache: true
+  become: true
+  tags: git

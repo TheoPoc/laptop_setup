@@ -1,7 +1,17 @@
 ---
 - name: Converge
   hosts: all
+  become: true
+  gather_facts: true
   tasks:
+    - name: Include mise role
+      ansible.builtin.include_role:
+        name: mise
+
+    - name: Include uv role
+      ansible.builtin.include_role:
+        name: uv
+
     - name: Include gita role
       ansible.builtin.include_role:
         name: gita

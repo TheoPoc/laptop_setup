@@ -1,4 +1,14 @@
 ---
+- name: Include OS-specific variables
+  ansible.builtin.include_vars: "{{ ansible_os_family }}.yml"
+  when: ansible_os_family in ['Darwin', 'Debian']
+  tags: gita
+
+- name: Include OS-specific installation tasks
+  ansible.builtin.include_tasks: "install-{{ ansible_os_family }}.yml"
+  when: ansible_os_family in ['Darwin', 'Debian']
+  tags: gita
+
 - name: Get uv path from mise
   ansible.builtin.command:
     cmd: "mise which uv"
@@ -27,7 +37,7 @@
 
 - name: Create gita config directory
   ansible.builtin.file:
-    path: "{{ ansible_env.HOME }}/.config/gita"
+    path: "{{ gita_config_dir }}"
     state: directory
     mode: "0755"
   tags:
@@ -36,7 +46,7 @@
 - name: Configure gita default settings
   ansible.builtin.template:
     src: gita.yml.j2
-    dest: "{{ ansible_env.HOME }}/.config/gita/repo.yml"
+    dest: "{{ gita_config_dir }}/repo.yml"
     mode: "0644"
   tags:
     - gita
