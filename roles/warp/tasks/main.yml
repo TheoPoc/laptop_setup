@@ -2,12 +2,12 @@
 # Tasks for installing and configuring Warp terminal
 
 - name: Include OS-specific variables
-  ansible.builtin.include_vars: "{{ ansible_os_family | lower }}.yml"
+  ansible.builtin.include_vars: "{{ ansible_facts.distribution | lower }}.yml"
   when: warp_enabled | bool
   tags: warp
 
 - name: Include OS-specific installation tasks
-  ansible.builtin.include_tasks: "install-{{ ansible_os_family }}.yml"
+  ansible.builtin.include_tasks: "install-{{ ansible_facts.distribution }}.yml"
   when: warp_enabled | bool
   tags: warp
 
@@ -22,7 +22,7 @@
         path: "{{ item }}"
         state: directory
         mode: "0750"
-        owner: "{{ ansible_user_id }}"
+        owner: "{{ ansible_facts.user_id }}"
       loop_control:
         label: "{{ item }}"
       loop:
@@ -34,7 +34,7 @@
         src: workflow.yaml.j2
         dest: "{{ warp_workflows_dir }}/workflow{{ ansible_loop.index }}.yaml"
         mode: "0640"
-        owner: "{{ ansible_user_id }}"
+        owner: "{{ ansible_facts.user_id }}"
       diff: true
       loop: "{{ warp_workflows }}"
       loop_control:

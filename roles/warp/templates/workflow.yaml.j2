@@ -10,5 +10,5 @@ arguments:
     description: {{ arg.description }}
     default_value: {{ arg.default_value | default('') }}
 {% endfor %}
-author: {{ item.workflow_author | default(ansible_user_id) }}
+author: {{ item.workflow_author | default(ansible_facts.user_id) }}
 shells: {{ item.workflow_shells | default(['bash', 'zsh']) }}

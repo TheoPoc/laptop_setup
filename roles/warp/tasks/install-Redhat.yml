@@ -4,7 +4,7 @@
   block:
     - name: Download Warp RPM package
       ansible.builtin.get_url:
-        url: "{{ warp_rpm_url }}"
+        url: "{{ warp_download_url }}"
         dest: "/tmp/warp-terminal.rpm"
         mode: "0644"
       register: warp_rpm_download

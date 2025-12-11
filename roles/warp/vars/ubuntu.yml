@@ -2,12 +2,13 @@
 # Debian/Ubuntu specific variables for Warp Terminal role
 
 # Default installation method for Debian/Ubuntu
-warp_install_method: "apt"
 
 warp_package_dependencies:
   - gnupg
   - gpg
-  - libasound2
+  - libasound2t64
+
+warp_install_method: "apt"
 
 # Workflow directory path for Linux
 warp_workflows_dir: "{{ ansible_facts.env.HOME }}/.local/share/warp-terminal/workflows"
