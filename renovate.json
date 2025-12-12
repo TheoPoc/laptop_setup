@@ -1,6 +1,6 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "description": "Renovate configuration for laptop_setup - manages npm, Ansible, and GitHub Actions dependencies",
+  "description": "Renovate configuration for laptop_setup - manages npm, Python (uv), Ansible, and GitHub Actions dependencies",
   "extends": [
     "config:recommended"
   ],
@@ -66,6 +66,17 @@
         "at 2pm on saturday"
       ],
       "pinDigests": false
+    },
+    {
+      "description": "Group Python dependencies (uv/pyproject.toml) updates",
+      "matchManagers": [
+        "pep621"
+      ],
+      "groupName": "Python dependencies",
+      "commitMessageTopic": "Python dependencies",
+      "schedule": [
+        "at 2pm on saturday"
+      ]
     },
     {
       "description": "Auto-merge minor and patch updates for non-major versions",
