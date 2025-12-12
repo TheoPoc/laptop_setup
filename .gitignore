@@ -1,6 +1,7 @@
 password.txt
 .ansible/
 .claude/
+.vscode/
 # Node.js dependencies
 node_modules/
 # Log directories
