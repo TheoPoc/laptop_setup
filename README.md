@@ -32,7 +32,7 @@ This repository contains an Ansible playbook for automating workstation setup on
 
 **Note:** The setup script will automatically check for Terminal Full Disk Access and guide you through granting it if needed.
 
-#### Ubuntu
+#### Ubuntu / Debian
 
 1. Update your system:
 
@@ -40,27 +40,13 @@ This repository contains an Ansible playbook for automating workstation setup on
    sudo apt update && sudo apt upgrade -y
    ```
 
-2. Install required packages:
+2. Install Git (required to clone the repository):
 
    ```bash
-   sudo apt install -y git python3 python3-pip
+   sudo apt install -y git
    ```
 
-#### Debian
-
-1. Update your system:
-
-   ```bash
-   sudo apt update && sudo apt upgrade -y
-   ```
-
-2. Install required packages:
-
-   ```bash
-   sudo apt install -y git python3 python3-pip
-   ```
-
-**Note:** Debian setup is identical to Ubuntu as both are Debian-based distributions using the APT package manager.
+**Note:** The setup script will automatically install Python 3, pip, Ansible, and other required dependencies.
 
 ### Common Setup Steps
 
@@ -71,6 +57,11 @@ This repository contains an Ansible playbook for automating workstation setup on
    cd laptop_setup
    ./setup.sh
    ```
+
+   The `setup.sh` script will:
+   - **macOS**: Install Homebrew and Ansible
+   - **Ubuntu/Debian**: Install Python 3, pip, and Ansible via pip
+   - **All OS**: Install Ansible Galaxy collections
 
 2. **IMPORTANT: Configure your personal settings**
 

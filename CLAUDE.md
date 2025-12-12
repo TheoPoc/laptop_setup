@@ -306,7 +306,9 @@ When you create a PR, automated checks will:
 
 Users must:
 
-1. Run `./setup.sh` to install Homebrew and Ansible (macOS only)
+1. Run `./setup.sh` to install dependencies and Ansible (supports macOS, Ubuntu, and Debian)
+   - macOS: Installs Homebrew and Ansible
+   - Ubuntu/Debian: Installs Python 3, pip, and Ansible
 2. Configure `hosts` file with their username
 3. Edit `group_vars/all.yml` with personal settings (Git config, packages, etc.)
 
@@ -317,11 +319,13 @@ Users must:
 - Apple ID login required for App Store installations
 - Rosetta 2 automatically installed on Apple Silicon Macs
 
-### Ubuntu-Specific Requirements
+### Ubuntu/Debian-Specific Requirements
 
 - System must be updated first
-- Git, Python3, and pip must be pre-installed
-- Uses snap for some application installations
+- Git must be pre-installed (to clone the repository)
+- Python3 and pip are automatically installed by `setup.sh`
+- Uses snap for some application installations (Ubuntu)
+- Uses direct downloads for some applications (Debian)
 
 ### Testing Limitations
 
