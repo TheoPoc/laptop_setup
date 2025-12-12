@@ -392,14 +392,15 @@ This repository uses **Renovate** for automated dependency updates across multip
 **What Renovate manages:**
 
 1. **npm dependencies** (package.json) - semantic-release and its plugins
-2. **Ansible Galaxy roles** (requirements.yml) - Community roles like `elliotweiser.osx-command-line-tools`
-3. **Ansible Galaxy collections** (requirements.yml) - Collections like `community.general`, `geerlingguy.mac`
-4. **GitHub Actions** (.github/workflows/*.yml) - Third-party actions like `actions/checkout`, `actions/setup-node`
+2. **Python dependencies** (pyproject.toml) - Python packages managed by uv like `ansible`, `molecule`, `pre-commit`
+3. **Ansible Galaxy roles** (requirements.yml) - Community roles like `elliotweiser.osx-command-line-tools`
+4. **Ansible Galaxy collections** (requirements.yml) - Collections like `community.general`, `geerlingguy.mac`
+5. **GitHub Actions** (.github/workflows/*.yml) - Third-party actions like `actions/checkout`, `actions/setup-node`
 
 **Configuration highlights:**
 
 - **Automated updates:** Renovate creates PRs for dependency updates automatically
-- **Grouped updates:** Dependencies are grouped by type (npm, Ansible collections, Ansible roles, GitHub Actions)
+- **Grouped updates:** Dependencies are grouped by type (npm, Python, Ansible collections, Ansible roles, GitHub Actions)
 - **Auto-merge:** Minor and patch updates are auto-merged after CI passes
 - **Manual review:** Major updates require manual approval (labeled with `major-update`)
 - **Security alerts:** Vulnerabilities are flagged immediately with `security` label
@@ -429,7 +430,7 @@ This repository uses **Renovate** for automated dependency updates across multip
 **Configuration files:**
 
 - `renovate.json` - Renovate configuration at repository root
-- Enabled datasources: npm, Ansible Galaxy (roles & collections), GitHub Actions
+- Enabled datasources: npm, Python (pep621), Ansible Galaxy (roles & collections), GitHub Actions
 
 **Important:**
 
