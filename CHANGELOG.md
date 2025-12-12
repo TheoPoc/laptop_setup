@@ -5,6 +5,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.1.0](https://github.com/TheoPoc/laptop_setup/compare/v2.0.0...v2.1.0) (2025-12-12)
+
+### ✨ Features
+
+* **renovate:** add lock file maintenance configuration ([a69bf47](https://github.com/TheoPoc/laptop_setup/commit/a69bf47577c49de3122dfa395a1607dcabe9452f))
+* **renovate:** add support for Python (uv) dependencies ([d7f2dca](https://github.com/TheoPoc/laptop_setup/commit/d7f2dcad9281c3095531598b1dd141a5019c2e80))
+
+### 📚 Documentation
+
+* **renovate:** update documentation to include Python/uv support ([be179eb](https://github.com/TheoPoc/laptop_setup/commit/be179ebeaa46bf10477ca965ca5475d77592ae0d))
+
+### 🔧 Chores
+
+* ignore vscode folder ([bcda577](https://github.com/TheoPoc/laptop_setup/commit/bcda577c652392d572adff5d44483d8462f51318))
+
 ## [2.0.0](https://github.com/TheoPoc/laptop_setup/compare/v1.8.0...v2.0.0) (2025-12-12)
 
 ### ⚠ BREAKING CHANGES
