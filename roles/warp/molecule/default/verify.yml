@@ -2,10 +2,33 @@
 - name: Verify
   hosts: all
   tasks:
+
+    - name: Check if Warp package is installed
+      ansible.builtin.package_facts:
+        manager: auto
+      register: warp_install_check
+      tags: warp
+
+    - name: Assert Warp installed in Debian family
+      ansible.builtin.assert:
+        that:
+          - "'warp-terminal' in ansible_facts.packages"
+        fail_msg: "Warp package is not installed"
+        success_msg: "Warp package is installed"
+      tags: warp
+
+    - name: Run 'warp-terminal help' command
+      ansible.builtin.command: warp-terminal help
+      register: warp_help_output
+      changed_when: false
+      failed_when: warp_help_output.rc != 0
+      tags: warp
+
     - name: Check if Warp parent directory exists
       ansible.builtin.stat:
-        path: "{{ ansible_env.HOME }}/.local/share/warp-terminal"
+        path: "{{ ansible_facts.env.HOME }}/.local/share/warp-terminal"
       register: warp_parent
+      tags: warp
 
     - name: Verify Warp parent directory exists
       ansible.builtin.assert:
@@ -14,11 +37,13 @@
           - warp_parent.stat.isdir
         fail_msg: "Warp parent directory does not exist"
         success_msg: "Warp parent directory exists"
+      tags: warp
 
     - name: Check if Warp workflows directory exists
       ansible.builtin.stat:
-        path: "{{ ansible_env.HOME }}/.local/share/warp-terminal/workflows"
+        path: "{{ ansible_facts.env.HOME }}/.local/share/warp-terminal/workflows"
       register: warp_workflows_dir
+      tags: warp
 
     - name: Verify Warp workflows directory exists
       ansible.builtin.assert:
@@ -27,11 +52,13 @@
           - warp_workflows_dir.stat.isdir
         fail_msg: "Warp workflows directory does not exist"
         success_msg: "Warp workflows directory exists"
+      tags: warp
 
     - name: Check if workflow file exists
       ansible.builtin.stat:
-        path: "{{ ansible_env.HOME }}/.local/share/warp-terminal/workflows/workflow1.yaml"
+        path: "{{ ansible_facts.env.HOME }}/.local/share/warp-terminal/workflows/workflow1.yaml"
       register: workflow_file
+      tags: warp
 
     - name: Verify workflow file exists
       ansible.builtin.assert:
@@ -39,3 +66,4 @@
           - workflow_file.stat.exists
         fail_msg: "Workflow file does not exist"
         success_msg: "Workflow file exists"
+      tags: warp
