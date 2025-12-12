@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.8.0](https://github.com/TheoPoc/laptop_setup/compare/v1.7.2...v1.8.0) (2025-12-12)
+
+### ✨ Features
+
+* **base-tools:** split Debian and Ubuntu package installations ([128cef7](https://github.com/TheoPoc/laptop_setup/commit/128cef74a286952d3c0570940f01853e364861d3))
+* **warp:** add Ubuntu-specific support and improve Debian installation ([292af49](https://github.com/TheoPoc/laptop_setup/commit/292af49b39b5ffc3889599005593e7321142d8c6))
+
 ## [1.7.2](https://github.com/TheoPoc/laptop_setup/compare/v1.7.1...v1.7.2) (2025-12-10)
 
 ### 🐛 Bug Fixes
