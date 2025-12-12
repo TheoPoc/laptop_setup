@@ -201,7 +201,7 @@ Some roles have dependencies managed through `meta/main.yml`:
 
 - Role-specific variables prefixed with role name (e.g., `cursor_extensions`, `git_username`)
 - Boolean flags use `_enabled` suffix (e.g., `cursor_mcp_enabled`, `git_enabled`)
-- Use `ansible_user_id` directly in roles for user-specific paths (no intermediate variables)
+- Use `ansible_facts.user_id` directly in roles for user-specific paths (no intermediate variables)
 
 ### GitHub CI/CD Workflow Investigation
 
