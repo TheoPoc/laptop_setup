@@ -126,5 +126,16 @@
   "dependencyDashboardLabels": [
     "dependencies",
     "renovate-dashboard"
-  ]
+  ],
+  "lockFileMaintenance": {
+    "enabled": true,
+    "schedule": [
+      "before 6am on monday"
+    ],
+    "commitMessageAction": "Update",
+    "commitMessageTopic": "lock files",
+    "automerge": true,
+    "automergeType": "pr",
+    "automergeStrategy": "squash"
+  }
 }
