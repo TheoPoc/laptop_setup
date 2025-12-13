@@ -5,6 +5,28 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.4.1](https://github.com/TheoPoc/laptop_setup/compare/v2.4.0...v2.4.1) (2025-12-13)
+
+### 🐛 Bug Fixes
+
+* **base-tools:** ensure zip packages is installed for unarchive module ([9000589](https://github.com/TheoPoc/laptop_setup/commit/9000589ba8436919136c0b2f97b9eff141839edc))
+* dont error if there is no debian/ubuntu packages on the list ([ba64749](https://github.com/TheoPoc/laptop_setup/commit/ba64749df86c004d7a793a0921fe3c77eb733408))
+* install git as dependencies cause sometimes need to install mise tools ([ba9e4fe](https://github.com/TheoPoc/laptop_setup/commit/ba9e4fe9084ffca16d4ef887aa3147976fd14e39))
+* invert order of eval mise before direnv on zshrc ([5023e74](https://github.com/TheoPoc/laptop_setup/commit/5023e741179bb61b018d479bc12680e1591f7cab))
+* make sure uv and direnv is installed for the molecule tests ([b8feca0](https://github.com/TheoPoc/laptop_setup/commit/b8feca099cbd6b98500e73e01c5af0f58eff3dcc))
+* **zsh:** add macOS conditions for Homebrew-specific sections ([053f547](https://github.com/TheoPoc/laptop_setup/commit/053f547c9fd41b45623e366d0ff6f601c9b06e57))
+* **zsh:** install autojump missing packages ([c9ded82](https://github.com/TheoPoc/laptop_setup/commit/c9ded82f9dc6de878de427e9ff6cf60f4a09dc6e))
+* **zsh:** remove dependencies from base tools ([8b3e27c](https://github.com/TheoPoc/laptop_setup/commit/8b3e27cbe89ec691175782578d45a495bdf587c7))
+* **zsh:** update macOS condition for deprecation ([11be8ea](https://github.com/TheoPoc/laptop_setup/commit/11be8ea709faa9f6022995d94548cc8391a1f4d0))
+* **zsh:** update zshrc verification and adjust package checks ([cc93c68](https://github.com/TheoPoc/laptop_setup/commit/cc93c685944f4354fe8a319f06b75b8433761a93))
+* **zsh:** verify part on load zshrc ([ad71fd8](https://github.com/TheoPoc/laptop_setup/commit/ad71fd881f05cede4297021d00a44beaa03813b4))
+
+### 🔧 Chores
+
+* add missing tags zsh to task ([57c6e55](https://github.com/TheoPoc/laptop_setup/commit/57c6e55f15c546f74f7a6d94019865d9e8e2aaf2))
+* remove deprecation_warnings setting from ansible.cfg ([a49a1cf](https://github.com/TheoPoc/laptop_setup/commit/a49a1cf038def6504d7791e3281b6a1a490400af))
+* **zsh:** add base-tools role as a dependency ([868e07f](https://github.com/TheoPoc/laptop_setup/commit/868e07fd4c740db3e7867e45a2c1b691df11a15e))
+
 ## [2.4.0](https://github.com/TheoPoc/laptop_setup/compare/v2.3.1...v2.4.0) (2025-12-13)
 
 ### ✨ Features
