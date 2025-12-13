@@ -70,15 +70,14 @@
 
     - name: Test .zshrc loading without errors
       ansible.builtin.shell: |
-        zsh -c 'source ~/.zshrc && exit 0' 2>&1
+        zsh -c 'source ~/.zshrc'
       register: zshrc_load
       changed_when: false
       failed_when: zshrc_load.rc != 0
 
     - name: Display .zshrc loading output (if any)
       ansible.builtin.debug:
-        msg: "{{ zshrc_load.stdout_lines }}"
-      when: zshrc_load.stdout != ""
+        var: zshrc_load
 
     - name: Verify .zshrc loads without errors
       ansible.builtin.assert:
