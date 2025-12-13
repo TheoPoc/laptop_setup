@@ -8,6 +8,7 @@
       - zsh
       - zsh-autosuggestions
       - zsh-syntax-highlighting
+      - autojump
     state: present
     update_cache: true
   become: true
