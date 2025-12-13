@@ -441,7 +441,6 @@ Renovate is configured to auto-merge only when **ALL** CI checks pass:
 - `lint` - Ansible linting and validation
 - `test-roles` - Molecule tests for all roles
 - `integration-test` - Full playbook integration test
-- `pr-checks` - PR automation checks
 
 **Setup:**
 
@@ -460,7 +459,6 @@ To enable Renovate on this repository:
      - ✅ `lint`
      - ✅ `test-roles` (or individual role tests)
      - ✅ `integration-test`
-     - ✅ `pr-checks`
    - Enable: "Require branches to be up to date before merging"
    - **Without branch protection, auto-merge will happen without waiting for CI!**
 
