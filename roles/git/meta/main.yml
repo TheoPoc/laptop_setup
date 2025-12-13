@@ -2,8 +2,8 @@
 ---
 galaxy_info:
   role_name: git
-  namespace: ansible_mgmt_laptop
-  author: Theo Poccard
+  namespace: laptop_setup
+  author: TheoPoc
   description: Git configuration role for multi-OS support
   license: MIT
   min_ansible_version: "2.14"

@@ -1,7 +1,7 @@
 ---
 galaxy_info:
   role_name: copier
-  author: tpo
+  author: TheoPoc
   description: Installs copier using uvx
   license: MIT
   min_ansible_version: "2.10"

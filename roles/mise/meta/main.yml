@@ -1,6 +1,6 @@
 ---
 galaxy_info:
-  author: saewyn
+  author: TheoPoc
   description: Install and configure mise (formerly rtx)
   license: MIT
   min_ansible_version: "2.9"

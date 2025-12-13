@@ -2,7 +2,7 @@
 galaxy_info:
   role_name: gpg
   author: TheoPoc
-  namespace: local
+  namespace: laptop_setup
   description: Configures GPG agent settings
   license: MIT
   min_ansible_version: "2.10"

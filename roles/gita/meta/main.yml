@@ -2,7 +2,7 @@
 galaxy_info:
   role_name: gita
   author: TheoPoc
-  namespace: local
+  namespace: laptop_setup
   description: Installs gita tool using uv
   license: MIT
   min_ansible_version: "2.10"

@@ -1,7 +1,7 @@
 ---
 galaxy_info:
   role_name: warp
-  author: ansible_user
+  author: TheoPoc
   description: Installs and configures Warp terminal with workflows
   license: MIT
   min_ansible_version: 2.9

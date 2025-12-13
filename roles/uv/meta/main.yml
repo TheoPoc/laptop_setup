@@ -1,7 +1,7 @@
 ---
 galaxy_info:
   role_name: uv
-  author: tpo
+  author: TheoPoc
   description: Installs uv Python package installer
   license: MIT
   min_ansible_version: "2.10"
