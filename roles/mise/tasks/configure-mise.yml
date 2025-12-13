@@ -12,7 +12,7 @@
     mode: "0644"
 
 - name: Install mise plugins
-  ansible.builtin.command: "mise plugin install {{ item }}"
+  ansible.builtin.command: "mise plugin install -y {{ item }}"
   loop: "{{ mise_tools | dict2items | map(attribute='key') | list }}"
   when: mise_tools | length > 0
   changed_when: false
@@ -24,7 +24,7 @@
     - "'is a core plugin' not in plugin_install.stderr"
 
 - name: Install latest versions
-  ansible.builtin.command: "mise install"
+  ansible.builtin.command: "mise install -y"
   when: mise_tools | length > 0
   changed_when: false
   check_mode: false
