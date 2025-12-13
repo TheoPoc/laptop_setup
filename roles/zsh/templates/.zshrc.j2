@@ -136,11 +136,11 @@ source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 # fzf
 #source <(fzf --zsh)
 
-# direnv
-eval "$(direnv hook zsh)"
-
 # mise
 eval "$(mise activate zsh)"
+
+# direnv
+eval "$(direnv hook zsh)"
 
 # Powerlevel10k
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
