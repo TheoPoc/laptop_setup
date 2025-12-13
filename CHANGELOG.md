@@ -5,6 +5,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.6.0](https://github.com/TheoPoc/laptop_setup/compare/v2.5.0...v2.6.0) (2025-12-13)
+
+### ✨ Features
+
+* **tooling:** add speckit framework for feature specification and planning ([03d27ec](https://github.com/TheoPoc/laptop_setup/commit/03d27ecd77b874dcdce5c7389d0ea6ee698b23c8))
+
+### 📚 Documentation
+
+* improve speckit guidance ([a54dd79](https://github.com/TheoPoc/laptop_setup/commit/a54dd79c22c81036498afd3964214a05d47ce299))
+
+### 🔧 Chores
+
+* **deps:** Update GitHub Actions to v6 ([e935b4c](https://github.com/TheoPoc/laptop_setup/commit/e935b4cd9613e6fc3c6df614308bbbd07d5a356d))
+* **deps:** Update lock files ([990ea35](https://github.com/TheoPoc/laptop_setup/commit/990ea3553da1ab1f29250e45e753e684dbed715d))
+* **deps:** Update Python dependencies ([d689652](https://github.com/TheoPoc/laptop_setup/commit/d6896521e0c3ea987b9f6455de7da3be437c0451))
+
 ## [2.5.0](https://github.com/TheoPoc/laptop_setup/compare/v2.4.1...v2.5.0) (2025-12-13)
 
 ### ✨ Features
