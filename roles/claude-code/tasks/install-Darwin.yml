@@ -23,15 +23,3 @@
   community.general.homebrew_cask:
     name: "{{ claude_code_package_name }}"
     state: present
-  register: claude_install
-
-- name: Verify Claude Code installation
-  ansible.builtin.command:
-    cmd: claude --version
-  register: claude_version_check
-  changed_when: false
-  failed_when: claude_version_check.rc != 0
-
-- name: Display Claude Code version
-  ansible.builtin.debug:
-    msg: "Claude Code {{ claude_version_check.stdout }} installed successfully"

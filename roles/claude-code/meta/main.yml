@@ -5,7 +5,7 @@
 galaxy_info:
   role_name: claude_code
   namespace: laptop_setup
-  author: Saewyn
+  author: TheoPoc
   description: Install Claude Code CLI tool on macOS, Ubuntu, and Debian
   license: MIT
   min_ansible_version: "2.15"
@@ -24,8 +24,4 @@ galaxy_info:
         - bullseye
         - bookworm
 
-# Role dependencies
-# base-tools is required on macOS to ensure Homebrew is installed
-dependencies:
-  - role: base-tools
-    when: ansible_facts.os_family == 'Darwin'
+dependencies: []

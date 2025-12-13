@@ -20,18 +20,7 @@
   args:
     creates: "{{ claude_code_binary_path }}"
   register: curl_install_result
-  retries: "{{ claude_code_download_retries }}"
-  delay: "{{ claude_code_download_retry_delay }}"
+  retries: 3
+  delay: 5
   until: curl_install_result.rc == 0
   when: not claude_binary.stat.exists
-
-- name: Verify Claude Code installation
-  ansible.builtin.command:
-    cmd: "{{ claude_code_binary_path }} --version"
-  register: claude_version_check
-  changed_when: false
-  failed_when: claude_version_check.rc != 0
-
-- name: Display Claude Code version
-  ansible.builtin.debug:
-    msg: "Claude Code {{ claude_version_check.stdout }} installed successfully"
