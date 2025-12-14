@@ -9,7 +9,7 @@
 
     - name: Show ansible version
       ansible.builtin.debug:
-        msg: "{{ ansible_facts.version }}"
+        msg: "{{ ansible_version }}"
 
     - name: Include docker role (docker mode)
       ansible.builtin.include_role:
