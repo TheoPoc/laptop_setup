@@ -1,6 +1,22 @@
 ---
-# Main task file for rancher-desktop role
+# Main task file for docker role
 
-- name: Include OS-specific installation tasks
-  ansible.builtin.include_tasks: "install-{{ ansible_facts.os_family }}.yml"
-  tags: rancher-desktop
+- name: Include OS-specific variables
+  ansible.builtin.include_vars: "{{ ansible_facts.os_family }}.yml"
+  tags: ["docker"]
+
+- name: Display Docker installation mode
+  ansible.builtin.debug:
+    msg: "Installing Docker in '{{ docker_mode }}' mode on {{ ansible_facts.os_family }}"
+    verbosity: 0
+  tags: ["docker"]
+
+- name: Include Docker Desktop/Engine installation (docker mode)
+  ansible.builtin.include_tasks: "install-docker-{{ ansible_facts.os_family }}.yml"
+  when: docker_mode == 'docker'
+  tags: ["docker"]
+
+- name: Include Rancher Desktop installation (rancher-desktop mode)
+  ansible.builtin.include_tasks: "install-rancher-{{ ansible_facts.os_family }}.yml"
+  when: docker_mode == 'rancher-desktop'
+  tags: ["docker"]

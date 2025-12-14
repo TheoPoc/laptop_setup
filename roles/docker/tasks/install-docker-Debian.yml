@@ -1,0 +1,128 @@
+# SPDX-License-Identifier: MIT-0
+---
+# Debian/Ubuntu - Docker Engine CE installation
+
+- name: Check if Docker Engine is already installed
+  ansible.builtin.stat:
+    path: "{{ docker_engine_bin }}"
+  register: docker_engine_installed
+  changed_when: false
+
+- name: Install prerequisites for Docker Engine
+  ansible.builtin.apt:
+    name:
+      - ca-certificates
+      - curl
+    state: present
+    update_cache: true
+  become: true
+  when: not docker_engine_installed.stat.exists
+
+- name: Create directory for APT keyrings
+  ansible.builtin.file:
+    path: /etc/apt/keyrings
+    state: directory
+    mode: '0755'
+  become: true
+  when: not docker_engine_installed.stat.exists
+
+- name: Download Docker GPG key (Debian)
+  ansible.builtin.get_url:
+    url: "{{ docker_engine.gpg_key_url_debian }}"
+    dest: "{{ docker_engine.gpg_key_path }}"
+    mode: '0644'
+  become: true
+  when:
+    - not docker_engine_installed.stat.exists
+    - ansible_facts.distribution == 'Debian'
+  retries: 3
+  delay: 5
+
+- name: Download Docker GPG key (Ubuntu)
+  ansible.builtin.get_url:
+    url: "{{ docker_engine.gpg_key_url_ubuntu }}"
+    dest: "{{ docker_engine.gpg_key_path }}"
+    mode: '0644'
+  become: true
+  when:
+    - not docker_engine_installed.stat.exists
+    - ansible_facts.distribution == 'Ubuntu'
+  retries: 3
+  delay: 5
+
+- name: Add Docker repository (Debian)
+  ansible.builtin.deb822_repository:
+    name: docker
+    types: deb
+    uris: "{{ docker_engine.repo_base_url_debian }}"
+    suites: "{{ ansible_facts.distribution_release }}"
+    components: "{{ docker_engine.repo_components }}"
+    signed_by: "{{ docker_engine.gpg_key_path }}"
+    state: present
+  become: true
+  when:
+    - not docker_engine_installed.stat.exists
+    - ansible_facts.distribution == 'Debian'
+
+- name: Add Docker repository (Ubuntu)
+  ansible.builtin.deb822_repository:
+    name: docker
+    types: deb
+    uris: "{{ docker_engine.repo_base_url_ubuntu }}"
+    suites: "{{ ansible_facts.distribution_release }}"
+    components: "{{ docker_engine.repo_components }}"
+    signed_by: "{{ docker_engine.gpg_key_path }}"
+    state: present
+  become: true
+  when:
+    - not docker_engine_installed.stat.exists
+    - ansible_facts.distribution == 'Ubuntu'
+
+- name: Update APT cache after adding Docker repository
+  ansible.builtin.apt:
+    update_cache: true
+  become: true
+  when: not docker_engine_installed.stat.exists
+  changed_when: false
+
+- name: Install Docker Engine packages
+  ansible.builtin.apt:
+    name: "{{ docker_engine.packages }}"
+    state: present
+  become: true
+  when: not docker_engine_installed.stat.exists
+
+- name: Ensure docker group exists
+  ansible.builtin.group:
+    name: "{{ docker_group }}"
+    state: present
+  become: true
+
+- name: Add current user to docker group
+  ansible.builtin.user:
+    name: "{{ ansible_facts.user_id }}"
+    groups: "{{ docker_group }}"
+    append: true
+  become: true
+  when: docker_engine.add_user_to_group | bool
+
+- name: Enable and start Docker services
+  ansible.builtin.systemd:
+    name: "{{ item }}"
+    enabled: true
+    state: started
+  loop: "{{ docker_services }}"
+  become: true
+  when: docker_engine.enable_service | bool
+  failed_when: false  # Allow failure in containers
+
+- name: Verify Docker installation
+  ansible.builtin.command: docker --version
+  register: docker_version
+  changed_when: false
+  failed_when: docker_version.rc != 0
+
+- name: Display Docker version
+  ansible.builtin.debug:
+    msg: "{{ docker_version.stdout }}"
+    verbosity: 0

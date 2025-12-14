@@ -1,0 +1,12 @@
+---
+# macOS-specific variables for docker role
+
+# Homebrew package names
+docker_desktop_cask: "docker"
+
+# Installation paths
+docker_app_path: "/Applications/Docker.app"
+rancher_desktop_app_path: "/Applications/Rancher Desktop.app"
+
+# Temp download location
+docker_temp_dir: "/tmp"

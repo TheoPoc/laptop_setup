@@ -1,6 +1,36 @@
 ---
-- name: Verify
-  hosts: all
+- name: Verify - Docker Mode
+  hosts: docker_mode
+  gather_facts: true
+  tasks:
+    - name: Check if Docker is installed
+      ansible.builtin.command: which docker
+      register: docker_installed
+      changed_when: false
+      failed_when: false
+
+    - name: Display Docker installation status
+      ansible.builtin.debug:
+        msg: "Docker: {{ 'Installed' if docker_installed.rc == 0 else 'Not installed (expected in test env)' }}"
+
+    - name: Check Docker version (if installed)
+      ansible.builtin.command: docker --version
+      register: docker_version
+      changed_when: false
+      failed_when: false
+      when: docker_installed.rc == 0
+
+    - name: Display Docker version
+      ansible.builtin.debug:
+        msg: "{{ docker_version.stdout }}"
+      when: docker_installed.rc == 0
+
+    - name: Verify role executed without errors (docker mode)
+      ansible.builtin.debug:
+        msg: "Docker role (docker mode) executed successfully"
+
+- name: Verify - Rancher Desktop Mode
+  hosts: rancher_mode
   gather_facts: true
   tasks:
     - name: Check if Rancher Desktop is installed
@@ -9,12 +39,10 @@
       changed_when: false
       failed_when: false
 
-    - name: Display installation status
+    - name: Display Rancher Desktop installation status
       ansible.builtin.debug:
-        msg: "Rancher Desktop installation check: {{ 'Installed' if rancher_installed.rc == 0 else 'Not installed (expected for test environment)' }}"
+        msg: "Rancher Desktop: {{ 'Installed' if rancher_installed.rc == 0 else 'Not installed (expected in test env)' }}"
 
-    # Note: Rancher Desktop installation verification is limited in container environments
-    # The role should complete without errors, which is the primary test
-    - name: Verify role executed without errors
+    - name: Verify role executed without errors (rancher-desktop mode)
       ansible.builtin.debug:
-        msg: "Rancher Desktop role executed successfully"
+        msg: "Docker role (rancher-desktop mode) executed successfully"

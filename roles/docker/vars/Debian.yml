@@ -1,0 +1,17 @@
+---
+# Debian/Ubuntu-specific variables for docker role
+
+# Docker Engine paths
+docker_engine_bin: "/usr/bin/docker"
+docker_group: "docker"
+
+# Rancher Desktop paths
+rancher_desktop_bin: "/usr/bin/rancher-desktop"
+
+# Temp download location
+docker_temp_dir: "/tmp"
+
+# Systemd service names
+docker_services:
+  - docker.service
+  - containerd.service

@@ -1,6 +1,17 @@
 ---
-- name: Converge
-  hosts: all
+- name: Converge - Docker Mode
+  hosts: docker_mode
+  become: true
+  gather_facts: true
+  vars:
+    ansible_user: root
+  tasks:
+    - name: Include docker role (docker mode)
+      ansible.builtin.include_role:
+        name: docker
+
+- name: Converge - Rancher Desktop Mode
+  hosts: rancher_mode
   become: true
   gather_facts: true
   vars:
@@ -9,6 +20,6 @@
       repo: "rancher-sandbox/rancher-desktop"
       version: "1"
   tasks:
-    - name: Include rancher-desktop role
+    - name: Include docker role (rancher-desktop mode)
       ansible.builtin.include_role:
-        name: rancher-desktop
+        name: docker
