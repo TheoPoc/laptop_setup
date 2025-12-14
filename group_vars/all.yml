@@ -309,8 +309,8 @@ cursor_keybindings:
 # ============================================================================
 
 git_enabled: false
-git_username: "TheoPoc"  # Replace with your full name
-git_email: "theo.poccard@gmail.com"  # Replace with your email address
+git_username: "TheoPoc" # Replace with your full name
+git_email: "theo.poccard@gmail.com" # Replace with your email address
 
 # ============================================================================
 # macOS settings role
@@ -327,7 +327,7 @@ display_applications:
   - /System/Applications/Messages.app
   - /System/Applications/Calendar.app
   - /System/Applications/Notes.app
-  - "\"/System/Applications/System Settings.app\""
+  - '"/System/Applications/System Settings.app"'
   - /System/Applications/Launchpad.app
 
 # ============================================================================
@@ -362,7 +362,7 @@ warp_workflows:
         default_value: "eu-west-3"
       - name: aws_account_id
         description: "The AWS account ID"
-        default_value: "123456789012"  # Replace with your AWS account ID
+        default_value: "123456789012" # Replace with your AWS account ID
       - name: aws_profile
         description: "The AWS profile to use"
         default_value: "default"
