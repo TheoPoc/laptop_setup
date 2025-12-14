@@ -1,5 +1,4 @@
 ---
 # Debian/Ubuntu-specific variables for git role
 
-
 git_credential_helper: "cache --timeout=3600"
