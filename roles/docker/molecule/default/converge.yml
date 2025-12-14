@@ -6,6 +6,11 @@
   vars:
     ansible_user: root
   tasks:
+
+    - name: Show ansible version
+      ansible.builtin.debug:
+        msg: "{{ ansible_facts.version }}"
+
     - name: Include docker role (docker mode)
       ansible.builtin.include_role:
         name: docker
