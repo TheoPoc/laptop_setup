@@ -66,4 +66,4 @@ ignore: |
   .venv/
   molecule/
   .cache/
-  roles/geerlingguy.docker/
+  .ansible/roles/geerlingguy.docker/
