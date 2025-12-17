@@ -28,13 +28,13 @@ tasks:
     desc: Run pre-commit on all files
     cmds:
       - echo "Running pre-commit hooks..."
-      - pre-commit run --all-files
+      - uv run pre-commit run --all-files
 
   check:
     desc: Run playbook in check mode
     cmds:
       - echo "Running playbook in check mode..."
-      - ansible-playbook main.yml --check --diff --ask-become-pass
+      - uv run ansible-playbook main.yml --check --diff --ask-become-pass
 
   run:
     desc: Run full playbook
@@ -50,85 +50,90 @@ tasks:
   #     - echo "Running role: {{.TAG}}"
   #     - ansible-playbook main.yml --tags {{.TAG}}
 
-
   lint:
     desc: Run all linters
+    deps:
+      - ansiblelint
+      - yamllint
+      - ansiblesyntaxecheck
     cmds:
-      - ansible-lint -v
-      - yamllint -c .yamllint .
-      - ansible-playbook main.yml --syntax-check --ask-become-pass
       - echo "All linting passed!"
 
-  molecule-test:
-    desc: Run Molecule tests for all roles
+  ansiblelint:
     cmds:
-      - echo "Running Molecule tests for all roles..."
-      - |
-        for role in roles/*/molecule; do
-          if [ -d "$role" ]; then
-            role_name=$(echo $role | cut -d'/' -f2)
-            echo "Testing role: $role_name"
-            cd roles/$role_name && molecule test && cd ../..
-          fi
-        done
-      - echo "All Molecule tests passed!"
+      - uv run ansible-lint -v
 
-  # test-role:
-  #   desc: Run Molecule tests for specific role
-  #   requires:
-  #     vars:
-  #       - ROLE
-  #   preconditions:
-  #     - sh: test -d "roles/{{.ROLE}}/molecule"
-  #       msg: "Role {{.ROLE}} does not have Molecule tests"
-  #   cmds:
-  #     - echo "Testing role: {{.ROLE}}"
-  #     - cd roles/{{.ROLE}} && molecule test
+  yamllint:
+    cmds:
+      - uv run yamllint -c .yamllint --no-warnings .
 
-  # molecule-converge:
-  #   desc: Run Molecule converge for specific role
-  #   requires:
-  #     vars:
-  #       - ROLE
-  #   cmds:
-  #     - echo "Running Molecule converge for: {{.ROLE}}"
-  #     - cd roles/{{.ROLE}} && molecule converge
+  ansiblesyntaxecheck:
+    cmds:
+      - uv run ansible-playbook main.yml --syntax-check --ask-become-pass
 
-  # molecule-verify:
-  #   desc: Run Molecule verify for specific role
-  #   requires:
-  #     vars:
-  #       - ROLE
-  #   cmds:
-  #     - echo "Running Molecule verify for: {{.ROLE}}"
-  #     - cd roles/{{.ROLE}} && molecule verify
+        #  molecule-test:
+        #    desc: Run Molecule tests for all roles
+        #    cmds:
+        #      - echo "Running Molecule tests for all roles..."
+        #      - |
+        #        for role in roles/*/molecule; do
+        #          if [ -d "$role" ]; then
+        #            role_name=$(echo $role | cut -d'/' -f2)
+        #            echo "Testing role: $role_name"
+        #            cd roles/$role_name && molecule test && cd ../..
+        #          fi
+        #        done
+        #      - echo "All Molecule tests passed!"
 
-  # molecule-login:
-  #   desc: Login to Molecule test container
-  #   requires:
-  #     vars:
-  #       - ROLE
-  #   interactive: true
-  #   cmds:
-  #     - echo "Logging into Molecule container for: {{.ROLE}}"
-  #     - cd roles/{{.ROLE}} && molecule login
+  test:
+    desc: Run Molecule tests for specific role
+    preconditions:
+      - sh: test -d "molecule"
+        msg: "Role {{.CLI_ARGS}} does not have Molecule tests"
+    dir: roles/{{.CLI_ARGS}}
+    cmds:
+      - uv run molecule test
 
-  # molecule-destroy:
-  #   desc: Destroy Molecule test container
-  #   requires:
-  #     vars:
-  #       - ROLE
-  #   cmds:
-  #     - echo "Destroying Molecule container for: {{.ROLE}}"
-  #     - cd roles/{{.ROLE}} && molecule destroy
+  converge:
+    desc: Run Molecule converge for specific role
+    preconditions:
+      - sh: test -d "molecule"
+        msg: "Role {{.CLI_ARGS}} does not have Molecule tests"
+    dir: roles/{{.CLI_ARGS}}
+    cmds:
+      - uv run molecule converge
 
-  # test:
-  #   desc: Run all tests
-  #   deps:
-  #     - lint
-  #     - molecule-test
+  verify:
+    desc: Run Molecule verify for specific role
+    preconditions:
+      - sh: test -d "molecule"
+        msg: "Role {{.CLI_ARGS}} does not have Molecule tests"
+    dir: roles/{{.CLI_ARGS}}
+    cmds:
+      - uv run molecule verify
+
+  login:
+    desc: Login to Molecule test container
+    preconditions:
+      - sh: test -d "molecule"
+        msg: "Role {{.CLI_ARGS}} does not have Molecule tests"
+    dir: roles/{{.CLI_ARGS}}
+    cmds:
+      - uv run molecule login
+
+  destroy:
+    desc: Destroy Molecule test container
+    preconditions:
+      - sh: test -d "molecule"
+        msg: "Role {{.CLI_ARGS}} does not have Molecule tests"
+    dir: roles/{{.CLI_ARGS}}
+    cmds:
+      - uv run molecule destroy
+
+  # fulltest:
+  #   desc: Run all Molecule tests
   #   cmds:
-  #     - echo "All tests passed!"
+  #     - uv run molecule test
 
   # list-tags:
   #   desc: List all available tags
@@ -148,3 +153,4 @@ tasks:
     cmds:
       - cat .mise.toml |grep -vE "\[tools\]"
       - uv pip list
+    silent: true
