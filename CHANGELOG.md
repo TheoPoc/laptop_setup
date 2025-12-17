@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.9.2](https://github.com/TheoPoc/laptop_setup/compare/v2.9.1...v2.9.2) (2025-12-17)
+
+### 🐛 Bug Fixes
+
+* dont install ssm via homebrew ([65380dc](https://github.com/TheoPoc/laptop_setup/commit/65380dc800788f621a772af9d8cc26877748c3b8))
+
 ## [2.9.1](https://github.com/TheoPoc/laptop_setup/compare/v2.9.0...v2.9.1) (2025-12-17)
 
 ### 🐛 Bug Fixes
