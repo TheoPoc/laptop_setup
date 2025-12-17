@@ -15,10 +15,9 @@ tasks:
       - cmd: pre-commit install
       - cmd: uv sync --frozen
       - cmd: uv run ansible-galaxy install -r requirements.yml
+      - cmd: /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+        platforms: [darwin]
       - cmd: |
-          /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-
-          # Setup Homebrew environment
           if [[ -x /opt/homebrew/bin/brew ]]; then
               eval "$(/opt/homebrew/bin/brew shellenv)"
           elif [[ -x /usr/local/bin/brew ]]; then

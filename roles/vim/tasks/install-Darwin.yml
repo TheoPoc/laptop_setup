@@ -1,0 +1,8 @@
+---
+# MacOS-specific installation for vim
+
+- name: Install homebrew formulae
+  community.general.homebrew:
+    name: "{{ vim_package }}"
+    state: present
+  tags: vim
