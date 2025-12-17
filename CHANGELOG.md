@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.9.1](https://github.com/TheoPoc/laptop_setup/compare/v2.9.0...v2.9.1) (2025-12-17)
+
+### 🐛 Bug Fixes
+
+* dont install mise on specific path ([a405201](https://github.com/TheoPoc/laptop_setup/commit/a405201563b85724490a6d74a0a1b7f5c0ce38c8))
+* **mise:** ensure to not install mise if already installed ([6a9af4b](https://github.com/TheoPoc/laptop_setup/commit/6a9af4b6b6d359d95ed06f51e3755f35d8723b5a))
+* renaming files cause ansible facts change ([e03db20](https://github.com/TheoPoc/laptop_setup/commit/e03db2002d1ab73da6fa5dc54c071661ea593426))
+
 ## [2.9.0](https://github.com/TheoPoc/laptop_setup/compare/v2.8.0...v2.9.0) (2025-12-17)
 
 ### ✨ Features
