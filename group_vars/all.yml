@@ -42,6 +42,7 @@ homebrew:
     - hcledit # CLI tool for editing HCL files
     - thefuck # Corrects your previous console command
     - rar     # for archive
+    - macvim  # vim specific for macos
 
   casks:
     - google-chrome

@@ -1,3 +1,5 @@
 ---
 # macOS-specific variables for vim role
+
+vim_package: macvim
 vim_group: "staff"
