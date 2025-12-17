@@ -4,7 +4,8 @@ version: '3'
 tasks:
   default:
     cmds:
-      - task: init
+      - cmd: task --list-all
+    silent: true
 
   init:
     desc: Init stack
@@ -41,14 +42,12 @@ tasks:
     cmds:
       - uv run ansible-playbook main.yml --ask-become-pass
 
-  # run-tag:
-  #   desc: Run specific role by tag
-  #   requires:
-  #     vars:
-  #       - TAG
-  #   cmds:
-  #     - echo "Running role: {{.TAG}}"
-  #     - ansible-playbook main.yml --tags {{.TAG}}
+  run:*:
+    desc: Run playbook by tag
+    vars:
+      TAG: '{{index .MATCH 0}}'
+    cmds:
+      - uv run ansible-playbook main.yml --tags {{.TAG}} --ask-become-pass
 
   lint:
     desc: Run all linters
@@ -60,14 +59,20 @@ tasks:
       - echo "All linting passed!"
 
   ansiblelint:
+    aliases:
+      - alint
     cmds:
       - uv run ansible-lint -v
 
   yamllint:
+    aliases:
+      - ylint
     cmds:
       - uv run yamllint -c .yamllint --no-warnings .
 
   ansiblesyntaxecheck:
+    aliases:
+      - ascheck
     cmds:
       - uv run ansible-playbook main.yml --syntax-check --ask-become-pass
 
@@ -85,50 +90,62 @@ tasks:
         #        done
         #      - echo "All Molecule tests passed!"
 
-  test:
+  test:*:
     desc: Run Molecule tests for specific role
     preconditions:
       - sh: test -d "molecule"
-        msg: "Role {{.CLI_ARGS}} does not have Molecule tests"
-    dir: roles/{{.CLI_ARGS}}
+        msg: "Role {{.ROLE}} does not have Molecule tests"
+    dir: roles/{{.ROLE}}
+    vars:
+      ROLE: '{{index .MATCH 0}}'
     cmds:
       - uv run molecule test
 
-  converge:
+  converge:*:
     desc: Run Molecule converge for specific role
     preconditions:
       - sh: test -d "molecule"
-        msg: "Role {{.CLI_ARGS}} does not have Molecule tests"
-    dir: roles/{{.CLI_ARGS}}
+        msg: "Role {{.ROLE}} does not have Molecule tests"
+    dir: roles/{{.ROLE}}
+    vars:
+      ROLE: '{{index .MATCH 0}}'
     cmds:
       - uv run molecule converge
 
-  verify:
+  verify:*:
     desc: Run Molecule verify for specific role
     preconditions:
       - sh: test -d "molecule"
-        msg: "Role {{.CLI_ARGS}} does not have Molecule tests"
-    dir: roles/{{.CLI_ARGS}}
+        msg: "Role {{.ROLE}} does not have Molecule tests"
+    dir: roles/{{.ROLE}}
+    vars:
+      ROLE: '{{index .MATCH 0}}'
     cmds:
       - uv run molecule verify
 
-  login:
+  destroy:*:
+    desc: Destroy Molecule instances for specific role
+    preconditions:
+      - sh: test -d "molecule"
+        msg: "Role {{.ROLE}} does not have Molecule tests"
+    dir: roles/{{.ROLE}}
+    vars:
+      ROLE: '{{index .MATCH 0}}'
+    cmds:
+      - uv run molecule destroy
+
+  login:*:*:
     desc: Login to Molecule test container
     preconditions:
       - sh: test -d "molecule"
-        msg: "Role {{.CLI_ARGS}} does not have Molecule tests"
-    dir: roles/{{.CLI_ARGS}}
+        msg: "Role {{.ROLE}} does not have Molecule tests"
+    dir: roles/{{.ROLE}}
+    vars:
+      ROLE: '{{index .MATCH 0}}'
+      HOST: '{{index .MATCH 1}}'
     cmds:
-      - uv run molecule login
-
-  destroy:
-    desc: Destroy Molecule test container
-    preconditions:
-      - sh: test -d "molecule"
-        msg: "Role {{.CLI_ARGS}} does not have Molecule tests"
-    dir: roles/{{.CLI_ARGS}}
-    cmds:
-      - uv run molecule destroy
+      - uv run molecule list -f simple
+      - uv run molecule login --host {{.HOST}}
 
   # fulltest:
   #   desc: Run all Molecule tests
@@ -141,12 +158,12 @@ tasks:
   #     - echo "Available tags:"
   #     - grep -h "tags:" main.yml | grep -v "#" | sed 's/.*tags://' | tr -d '[]' | tr ',' '\n' | sed 's/^[ \t]*//' | sort -u
 
-
-  # update-galaxy:
-  #   desc: Update Ansible Galaxy roles
-  #   cmds:
-  #     - echo "Updating Ansible Galaxy roles..."
-  #     - ansible-galaxy install -r requirements.yml --force
+  update-galaxy:
+    desc: Update Ansible Galaxy roles
+    cmds:
+      - echo "Updating Ansible Galaxy roles..."
+      - ansible-galaxy install -r requirements.yml --force
+    silent: true
 
   version:
     desc: Show versions of installed tools
