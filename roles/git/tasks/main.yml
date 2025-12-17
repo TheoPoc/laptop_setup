@@ -3,30 +3,27 @@
 # tasks file for roles/git
 
 - name: Include OS-specific variables
-  ansible.builtin.include_vars: "{{ ansible_facts.os_family }}.yml"
+  ansible.builtin.include_vars: "{{ lookup('ansible.builtin.first_found', params) }}"
+  vars:
+    params:
+      files:
+        - "{{ ansible_facts.os_family }}.yml"
+        - "main.yml"
+      paths:
+        - "vars"
   tags: git
 
-- name: Include OS-specific installation tasks
-  ansible.builtin.include_tasks: "install-{{ ansible_facts.os_family }}.yml"
+- name: Install Debian specific installation tasks
+  ansible.builtin.include_tasks: "install-Debian.yml"
+  when: ansible_facts.distribution == "Debian"
   tags: git
 
-- name: Configure Git settings
+- name: Install Ubuntu specific installation tasks
+  ansible.builtin.include_tasks: "install-Ubuntu.yml"
+  when: ansible_facts.distribution == "Ubuntu"
+  tags: git
+
+- name: Configure git
+  ansible.builtin.include_tasks: "setup.yml"
   when: git_enabled | bool
-  block:
-    - name: Configure Git username
-      community.general.git_config:
-        name: user.name
-        scope: global
-        value: "{{ git_username }}"
-
-    - name: Configure Git email
-      community.general.git_config:
-        name: user.email
-        scope: global
-        value: "{{ git_email }}"
-
-    - name: Configure Git credential helper
-      community.general.git_config:
-        name: credential.helper
-        scope: global
-        value: "{{ git_credential_helper }}"
+  tags: git
