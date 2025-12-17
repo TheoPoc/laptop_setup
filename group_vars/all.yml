@@ -54,7 +54,6 @@ homebrew:
     - libreoffice
     - postman
     - warp
-    - session-manager-plugin
     - tfmv
 
 debian_apt_packages:
