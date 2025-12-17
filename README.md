@@ -37,7 +37,8 @@ sudo apt install -y git curl
    git clone https://github.com/TheoPoc/laptop_setup.git
    curl https://mise.run | sh
    cd laptop_setup
-   mise trust -qa && mise install -yq && eval "$(mise activate bash)"
+   eval "$($HOME/.local/bin/mise activate bash)"
+   mise trust -qa && mise install -yq && eval "$($HOME/.local/bin/mise activate bash)"
    ```
 2. **Configure your settings** in [group_vars/all.yml](group_vars/all.yml):
 
