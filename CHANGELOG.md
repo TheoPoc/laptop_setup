@@ -5,6 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.10.1](https://github.com/TheoPoc/laptop_setup/compare/v2.10.0...v2.10.1) (2025-12-18)
+
+### 🐛 Bug Fixes
+
+* homebrew path ([045ca1b](https://github.com/TheoPoc/laptop_setup/commit/045ca1bf6d40ce600aac2ee3875fe6e19a6282ff))
+* **homebrew:** standardize homebrew path variables across all roles ([f59c0f2](https://github.com/TheoPoc/laptop_setup/commit/f59c0f25160dbf2250c4469248a81fb77266e5dd))
+* install homebrew non interactive ([775e01a](https://github.com/TheoPoc/laptop_setup/commit/775e01a0c42c69a0e7eee019a14ed65e1bbb8ca6))
+* platform name for i386 ([323432c](https://github.com/TheoPoc/laptop_setup/commit/323432cc4f10797b26bbb49882d66fb5c1ae8d84))
+
+### 📚 Documentation
+
+* update docs for setup on macos ([c6fdf76](https://github.com/TheoPoc/laptop_setup/commit/c6fdf76be7990b50f494037cad1f14595c07fcba))
+
 ## [2.10.0](https://github.com/TheoPoc/laptop_setup/compare/v2.9.2...v2.10.0) (2025-12-17)
 
 ### ✨ Features
