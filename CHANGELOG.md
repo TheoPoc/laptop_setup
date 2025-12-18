@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.10.2](https://github.com/TheoPoc/laptop_setup/compare/v2.10.1...v2.10.2) (2025-12-18)
+
+### 🐛 Bug Fixes
+
+* **warp:** standardize OS-specific file naming to uppercase ([1e4e72e](https://github.com/TheoPoc/laptop_setup/commit/1e4e72ef936ca4a5746f71dfd12dd2604a3001f5))
+
+### 💎 Styles
+
+* **macos_settings:** fix spacing in Jinja2 variable ([a573e38](https://github.com/TheoPoc/laptop_setup/commit/a573e38dc1451e8b07d22814e7c953b46a6fa0b9))
+
 ## [2.10.1](https://github.com/TheoPoc/laptop_setup/compare/v2.10.0...v2.10.1) (2025-12-18)
 
 ### 🐛 Bug Fixes
