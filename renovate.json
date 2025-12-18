@@ -102,7 +102,7 @@
     "assignees": [
       "TheoPoc"
     ],
-    "automerge": false
+    "automerge": true
   },
   "dependencyDashboard": true,
   "dependencyDashboardTitle": "🤖 Dependency Updates Dashboard",
