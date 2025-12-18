@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.10.3](https://github.com/TheoPoc/laptop_setup/compare/v2.10.2...v2.10.3) (2025-12-18)
+
+### 🐛 Bug Fixes
+
+* **macos_settings:** standardize dockutil path to use Ansible variable and replace shell with command ([f5633a9](https://github.com/TheoPoc/laptop_setup/commit/f5633a9a6164ed6f19ca09f0fe4dc51e357ee641))
+
 ## [2.10.2](https://github.com/TheoPoc/laptop_setup/compare/v2.10.1...v2.10.2) (2025-12-18)
 
 ### 🐛 Bug Fixes
