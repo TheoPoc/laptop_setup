@@ -33,6 +33,7 @@ jobs:
         uses: ansible/ansible-lint@v25.12.1
         with:
           requirements_file: requirements.yml
+          args: "--profile=moderate"
 
       - name: Run yamllint
         uses: ibiqlik/action-yamllint@v3
