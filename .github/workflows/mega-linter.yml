@@ -58,6 +58,11 @@ jobs:
           # improve performance
           fetch-depth: 0
 
+      - name: Cache Docker images.
+        uses: ScribeMD/docker-cache@0.5.0
+        with:
+          key: docker-${{ runner.os }}-${{ hashFiles(paths) }}
+
       # MegaLinter
       - name: MegaLinter
 
