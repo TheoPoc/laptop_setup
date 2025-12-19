@@ -48,7 +48,7 @@ jobs:
 
   megalinter:
     name: MegaLinter
-    needs: ["cache"]
+    needs: ["docker_cache"]
     runs-on: ubuntu-latest
 
     # Give the default GITHUB_TOKEN write permission to commit and push, comment
