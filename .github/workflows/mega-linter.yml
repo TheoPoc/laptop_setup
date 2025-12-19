@@ -36,25 +36,6 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  docker_cache:
-    name: cache
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout Code
-        uses: actions/checkout@v6
-        with:
-          token: ${{ secrets.PAT || secrets.GITHUB_TOKEN }}
-
-          # If you use VALIDATE_ALL_CODEBASE = true, you can remove this line to
-          # improve performance
-          fetch-depth: 0
-
-      - name: Megalinter public image cache
-        uses: ./.github/actions/docker_image_cache
-        with:
-          image_name_tag: 'ghcr.io/oxsecurity/megalinter-documentation:v9.2.0'
-
   megalinter:
     name: MegaLinter
     needs: ["docker_cache"]
@@ -78,9 +59,15 @@ jobs:
           # improve performance
           fetch-depth: 0
 
+      - name: Megalinter public image cache
+        uses: ./.github/actions/docker_image_cache
+        id: step1
+        with:
+          image_name_tag: 'ghcr.io/oxsecurity/megalinter-documentation:v9.2.0'
+
       # MegaLinter
       - name: MegaLinter
-
+        if: steps.step1.conclusion == 'success'
         # You can override MegaLinter flavor used to have faster performances
         # More info at https://megalinter.io/latest/flavors/
         uses: oxsecurity/megalinter/flavors/documentation@v9
