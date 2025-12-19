@@ -58,10 +58,10 @@ jobs:
           # improve performance
           fetch-depth: 0
 
-      - name: Cache Docker images.
-        uses: ScribeMD/docker-cache@0.5.0
+      - name: Megalinter public image cache
+        uses: ./.github/actions/docker_image_cache
         with:
-          key: docker-${{ runner.os }}-${{ hashFiles('.mega-linter.yml') }}
+          image_name_tag: 'ghcr.io/oxsecurity/megalinter-documentation:v9.2.0'
 
       # MegaLinter
       - name: MegaLinter
